@@ -195,6 +195,22 @@ export function Sidebar() {
           {collapsed ? "›" : "‹"}
         </button>
       </div>
+
+      {/* Drag handle — geser panel; double-click utk reset */}
+      <div
+        title="Geser panel — double-click utk reset"
+        onDoubleClick={() => update({ sidebarOffset: { x: 0, y: 0 } })}
+        {...drag}
+        style={{
+          position: "absolute", top: "50%", right: -6, transform: "translateY(-50%)",
+          width: 12, height: 56, borderRadius: 6,
+          background: "rgba(168,85,247,0.18)", border: "1px solid rgba(168,85,247,0.35)",
+          cursor: "grab", touchAction: "none", zIndex: 2,
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}
+      >
+        <span style={{ width: 2, height: 24, background: "rgba(232,244,255,0.5)", borderRadius: 2 }} />
+      </div>
     </aside>
   );
 }
