@@ -540,8 +540,8 @@ export function buildGraph(): Graph {
             edges.push({ a: spNodeId, b: pair[1], strength: "weak", color: "#38bdf8", kind: "link" });
           }
           if ((sp as any).replyOf) {
-            edges.push({ a: spNodeId, b: "role:gr", strength: "weak", color: "#fde047", kind: "link" });
-            edges.push({ a: spNodeId, b: "role:or", strength: "weak", color: "#fde047", kind: "link" });
+            edges.push({ a: spNodeId, b: "role:ap:gr", strength: "weak", color: "#fde047", kind: "link" });
+            edges.push({ a: spNodeId, b: "role:ap:or", strength: "weak", color: "#fde047", kind: "link" });
           }
           if (sp.crown === "best-speaker" && isChaos) {
             edges.push({ a: spNodeId, b: "style:chaos", strength: "weak", color: "#a855f7", kind: "link" });
