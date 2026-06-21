@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, animate } from "framer-motion";
-import { useUniverse } from "@/lib/store";
+import { useUniverse, useSettings } from "@/lib/store";
 import { buildGraph, CLUSTER_META } from "@/lib/graph/build";
 import { PanelContent } from "./panels/PanelContent";
+import { FloatingPills } from "./mobile/FloatingPills";
 import logo from "@/assets/smandash-logo.png";
 
 const ICONS: Record<string, string> = {
@@ -12,6 +13,12 @@ const ICONS: Record<string, string> = {
 };
 
 export function MobileShell() {
+  const layout = useSettings((s) => s.mobileLayout);
+  if (layout === "pills") return <FloatingPills />;
+  return <BottomSheetShell />;
+}
+
+function BottomSheetShell() {
   const selectedId = useUniverse((s) => s.selectedId);
   const select = useUniverse((s) => s.select);
   const focusCluster = useUniverse((s) => s.focusCluster);
