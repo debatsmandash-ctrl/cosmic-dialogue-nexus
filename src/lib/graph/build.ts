@@ -402,22 +402,24 @@ export function buildGraph(): Graph {
       const jid = typeToJenisId[m.type] || "jm1";
       (byJenis[jid] ||= []).push(m);
     });
+    // Palet warm-neon untuk bintang motion (tidak pernah hitam/gelap)
+    const MOTION_NEON = ["#ff3d8b", "#ff8b3d", "#ffd53d", "#ff3df5", "#ffb13d", "#ff5fb3", "#ffe066"];
+    let motionColorIdx = 0;
     for (const jid of Object.keys(byJenis)) {
       const arr = byJenis[jid];
       const subHubPos = jenisPos[jid] ?? motionCenter;
-      const subColor = JENIS_MOSI.find((x) => x.id === jid)?.warna || "#a855f7";
+      const subColor = JENIS_MOSI.find((x) => x.id === jid)?.warna || "#ff8b3d";
       const branchRadius = Math.max(7, Math.min(20, 5 + Math.log2(arr.length + 1) * 2.8));
       const pos = placeBranch(subHubPos, motionCenter, arr.length, branchRadius * 0.45, branchRadius * 1.15);
       arr.forEach((m, i) => {
         const id = `motion:${m.id}`;
-        // Warna per sub-hub (semua mosi di sub-hub yang sama pakai shade warna sub-hub)
-        const c = paletteColor(`motion:${jid}`, m.id);
-        const useColor = c === "#a855f7" ? subColor : c;
+        // Bintang mosi SELALU warm-neon — deterministik per id
+        const useColor = MOTION_NEON[(motionColorIdx++) % MOTION_NEON.length];
         nodes.push({ id, label: m.title, kind: "motion", cluster: "motion", color: useColor, size: 0.085, pos: pos[i], refId: m.id, importance: 0.35 });
         edges.push({ a: `jenis:${jid}`, b: id, strength: "weak", color: useColor });
         const domainKey = motionCatToDomain[m.cat];
         if (domainKey && matterDomainIds[domainKey]) {
-          edges.push({ a: id, b: matterDomainIds[domainKey], strength: "weak", color: "#00ffc8", kind: "link" });
+          edges.push({ a: id, b: matterDomainIds[domainKey], strength: "weak", color: "#ff8b3d", kind: "link" });
         }
       });
     }
