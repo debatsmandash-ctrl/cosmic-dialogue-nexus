@@ -266,3 +266,57 @@ export const EDITOR_NODES = [
   { id: "add-motion", nama: "Add Motion", desc: "Tambah mosi custom ke motion bank." },
   { id: "edit-vocab", nama: "Edit Vocab", desc: "Tambah / edit istilah kamus." },
 ];
+
+// ─── ROLES (Asian + British Parliamentary, dengan sub-skill) ───
+export interface RoleSubSkill {
+  kind: "case" | "timing" | "structure" | "speech";
+  label: string;
+  desc?: string;
+  lines?: string[];
+  blocks?: { t: string; what: string }[];
+}
+export interface RoleDef {
+  id: string;
+  nama: string;
+  short: string;
+  time: string;
+  color: string;
+  inti: string;
+  sub: {
+    case: string[];
+    timing: { t: string; what: string }[];
+    structure: string[];
+  };
+}
+export interface BPTeam {
+  key: "og" | "oo" | "cg" | "co";
+  label: string;
+  color: string;
+  roles: RoleDef[];
+}
+
+const _rolesRaw = rolesRaw as unknown as {
+  speechTimingDefault: { label: string; desc: string; blocks: { t: string; what: string }[] };
+  asian: (RoleDef & { side: "gov" | "opp" })[];
+  british: Record<"og" | "oo" | "cg" | "co", { label: string; color: string; roles: RoleDef[] }>;
+};
+
+export const SPEECH_TIMING_DEFAULT = _rolesRaw.speechTimingDefault;
+export const ROLES_AP = _rolesRaw.asian;
+export const ROLES_BP: BPTeam[] = (["og", "oo", "cg", "co"] as const).map((k) => ({
+  key: k,
+  label: _rolesRaw.british[k].label,
+  color: _rolesRaw.british[k].color,
+  roles: _rolesRaw.british[k].roles,
+}));
+
+/** Build a unified lookup: "ap:pm" / "bp:og:pmg" → RoleDef */
+export const ROLE_LOOKUP: Record<string, RoleDef & { format: "ap" | "bp"; teamLabel?: string; side?: string }> = {};
+for (const r of ROLES_AP) {
+  ROLE_LOOKUP[`ap:${r.id}`] = { ...r, format: "ap", side: (r as any).side };
+}
+for (const team of ROLES_BP) {
+  for (const r of team.roles) {
+    ROLE_LOOKUP[`bp:${team.key}:${r.id}`] = { ...r, format: "bp", teamLabel: team.label, side: team.key };
+  }
+}
