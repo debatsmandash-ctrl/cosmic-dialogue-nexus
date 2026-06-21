@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { buildGraph } from "@/lib/graph/build";
 import { useUniverse, useSettings, type QualityPreset } from "@/lib/store";
 import type { StarNode, StarEdge, NodeKind } from "@/data/types";
-import { CosmicCrust } from "./CosmicCrust";
+import { MilkyWaySky } from "./MilkyWaySky";
 import { HoverEdges } from "./HoverEdges";
 import { useDeviceProfile, type DeviceProfile } from "@/hooks/useDeviceProfile";
 
@@ -244,6 +244,7 @@ const LABEL_THRESHOLDS: Record<NodeKind, number> = {
   bab: 70,
   subbab: 28,
   role: 90,
+  roleskill: 36,
   style: 110,
   motion: 32,
   jenis: 100,
@@ -490,17 +491,17 @@ function Scene({ profile }: { profile: DeviceProfile }) {
 
   return (
     <>
-      {/* Lighting global yang lebih kalem agar emissive node menonjol */}
-      <ambientLight intensity={0.18} />
-      <pointLight position={[0, 0, 0]} intensity={0.7} color="#a855f7" distance={260} />
-      <pointLight position={[140, 80, -80]} intensity={0.35} color="#00ffc8" distance={360} />
-      <pointLight position={[-140, -60, 100]} intensity={0.25} color="#ff5cf0" distance={320} />
-      <pointLight position={[60, -120, 60]} intensity={0.18} color="#38bdf8" distance={300} />
+      {/* Lighting global — kalem & gelap; aksen krem/biru, BUKAN pink/magenta */}
+      <ambientLight intensity={0.14} />
+      <pointLight position={[0, 0, 0]} intensity={0.5} color="#d8b27a" distance={260} />
+      <pointLight position={[140, 80, -80]} intensity={0.28} color="#00ffc8" distance={360} />
+      <pointLight position={[-140, -60, 100]} intensity={0.22} color="#8aa6d8" distance={320} />
+      <pointLight position={[60, -120, 60]} intensity={0.16} color="#38bdf8" distance={300} />
 
       <StarField />
       {profile.tier === "desktop" && <Galaxies />}
       <StarClusters />
-      <CosmicCrust shells={crustShells} octaves={crustOctaves} opacity={settings.nebulaOpacity} />
+      <MilkyWaySky opacity={settings.nebulaOpacity} />
 
       <group>
         {graph.edges.map((e: StarEdge, i: number) => {

@@ -1,6 +1,6 @@
 import {
   MOTIONS, JENIS_MOSI, VOCAB, MATTER,
-  STYLES, ROLES, PRACTICE_MODES, CIRCUIT, ASSISTANT_PROMPTS, META_NODES, EDITOR_NODES,
+  STYLES, ROLES, ROLES_AP, ROLES_BP, PRACTICE_MODES, CIRCUIT, ASSISTANT_PROMPTS, META_NODES, EDITOR_NODES,
   COMPETITORS, ACTIVE_MEMBERS, EVENTS, paletteColor,
 } from "@/data";
 import type { StarNode, StarEdge, ClusterKey } from "@/data/types";
@@ -29,12 +29,12 @@ const dist = (a: V3, b: V3): number => Math.hypot(a[0]-b[0], a[1]-b[1], a[2]-b[2
 // Cluster meta. Centers auto-spread on a fibonacci sphere so no two collide.
 interface ClusterMeta { key: ClusterKey; label: string; color: string; dist: number; }
 const CLUSTERS: ClusterMeta[] = [
-  { key: "matter",        label: "MATTER",       color: "#00ffc8", dist: 52 },
-  { key: "motion",        label: "MOTION BANK",  color: "#a855f7", dist: 50 },
-  { key: "kamus",         label: "KAMUS",        color: "#38bdf8", dist: 50 },
-  { key: "competitor",    label: "COMPETITOR",   color: "#fb7185", dist: 54 },
-  { key: "active_member", label: "SMANDASH",     color: "#00ffc8", dist: 56 },
-  { key: "event",         label: "EVENT",        color: "#fde047", dist: 58 },
+  { key: "matter",        label: "MATTER",       color: "#00ffc8", dist: 50 },
+  { key: "motion",        label: "MOTION BANK",  color: "#ff8b3d", dist: 48 },
+  { key: "kamus",         label: "KAMUS",        color: "#38bdf8", dist: 48 },
+  { key: "competitor",    label: "COMPETITOR",   color: "#fb7185", dist: 40 },
+  { key: "active_member", label: "SMANDASH",     color: "#00ffc8", dist: 38 },
+  { key: "event",         label: "EVENT",        color: "#fde047", dist: 52 },
   { key: "roles",         label: "ROLES",        color: "#ff6b6b", dist: 44 },
   { key: "styles",        label: "STYLES",       color: "#f0c040", dist: 42 },
   { key: "practice",      label: "PRACTICE",     color: "#ff9f43", dist: 40 },
@@ -220,48 +220,107 @@ export function buildGraph(): Graph {
     });
   }
 
-  // ─── ROLES (cluster → GOV/OPP sub-hubs → 4 roles each) ───
+  // ─── ROLES (cluster → AP / BP sub-hubs → side-hubs → role nodes → sub-skill leaves) ───
   {
     const center = clusterCenter.roles;
-    // sub-hub positions: pick two opposite directions tangent to root→cluster line
     const radial = normalize(center);
-    // pick a perpendicular axis
     const tmp: V3 = Math.abs(radial[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
     const perp = normalize([
       radial[1]*tmp[2] - radial[2]*tmp[1],
       radial[2]*tmp[0] - radial[0]*tmp[2],
       radial[0]*tmp[1] - radial[1]*tmp[0],
     ]);
-    const offset = 16;
-    const govCenter = add(center, scale(perp, -offset));
-    const oppCenter = add(center, scale(perp,  offset));
 
-    nodes.push({ id: "subhub:roles:gov", label: "GOV", kind: "subhub", cluster: "roles", color: "#ff6b6b", size: 0.42, pos: govCenter });
-    nodes.push({ id: "subhub:roles:opp", label: "OPP", kind: "subhub", cluster: "roles", color: "#38bdf8", size: 0.42, pos: oppCenter });
-    edges.push({ a: "cluster:roles", b: "subhub:roles:gov", strength: "strong", color: "#ff6b6b" });
-    edges.push({ a: "cluster:roles", b: "subhub:roles:opp", strength: "strong", color: "#38bdf8" });
+    // AP & BP sub-hubs (kiri & kanan dari cluster center)
+    const apCenter = add(center, scale(perp, -22));
+    const bpCenter = add(center, scale(perp,  22));
 
-    const govRoles = ROLES.filter((r) => r.side === "gov");
-    const oppRoles = ROLES.filter((r) => r.side === "opp");
-    const govPos = placeCloud(govCenter, 7, govRoles.length, 3.5);
-    const oppPos = placeCloud(oppCenter, 7, oppRoles.length, 3.5);
+    nodes.push({ id: "subhub:roles:ap", label: "ASIAN PARLIAMENTARY", kind: "subhub", cluster: "roles", color: "#ff8b3d", size: 0.5, pos: apCenter, importance: 0.85 });
+    nodes.push({ id: "subhub:roles:bp", label: "BRITISH PARLIAMENTARY", kind: "subhub", cluster: "roles", color: "#a78bfa", size: 0.5, pos: bpCenter, importance: 0.85 });
+    edges.push({ a: "cluster:roles", b: "subhub:roles:ap", strength: "strong", color: "#ff8b3d" });
+    edges.push({ a: "cluster:roles", b: "subhub:roles:bp", strength: "strong", color: "#a78bfa" });
 
-    govRoles.forEach((r, i) => {
-      const id = `role:${r.id}`;
-      nodes.push({ id, label: r.nama, kind: "role", cluster: "roles", color: r.color, size: 0.24, pos: govPos[i], refId: r.id });
-      edges.push({ a: "subhub:roles:gov", b: id, strength: "strong", color: r.color });
-    });
-    oppRoles.forEach((r, i) => {
-      const id = `role:${r.id}`;
-      nodes.push({ id, label: r.nama, kind: "role", cluster: "roles", color: r.color, size: 0.24, pos: oppPos[i], refId: r.id });
-      edges.push({ a: "subhub:roles:opp", b: id, strength: "strong", color: r.color });
-    });
+    const SKILL_COLORS: Record<string, string> = {
+      case: "#ff6b6b", timing: "#fde047", structure: "#38bdf8", speech: "#00ffc8",
+    };
+    const SKILL_LABELS: Record<string, string> = {
+      case: "Case Building", timing: "Timing", structure: "Structure", speech: "Speech Timing",
+    };
 
-    // weak cross-pairs
-    for (const [a, b] of [["pm","lo"],["dpm","dlo"],["gw","ow"],["gr","or"]]) {
-      edges.push({ a: `role:${a}`, b: `role:${b}`, strength: "weak", color: "#ffffff" });
+    function spawnRoleSkills(roleId: string, roleCenter: V3, parentCenter: V3) {
+      const kinds = ["case", "timing", "structure", "speech"] as const;
+      const positions = placeBranch(roleCenter, parentCenter, kinds.length, 3.0, 5.2);
+      kinds.forEach((k, i) => {
+        const id = `${roleId}:${k}`;
+        nodes.push({
+          id, label: SKILL_LABELS[k], kind: "roleskill", cluster: "roles",
+          color: SKILL_COLORS[k], size: 0.085, pos: positions[i],
+          refId: `${roleId}|${k}`, importance: 0.35,
+        });
+        edges.push({ a: roleId, b: id, strength: "weak", color: SKILL_COLORS[k] });
+      });
+    }
+
+    // ─── ASIAN PARLIAMENTARY: GOV / OPP mini-hub → 4 role tiap sisi ───
+    {
+      const apRadial = normalize(sub(apCenter, center));
+      const apTmp: V3 = Math.abs(apRadial[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0];
+      const apPerp = normalize([
+        apRadial[1]*apTmp[2] - apRadial[2]*apTmp[1],
+        apRadial[2]*apTmp[0] - apRadial[0]*apTmp[2],
+        apRadial[0]*apTmp[1] - apRadial[1]*apTmp[0],
+      ]);
+      const govCenter = add(apCenter, scale(apPerp, -10));
+      const oppCenter = add(apCenter, scale(apPerp,  10));
+      nodes.push({ id: "subhub:roles:ap:gov", label: "AP · GOV", kind: "subhub", cluster: "roles", color: "#ff6b6b", size: 0.34, pos: govCenter });
+      nodes.push({ id: "subhub:roles:ap:opp", label: "AP · OPP", kind: "subhub", cluster: "roles", color: "#38bdf8", size: 0.34, pos: oppCenter });
+      edges.push({ a: "subhub:roles:ap", b: "subhub:roles:ap:gov", strength: "strong", color: "#ff6b6b" });
+      edges.push({ a: "subhub:roles:ap", b: "subhub:roles:ap:opp", strength: "strong", color: "#38bdf8" });
+
+      const apGov = ROLES_AP.filter((r: any) => r.side === "gov");
+      const apOpp = ROLES_AP.filter((r: any) => r.side === "opp");
+      const govPos = placeCloud(govCenter, 8, apGov.length, 4.0);
+      const oppPos = placeCloud(oppCenter, 8, apOpp.length, 4.0);
+
+      apGov.forEach((r, i) => {
+        const id = `role:ap:${r.id}`;
+        nodes.push({ id, label: r.nama, kind: "role", cluster: "roles", color: r.color, size: 0.22, pos: govPos[i], refId: `ap:${r.id}`, importance: 0.6 });
+        edges.push({ a: "subhub:roles:ap:gov", b: id, strength: "strong", color: r.color });
+        spawnRoleSkills(id, govPos[i], govCenter);
+      });
+      apOpp.forEach((r, i) => {
+        const id = `role:ap:${r.id}`;
+        nodes.push({ id, label: r.nama, kind: "role", cluster: "roles", color: r.color, size: 0.22, pos: oppPos[i], refId: `ap:${r.id}`, importance: 0.6 });
+        edges.push({ a: "subhub:roles:ap:opp", b: id, strength: "strong", color: r.color });
+        spawnRoleSkills(id, oppPos[i], oppCenter);
+      });
+
+      // weak cross-pairs (legacy)
+      for (const [a, b] of [["pm","lo"],["dpm","dlo"],["gw","ow"],["gr","or"]]) {
+        edges.push({ a: `role:ap:${a}`, b: `role:ap:${b}`, strength: "weak", color: "#ffffff" });
+      }
+    }
+
+    // ─── BRITISH PARLIAMENTARY: 4 team hubs (OG/OO/CG/CO) → 2 roles each ───
+    {
+      const bpDirs = fibDirections(ROLES_BP.length, 0.25);
+      ROLES_BP.forEach((team, ti) => {
+        const teamCenter = add(bpCenter, scale(bpDirs[ti], 11));
+        const teamHubId = `subhub:roles:bp:${team.key}`;
+        nodes.push({ id: teamHubId, label: team.label, kind: "subhub", cluster: "roles", color: team.color, size: 0.3, pos: teamCenter });
+        edges.push({ a: "subhub:roles:bp", b: teamHubId, strength: "strong", color: team.color });
+
+        const rolePos = placeBranch(teamCenter, bpCenter, team.roles.length, 4.5, 7.0);
+        team.roles.forEach((r, ri) => {
+          const id = `role:bp:${team.key}:${r.id}`;
+          nodes.push({ id, label: r.nama, kind: "role", cluster: "roles", color: r.color, size: 0.18, pos: rolePos[ri], refId: `bp:${team.key}:${r.id}`, importance: 0.55 });
+          edges.push({ a: teamHubId, b: id, strength: "strong", color: r.color });
+          spawnRoleSkills(id, rolePos[ri], teamCenter);
+        });
+      });
     }
   }
+
 
   // ─── MATTER (cluster → domains → babs → subbabs) ───
   const matterDomainIds: Record<string, string> = {};
@@ -329,11 +388,12 @@ export function buildGraph(): Graph {
     const motionCenter = clusterCenter.motion;
     // 1) Sub-hub per Jenis Mosi sebagai cabang Motion Bank — lebih rapat
     const jenisPositions = placeCloud(motionCenter, 22, JENIS_MOSI.length, 9);
+    const JENIS_NEON = ["#ff3d8b", "#ff8b3d", "#ffd53d", "#ff5fb3", "#ffb13d", "#ffe066", "#ff6b6b"];
     JENIS_MOSI.forEach((j, i) => {
       const id = `jenis:${j.id}`;
       jenisIdMap[j.id] = id;
       jenisPos[j.id] = jenisPositions[i];
-      const c = j.warna && j.warna.startsWith("#") ? j.warna : paletteColor("jenis", j.id);
+      const c = JENIS_NEON[i % JENIS_NEON.length];
       nodes.push({ id, label: j.nama, kind: "subhub", cluster: "motion", color: c, size: 0.36, pos: jenisPositions[i], refId: j.id, importance: 0.7 });
       edges.push({ a: "cluster:motion", b: id, strength: "strong", color: c });
     });
@@ -343,22 +403,24 @@ export function buildGraph(): Graph {
       const jid = typeToJenisId[m.type] || "jm1";
       (byJenis[jid] ||= []).push(m);
     });
+    // Palet warm-neon untuk bintang motion (tidak pernah hitam/gelap)
+    const MOTION_NEON = ["#ff3d8b", "#ff8b3d", "#ffd53d", "#ff3df5", "#ffb13d", "#ff5fb3", "#ffe066"];
+    let motionColorIdx = 0;
     for (const jid of Object.keys(byJenis)) {
       const arr = byJenis[jid];
       const subHubPos = jenisPos[jid] ?? motionCenter;
-      const subColor = JENIS_MOSI.find((x) => x.id === jid)?.warna || "#a855f7";
+      const subColor = JENIS_MOSI.find((x) => x.id === jid)?.warna || "#ff8b3d";
       const branchRadius = Math.max(7, Math.min(20, 5 + Math.log2(arr.length + 1) * 2.8));
       const pos = placeBranch(subHubPos, motionCenter, arr.length, branchRadius * 0.45, branchRadius * 1.15);
       arr.forEach((m, i) => {
         const id = `motion:${m.id}`;
-        // Warna per sub-hub (semua mosi di sub-hub yang sama pakai shade warna sub-hub)
-        const c = paletteColor(`motion:${jid}`, m.id);
-        const useColor = c === "#a855f7" ? subColor : c;
+        // Bintang mosi SELALU warm-neon — deterministik per id
+        const useColor = MOTION_NEON[(motionColorIdx++) % MOTION_NEON.length];
         nodes.push({ id, label: m.title, kind: "motion", cluster: "motion", color: useColor, size: 0.085, pos: pos[i], refId: m.id, importance: 0.35 });
         edges.push({ a: `jenis:${jid}`, b: id, strength: "weak", color: useColor });
         const domainKey = motionCatToDomain[m.cat];
         if (domainKey && matterDomainIds[domainKey]) {
-          edges.push({ a: id, b: matterDomainIds[domainKey], strength: "weak", color: "#00ffc8", kind: "link" });
+          edges.push({ a: id, b: matterDomainIds[domainKey], strength: "weak", color: "#ff8b3d", kind: "link" });
         }
       });
     }
@@ -431,9 +493,9 @@ export function buildGraph(): Graph {
   const speakerIdMap: Record<string, string> = {};
   const teamIdMap: Record<string, string> = {};
   const roleSideMap: Record<string, [string, string]> = {
-    p1: ["role:pm", "role:lo"],
-    p2: ["role:dpm", "role:dlo"],
-    p3: ["role:gw", "role:ow"],
+    p1: ["role:ap:pm", "role:ap:lo"],
+    p2: ["role:ap:dpm", "role:ap:dlo"],
+    p3: ["role:ap:gw", "role:ap:ow"],
   };
   function buildSchoolTree(cluster: ClusterKey, schools: typeof COMPETITORS, center: V3, baseRadius: number) {
     const schoolPositions = placeCloud(center, baseRadius, schools.length, baseRadius * 0.34);
@@ -449,7 +511,7 @@ export function buildGraph(): Graph {
       if (isChaos) edges.push({ a: schoolNodeId, b: "style:chaos", strength: "weak", color: "#a855f7", kind: "link" });
       const teamCount = s.teams.length;
       // Lebih rapat: team & speaker tetap dekat school
-      const teamPositions = teamCount === 1 ? [schoolPos] : placeBranch(schoolPos, center, teamCount, 4.0, 7.5);
+      const teamPositions = teamCount === 1 ? [schoolPos] : placeBranch(schoolPos, center, teamCount, 6.5, 11.5);
       s.teams.forEach((t, ti) => {
         const teamPos = teamPositions[ti];
         const teamNodeId = `${cluster}:team:${t.id}`;
@@ -464,7 +526,7 @@ export function buildGraph(): Graph {
         }
         const parentId = teamCount > 1 ? teamNodeId : schoolNodeId;
         const parentPos = teamCount > 1 ? teamPos : schoolPos;
-        const speakerPositions = placeBranch(parentPos, center, t.speakers.length, 2.8, 5.4);
+        const speakerPositions = placeBranch(parentPos, center, t.speakers.length, 4.5, 8.5);
         t.speakers.forEach((sp, spi) => {
           const spNodeId = `${cluster}:speaker:${sp.id}`;
           speakerIdMap[sp.id] = spNodeId;
@@ -481,8 +543,8 @@ export function buildGraph(): Graph {
             edges.push({ a: spNodeId, b: pair[1], strength: "weak", color: "#38bdf8", kind: "link" });
           }
           if ((sp as any).replyOf) {
-            edges.push({ a: spNodeId, b: "role:gr", strength: "weak", color: "#fde047", kind: "link" });
-            edges.push({ a: spNodeId, b: "role:or", strength: "weak", color: "#fde047", kind: "link" });
+            edges.push({ a: spNodeId, b: "role:ap:gr", strength: "weak", color: "#fde047", kind: "link" });
+            edges.push({ a: spNodeId, b: "role:ap:or", strength: "weak", color: "#fde047", kind: "link" });
           }
           if (sp.crown === "best-speaker" && isChaos) {
             edges.push({ a: spNodeId, b: "style:chaos", strength: "weak", color: "#a855f7", kind: "link" });

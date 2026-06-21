@@ -1,12 +1,13 @@
 import type { StarNode } from "@/data/types";
 import {
   MOTIONS, JENIS_MOSI, VOCAB, MATTER, STYLES, ROLES,
+  ROLE_LOOKUP, SPEECH_TIMING_DEFAULT,
   PRACTICE_MODES, CIRCUIT, ASSISTANT_PROMPTS, META_NODES, EDITOR_NODES,
   COMPETITORS, ACTIVE_MEMBERS, EVENTS,
 } from "@/data";
 import { useUniverse } from "@/lib/store";
 import { buildGraph } from "@/lib/graph/build";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 const muted = { fontFamily: "Space Mono", fontSize: 10, letterSpacing: "0.25em", color: "var(--au-muted)", textTransform: "uppercase" as const };
 const para = { fontFamily: "DM Sans", fontSize: 13.5, lineHeight: 1.75, color: "var(--au-dim)" };
@@ -108,17 +109,145 @@ function StylePanel({ refId }: { refId: string }) {
 }
 
 function RolePanel({ refId }: { refId: string }) {
-  const r = ROLES.find((x) => x.id === refId);
+  // refId formats: "ap:pm", "bp:og:pmg", or legacy "pm"
+  const lookup = ROLE_LOOKUP[refId];
+  const legacy = !lookup ? ROLES.find((x) => x.id === refId) : null;
+  const r = lookup ?? (legacy ? {
+    ...legacy, format: "ap" as const, side: legacy.side,
+    sub: { case: [legacy.inti], timing: [], structure: [] },
+    teamLabel: undefined,
+  } : null);
   if (!r) return null;
+  const [tab, setTab] = useState<"case" | "timing" | "structure" | "speech">("case");
+  const sideLabel = (r as any).teamLabel || ((r as any).side ? String((r as any).side).toUpperCase() : "");
+  const isStructure = tab === "structure";
   return (
     <div>
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-        <Chip color={r.color}>{r.role}</Chip>
-        <Chip color={r.side === "gov" ? "var(--au-agg)" : "var(--au-blue)"}>{r.side.toUpperCase()}</Chip>
+        <Chip color={r.color}>{r.format === "bp" ? "BRITISH PARLIAMENTARY" : "ASIAN PARLIAMENTARY"}</Chip>
+        {sideLabel && <Chip color={r.color}>{sideLabel}</Chip>}
         <Chip color="var(--au-gold)">{r.time}</Chip>
       </div>
       <h3 style={heading}>{r.nama}</h3>
       <p style={para}>{r.inti}</p>
+      {/* tab bar */}
+      <div style={{ display: "flex", gap: 6, marginTop: 18, flexWrap: "wrap" }}>
+        {(["case", "timing", "structure", "speech"] as const).map((k) => {
+          const labels = { case: "Case Building", timing: "Timing", structure: "Structure", speech: "Speech Timing" } as const;
+          const active = tab === k;
+          return (
+            <button key={k} onClick={() => setTab(k)}
+              style={{
+                padding: "6px 12px",
+                fontFamily: "Space Mono", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase",
+                color: active ? "#05080f" : r.color,
+                background: active ? r.color : "transparent",
+                border: `1px solid ${r.color}66`, borderRadius: 3, cursor: "pointer",
+              }}>{labels[k]}</button>
+          );
+        })}
+      </div>
+      <div style={{ marginTop: 14 }}>
+        {tab === "case" && (
+          <ul style={{ ...para, paddingLeft: 16 }}>
+            {r.sub.case.map((p, i) => <li key={i} style={{ marginBottom: 6 }}>{p}</li>)}
+          </ul>
+        )}
+        {tab === "timing" && (
+          <div>
+            {(r.sub.timing.length ? r.sub.timing : SPEECH_TIMING_DEFAULT.blocks).map((b, i) => (
+              <div key={i} style={{ display: "flex", gap: 12, padding: "8px 10px", borderLeft: `2px solid ${r.color}`, marginBottom: 6, background: `${r.color}08` }}>
+                <span style={{ ...muted, color: r.color, minWidth: 88 }}>{b.t}</span>
+                <span style={para}>{b.what}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {isStructure && (
+          <div style={{
+            border: `1px solid ${r.color}55`,
+            background: `linear-gradient(135deg, ${r.color}10, transparent)`,
+            padding: "14px 16px", borderRadius: 6, boxShadow: `inset 0 0 18px ${r.color}22, 0 0 22px ${r.color}22`,
+          }}>
+            {r.sub.structure.map((p, i) => (
+              <div key={i} style={{ ...para, marginBottom: 8, paddingLeft: 14, position: "relative" }}>
+                <span style={{ position: "absolute", left: 0, top: 6, width: 6, height: 6, borderRadius: "50%", background: r.color, boxShadow: `0 0 8px ${r.color}` }} />
+                {p}
+              </div>
+            ))}
+          </div>
+        )}
+        {tab === "speech" && (
+          <div>
+            <p style={{ ...para, marginBottom: 10 }}>{SPEECH_TIMING_DEFAULT.desc}</p>
+            {SPEECH_TIMING_DEFAULT.blocks.map((b, i) => (
+              <div key={i} style={{ display: "flex", gap: 12, padding: "8px 10px", borderLeft: `2px solid var(--au-cyan)`, marginBottom: 6, background: "rgba(0,255,200,0.05)" }}>
+                <span style={{ ...muted, color: "var(--au-cyan)", minWidth: 88 }}>{b.t}</span>
+                <span style={para}>{b.what}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RoleSkillPanel({ refId }: { refId: string }) {
+  // refId format: "role:ap:pm|case"
+  const [rolePart, kind] = refId.split("|") as [string, "case" | "timing" | "structure" | "speech"];
+  // rolePart is the full node id, e.g. "role:ap:pm" → key "ap:pm"
+  const key = rolePart.replace(/^role:/, "");
+  const r = ROLE_LOOKUP[key];
+  if (!r) return <p style={para}>—</p>;
+  const labels = { case: "Case Building", timing: "Timing", structure: "Structure", speech: "Speech Timing" } as const;
+  return (
+    <div>
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        <Chip color={r.color}>{r.nama}</Chip>
+        <Chip color="var(--au-gold)">{labels[kind]}</Chip>
+      </div>
+      <h3 style={heading}>{labels[kind]} — {r.nama}</h3>
+      {kind === "case" && (
+        <ul style={{ ...para, paddingLeft: 16 }}>
+          {r.sub.case.map((p, i) => <li key={i} style={{ marginBottom: 6 }}>{p}</li>)}
+        </ul>
+      )}
+      {kind === "timing" && (
+        <div>
+          {(r.sub.timing.length ? r.sub.timing : SPEECH_TIMING_DEFAULT.blocks).map((b, i) => (
+            <div key={i} style={{ display: "flex", gap: 12, padding: "8px 10px", borderLeft: `2px solid ${r.color}`, marginBottom: 6, background: `${r.color}08` }}>
+              <span style={{ ...muted, color: r.color, minWidth: 88 }}>{b.t}</span>
+              <span style={para}>{b.what}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {kind === "structure" && (
+        <div style={{
+          border: `1px solid ${r.color}66`,
+          background: `linear-gradient(135deg, ${r.color}12, transparent)`,
+          padding: "14px 16px", borderRadius: 6, boxShadow: `inset 0 0 18px ${r.color}33, 0 0 26px ${r.color}22`,
+        }}>
+          {r.sub.structure.map((p, i) => (
+            <div key={i} style={{ ...para, marginBottom: 8, paddingLeft: 14, position: "relative" }}>
+              <span style={{ position: "absolute", left: 0, top: 6, width: 6, height: 6, borderRadius: "50%", background: r.color, boxShadow: `0 0 8px ${r.color}` }} />
+              {p}
+            </div>
+          ))}
+        </div>
+      )}
+      {kind === "speech" && (
+        <div>
+          <p style={{ ...para, marginBottom: 10 }}>{SPEECH_TIMING_DEFAULT.desc}</p>
+          {SPEECH_TIMING_DEFAULT.blocks.map((b, i) => (
+            <div key={i} style={{ display: "flex", gap: 12, padding: "8px 10px", borderLeft: "2px solid var(--au-cyan)", marginBottom: 6, background: "rgba(0,255,200,0.05)" }}>
+              <span style={{ ...muted, color: "var(--au-cyan)", minWidth: 88 }}>{b.t}</span>
+              <span style={para}>{b.what}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -443,6 +572,7 @@ export function PanelContent({ node }: { node: StarNode }) {
   }
   else if (node.kind === "style") body = <StylePanel refId={node.refId!} />;
   else if (node.kind === "role") body = <RolePanel refId={node.refId!} />;
+  else if (node.kind === "roleskill") body = <RoleSkillPanel refId={node.refId!} />;
   else if (node.kind === "domain") body = <MatterDomainPanel refId={node.refId!} />;
   else if (node.kind === "bab") body = <MatterBabPanel refId={node.refId!} />;
   else if (node.kind === "subbab") body = <MatterSubBabPanel refId={node.refId!} />;

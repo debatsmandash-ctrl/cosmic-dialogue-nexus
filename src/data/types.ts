@@ -73,7 +73,7 @@ export type ClusterKey =
 
 export type NodeKind =
   | "root" | "cluster" | "subhub" | "domain" | "bab" | "subbab"
-  | "role" | "style" | "motion" | "jenis" | "vocab" | "section"
+  | "role" | "roleskill" | "style" | "motion" | "jenis" | "vocab" | "section"
   | "school" | "team" | "speaker" | "bracket" | "letter";
 
 export interface StarNode {
