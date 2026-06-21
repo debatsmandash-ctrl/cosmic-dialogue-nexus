@@ -137,6 +137,15 @@ export function SettingsPanel() {
             </Row>
           </Section>
 
+          <Section title="Mobile Layout">
+            <Row label="Style" hint="Berlaku di tampilan HP/tablet sentuh">
+              <div style={{ display: "flex", gap: 4 }}>
+                <Pill active={s.mobileLayout === "sheet"} onClick={() => update({ mobileLayout: "sheet" })}>SHEET</Pill>
+                <Pill active={s.mobileLayout === "pills"} onClick={() => update({ mobileLayout: "pills" })}>PILLS</Pill>
+              </div>
+            </Row>
+          </Section>
+
           <Section title="Accessibility">
             <Row label="Reduced motion" hint="Matikan auto-rotate dan animasi transisi">
               <Toggle value={s.reducedMotion} onChange={(v) => update({ reducedMotion: v, autoRotate: v ? false : s.autoRotate })} />
