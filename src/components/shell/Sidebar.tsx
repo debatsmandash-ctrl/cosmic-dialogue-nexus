@@ -1,6 +1,7 @@
-import { useUniverse } from "@/lib/store";
+import { useUniverse, useSettings } from "@/lib/store";
 import { CLUSTER_META } from "@/lib/graph/build";
 import { useState } from "react";
+import { usePointerDrag } from "@/hooks/usePointerDrag";
 import logo from "@/assets/smandash-logo.png";
 
 const ICONS: Record<string, string> = {
