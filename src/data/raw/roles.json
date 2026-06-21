@@ -1,0 +1,404 @@
+{
+  "speechTimingDefault": {
+    "label": "Speech Timing",
+    "desc": "Pembagian waktu universal — patokan internal speaker di tiap role.",
+    "blocks": [
+      { "t": "0:00–0:30", "what": "Hook + Definisi / Konteks framing." },
+      { "t": "0:30–1:30", "what": "Roadmap + setup burden / clash." },
+      { "t": "1:30–5:00", "what": "Substantive argumen (2–3, kausalistik bersih)." },
+      { "t": "5:00–6:00", "what": "Engagement: rebut & flip lawan." },
+      { "t": "6:00–7:00", "what": "Weighing comparative + crystallize closing." }
+    ]
+  },
+  "asian": [
+    {
+      "id": "pm", "nama": "Prime Minister", "short": "PM", "side": "gov", "time": "7:00",
+      "color": "#ff6b6b",
+      "inti": "Definisi, framing, struktur case Gov. 3 argumen utama dengan kausalistik bersih.",
+      "sub": {
+        "case": [
+          "Definisi tight: actor, action, scope, mechanism.",
+          "Burden Gov + framing prinsip dasar.",
+          "3 substantive: stake, mechanism, impact."
+        ],
+        "timing": [
+          { "t": "0:00–0:45", "what": "Definisi + framing case." },
+          { "t": "0:45–2:00", "what": "Substantive 1 (paling kuat, foundational)." },
+          { "t": "2:00–4:00", "what": "Substantive 2 (mekanisme)." },
+          { "t": "4:00–6:00", "what": "Substantive 3 (impact + grup terdampak)." },
+          { "t": "6:00–7:00", "what": "Weighing + preempt lawan." }
+        ],
+        "structure": [
+          "Definisi → Burden → Roadmap (3 argumen).",
+          "Argumen format: AREL — Assertion, Reasoning, Example, Link back.",
+          "Tutup tiap argumen dengan link ke prinsip kemenangan."
+        ]
+      }
+    },
+    {
+      "id": "lo", "nama": "Leader of Opposition", "short": "LO", "side": "opp", "time": "7:00",
+      "color": "#38bdf8",
+      "inti": "Rebut PM, pasang opp case, definisi clash. Wajib opp world — bukan hanya defensive.",
+      "sub": {
+        "case": [
+          "Cek definisi: terima / squirrel / challenge.",
+          "Rebut PM line-by-line tapi prioritaskan substantive.",
+          "Bangun opp world: minimal 2 substantive."
+        ],
+        "timing": [
+          { "t": "0:00–0:30", "what": "Status definisi + framing opp." },
+          { "t": "0:30–2:30", "what": "Rebut PM (top 3 hits)." },
+          { "t": "2:30–4:30", "what": "Opp substantive 1." },
+          { "t": "4:30–6:15", "what": "Opp substantive 2." },
+          { "t": "6:15–7:00", "what": "Weighing + closing." }
+        ],
+        "structure": [
+          "Framing → Rebut → Opp case → Weighing.",
+          "Format rebut: Their claim → Why wrong → Even if true, irrelevant.",
+          "Setiap rebut harus terhubung ke clash utama."
+        ]
+      }
+    },
+    {
+      "id": "dpm", "nama": "Deputy Prime Minister", "short": "DPM", "side": "gov", "time": "7:00",
+      "color": "#ff9f43",
+      "inti": "Rebut LO total, extension Gov (dimensi baru), rebuild case PM.",
+      "sub": {
+        "case": [
+          "Rebut LO secara komprehensif.",
+          "Tambahkan extension: dimensi/perspective baru yang belum dibahas PM.",
+          "Rebuild substantive PM yang diserang."
+        ],
+        "timing": [
+          { "t": "0:00–2:30", "what": "Rebut LO menyeluruh." },
+          { "t": "2:30–5:00", "what": "Extension Gov (analisis baru)." },
+          { "t": "5:00–6:15", "what": "Rebuild PM substantive." },
+          { "t": "6:15–7:00", "what": "Weighing + setup whip." }
+        ],
+        "structure": [
+          "Rebut → Extension → Rebuild → Weighing.",
+          "Extension WAJIB baru, bukan repeat PM.",
+          "Tandai eksplisit: ‘extension saya adalah …’."
+        ]
+      }
+    },
+    {
+      "id": "dlo", "nama": "Deputy Leader of Opposition", "short": "DLO", "side": "opp", "time": "7:00",
+      "color": "#a855f7",
+      "inti": "Rebut DPM, flip extension Gov, opp extension baru, setup OW.",
+      "sub": {
+        "case": [
+          "Rebut DPM extension secepatnya — jangan biarkan extension Gov berdiri.",
+          "Tambah opp extension baru.",
+          "Rebuild rebuttal LO yang diserang DPM."
+        ],
+        "timing": [
+          { "t": "0:00–2:30", "what": "Rebut DPM (fokus extension)." },
+          { "t": "2:30–5:00", "what": "Opp extension baru." },
+          { "t": "5:00–6:15", "what": "Rebuild + weighing." },
+          { "t": "6:15–7:00", "what": "Setup narrative untuk OW." }
+        ],
+        "structure": [
+          "Rebut DPM → Opp extension → Rebuild → Weighing.",
+          "Ingat: extension OPP harus klop dgn case LO, jangan bertentangan.",
+          "Buka jalur clash agar OW tinggal crystallize."
+        ]
+      }
+    },
+    {
+      "id": "gw", "nama": "Government Whip", "short": "GW", "side": "gov", "time": "7:00",
+      "color": "#00ffc8",
+      "inti": "Tidak ada argumen baru. Loop closing dropped → comparative weighing 3 dimensi → crystallize.",
+      "sub": {
+        "case": [
+          "Identifikasi semua clash utama (biasanya 3).",
+          "Comparative weighing: magnitude, probability, scope, reversibility.",
+          "Crystallize 1 kalimat: ‘Gov menang karena …’."
+        ],
+        "timing": [
+          { "t": "0:00–1:00", "what": "Identifikasi clash utama." },
+          { "t": "1:00–2:30", "what": "Clash 1 (rebut + weigh)." },
+          { "t": "2:30–4:30", "what": "Clash 2." },
+          { "t": "4:30–6:00", "what": "Clash 3." },
+          { "t": "6:00–7:00", "what": "Crystallize + framing kemenangan." }
+        ],
+        "structure": [
+          "Clash by clash, BUKAN argumen by argumen.",
+          "Tiap clash: Our claim → Their claim → Why we win → Why it matters.",
+          "Akhir: 3 sentence crystallize memorable."
+        ]
+      }
+    },
+    {
+      "id": "ow", "nama": "Opposition Whip", "short": "OW", "side": "opp", "time": "7:00",
+      "color": "#f0c040",
+      "inti": "Rebut GW crystallize, opp weighing 3 dimensi, crystallize opp memorable.",
+      "sub": {
+        "case": [
+          "Rebut framing & weighing GW langsung.",
+          "Bangun opp weighing dengan dimensi berbeda.",
+          "Crystallize opp narrative."
+        ],
+        "timing": [
+          { "t": "0:00–1:00", "what": "Rebut GW framing." },
+          { "t": "1:00–2:30", "what": "Clash 1 dari sisi opp." },
+          { "t": "2:30–4:30", "what": "Clash 2." },
+          { "t": "4:30–6:00", "what": "Clash 3." },
+          { "t": "6:00–7:00", "what": "Crystallize opp closing." }
+        ],
+        "structure": [
+          "Same clash format dgn GW tapi mirror.",
+          "Jangan add new argument — only weigh & rebut.",
+          "Akhir: punchy closing yang ditangkap juri."
+        ]
+      }
+    },
+    {
+      "id": "gr", "nama": "Government Reply", "short": "GR", "side": "gov", "time": "4:00",
+      "color": "#ff6b6b",
+      "inti": "‘Juri Gov’ — kisahkan kenapa Gov menang dari perspektif juri. Bukan recycle speech.",
+      "sub": {
+        "case": [
+          "Identifikasi 2–3 alasan utama Gov menang.",
+          "Bandingkan dari kacamata juri (bukan tim).",
+          "Tidak boleh ada argumen baru."
+        ],
+        "timing": [
+          { "t": "0:00–0:30", "what": "Hook + framing kemenangan." },
+          { "t": "0:30–2:00", "what": "Reason 1 menang." },
+          { "t": "2:00–3:30", "what": "Reason 2 menang." },
+          { "t": "3:30–4:00", "what": "Closing emosional." }
+        ],
+        "structure": [
+          "Comparative narrative, bukan rebuttal.",
+          "Format: ‘Juri seharusnya vote Gov karena …’.",
+          "Closing harus ringkas & memorable."
+        ]
+      }
+    },
+    {
+      "id": "or", "nama": "Opposition Reply", "short": "OR", "side": "opp", "time": "4:00",
+      "color": "#38bdf8",
+      "inti": "Mirror GR. Predict & preempt narasi GR, beri juri reason untuk vote Opp.",
+      "sub": {
+        "case": [
+          "Identifikasi 2–3 alasan utama Opp menang.",
+          "Preempt narrative GR.",
+          "Tidak ada argumen baru."
+        ],
+        "timing": [
+          { "t": "0:00–0:30", "what": "Hook + framing." },
+          { "t": "0:30–2:00", "what": "Reason 1 menang." },
+          { "t": "2:00–3:30", "what": "Reason 2 menang." },
+          { "t": "3:30–4:00", "what": "Closing." }
+        ],
+        "structure": [
+          "Mirror GR dengan twist opp.",
+          "Highlight bahwa weighing opp lebih superior.",
+          "Closing tegas, beri juri reason klop."
+        ]
+      }
+    }
+  ],
+  "british": {
+    "og": {
+      "label": "Opening Government", "color": "#ff6b6b",
+      "roles": [
+        {
+          "id": "pmg", "nama": "Prime Minister (OG)", "short": "PM·OG", "time": "7:00", "color": "#ff6b6b",
+          "inti": "Set definisi, model, dan 2 substantive Gov.",
+          "sub": {
+            "case": [
+              "Definisi + model jelas (actor, action, mechanism).",
+              "2 substantive substansial: stake & impact.",
+              "Framing prinsip Gov."
+            ],
+            "timing": [
+              { "t": "0:00–1:00", "what": "Definisi + model + framing." },
+              { "t": "1:00–4:00", "what": "Substantive 1." },
+              { "t": "4:00–6:30", "what": "Substantive 2." },
+              { "t": "6:30–7:00", "what": "Weighing & preempt." }
+            ],
+            "structure": [
+              "Definisi → Model → Burden → 2 Substantive → Weighing.",
+              "Tinggalkan ruang extension untuk closing half.",
+              "Definisi harus fair & defendable, hindari truistic."
+            ]
+          }
+        },
+        {
+          "id": "dpmg", "nama": "Deputy PM (OG)", "short": "DPM·OG", "time": "7:00", "color": "#ff9f43",
+          "inti": "Rebut LO, rebuild PM, 1 substantive baru atau extension analisis.",
+          "sub": {
+            "case": [
+              "Rebut LO komprehensif.",
+              "Rebuild substantive PM yang diserang.",
+              "Tambah substantive baru / extension analisis."
+            ],
+            "timing": [
+              { "t": "0:00–2:00", "what": "Rebut LO." },
+              { "t": "2:00–4:00", "what": "Rebuild PM substantive." },
+              { "t": "4:00–6:00", "what": "Substantive baru / extension." },
+              { "t": "6:00–7:00", "what": "Weighing + setup." }
+            ],
+            "structure": [
+              "Rebut → Rebuild → New material → Weighing.",
+              "Jangan tinggalkan terlalu banyak space untuk closing OG.",
+              "Klarifikasi kalau model OG di-twist OO."
+            ]
+          }
+        }
+      ]
+    },
+    "oo": {
+      "label": "Opening Opposition", "color": "#38bdf8",
+      "roles": [
+        {
+          "id": "lo", "nama": "Leader of Opposition (OO)", "short": "LO·OO", "time": "7:00", "color": "#38bdf8",
+          "inti": "Cek definisi, rebut PM, pasang 2 substantive opp.",
+          "sub": {
+            "case": [
+              "Cek & terima/squirrel definisi.",
+              "Rebut PM hits utama.",
+              "Pasang 2 substantive opp world."
+            ],
+            "timing": [
+              { "t": "0:00–0:30", "what": "Status definisi." },
+              { "t": "0:30–2:30", "what": "Rebut PM." },
+              { "t": "2:30–4:30", "what": "Substantive opp 1." },
+              { "t": "4:30–6:15", "what": "Substantive opp 2." },
+              { "t": "6:15–7:00", "what": "Weighing." }
+            ],
+            "structure": [
+              "Definisi → Rebut → Opp case → Weighing.",
+              "Beri ruang clash untuk CO extension.",
+              "Set framing prinsip opp di awal."
+            ]
+          }
+        },
+        {
+          "id": "dlo", "nama": "Deputy LO (OO)", "short": "DLO·OO", "time": "7:00", "color": "#a855f7",
+          "inti": "Rebut DPM, rebuild LO, extension analisis opp.",
+          "sub": {
+            "case": [
+              "Rebut DPM terutama substantive baru.",
+              "Rebuild LO yang diserang.",
+              "Tambah extension analisis opp."
+            ],
+            "timing": [
+              { "t": "0:00–2:00", "what": "Rebut DPM." },
+              { "t": "2:00–4:00", "what": "Rebuild LO." },
+              { "t": "4:00–6:00", "what": "Extension opp." },
+              { "t": "6:00–7:00", "what": "Weighing." }
+            ],
+            "structure": [
+              "Rebut → Rebuild → Extension → Weighing.",
+              "Setup ruang clash untuk MO.",
+              "Tinggalkan ‘hooks’ yang bisa dipakai CO."
+            ]
+          }
+        }
+      ]
+    },
+    "cg": {
+      "label": "Closing Government", "color": "#fbbf24",
+      "roles": [
+        {
+          "id": "mg", "nama": "Member of Government (CG)", "short": "MG·CG", "time": "7:00", "color": "#fbbf24",
+          "inti": "Extension Gov: argumen baru yang BEDA dari OG, tapi tetap pro-mosi.",
+          "sub": {
+            "case": [
+              "Identifikasi gap analisis OG.",
+              "Bangun extension baru (dimensi/aktor/timeframe berbeda).",
+              "Rebut OO ringan, fokus extension."
+            ],
+            "timing": [
+              { "t": "0:00–1:00", "what": "Posisi extension vs OG." },
+              { "t": "1:00–2:30", "what": "Rebut OO singkat." },
+              { "t": "2:30–6:00", "what": "Extension 1–2 substantive." },
+              { "t": "6:00–7:00", "what": "Weighing extension." }
+            ],
+            "structure": [
+              "Position → Rebut OO → Extension → Weighing.",
+              "Extension WAJIB berbeda dari OG, bukan rephrasing.",
+              "Tandai eksplisit ‘our extension is …’."
+            ]
+          }
+        },
+        {
+          "id": "gw", "nama": "Government Whip (CG)", "short": "GW·CG", "time": "7:00", "color": "#00ffc8",
+          "inti": "Tidak ada argumen baru. Comparative summary semua clash, push CG menang.",
+          "sub": {
+            "case": [
+              "Identifikasi clash utama (2–3).",
+              "Bandingkan extension CG vs OG vs OO vs CO.",
+              "Crystallize narrative kemenangan CG."
+            ],
+            "timing": [
+              { "t": "0:00–1:00", "what": "Identifikasi clash." },
+              { "t": "1:00–3:00", "what": "Clash 1." },
+              { "t": "3:00–5:00", "what": "Clash 2." },
+              { "t": "5:00–6:30", "what": "Clash 3." },
+              { "t": "6:30–7:00", "what": "Crystallize CG di atas semua." }
+            ],
+            "structure": [
+              "Clash by clash + table of teams.",
+              "Tegaskan posisi CG > OG > OO > CO secara komparatif.",
+              "Closing memorable."
+            ]
+          }
+        }
+      ]
+    },
+    "co": {
+      "label": "Closing Opposition", "color": "#a78bfa",
+      "roles": [
+        {
+          "id": "mo", "nama": "Member of Opposition (CO)", "short": "MO·CO", "time": "7:00", "color": "#a78bfa",
+          "inti": "Extension Opp: argumen baru yang BEDA dari OO, pasang clash baru.",
+          "sub": {
+            "case": [
+              "Identifikasi gap analisis OO.",
+              "Extension opp baru (dimensi berbeda).",
+              "Rebut CG ringan, fokus extension."
+            ],
+            "timing": [
+              { "t": "0:00–1:00", "what": "Position vs OO." },
+              { "t": "1:00–2:30", "what": "Rebut CG singkat." },
+              { "t": "2:30–6:00", "what": "Extension." },
+              { "t": "6:00–7:00", "what": "Weighing." }
+            ],
+            "structure": [
+              "Position → Rebut CG → Extension → Weighing.",
+              "Extension harus beda dari OO secara substantive.",
+              "Setup narrative agar OW bisa crystallize."
+            ]
+          }
+        },
+        {
+          "id": "ow", "nama": "Opposition Whip (CO)", "short": "OW·CO", "time": "7:00", "color": "#f0c040",
+          "inti": "Tidak ada argumen baru. Comparative summary, push CO menang.",
+          "sub": {
+            "case": [
+              "Identifikasi clash utama.",
+              "Bandingkan extension CO vs OO vs CG vs OG.",
+              "Crystallize CO."
+            ],
+            "timing": [
+              { "t": "0:00–1:00", "what": "Identifikasi clash." },
+              { "t": "1:00–3:00", "what": "Clash 1." },
+              { "t": "3:00–5:00", "what": "Clash 2." },
+              { "t": "5:00–6:30", "what": "Clash 3." },
+              { "t": "6:30–7:00", "what": "Crystallize CO." }
+            ],
+            "structure": [
+              "Clash by clash + table of teams.",
+              "Tegaskan CO > OO > CG > OG secara komparatif.",
+              "Closing harus punchy."
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
