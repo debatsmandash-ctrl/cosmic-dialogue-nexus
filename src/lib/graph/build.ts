@@ -553,8 +553,8 @@ export function buildGraph(): Graph {
       });
     });
   }
-  // Competitor: cluster→sekolah lebih DEKAT (radius 22, sebelumnya 44) sesuai request.
-  buildSchoolTree("competitor", COMPETITORS, clusterCenter.competitor, 22);
+  // Competitor: cluster→sekolah lebih DEKAT lagi (16) sesuai request.
+  buildSchoolTree("competitor", COMPETITORS, clusterCenter.competitor, 16);
   buildSchoolTree("active_member", ACTIVE_MEMBERS, clusterCenter.active_member, 24);
 
   // ─── WANGY (MAN IC Siak) — bintang merah headline, paling terang ───
@@ -573,25 +573,40 @@ export function buildGraph(): Graph {
   {
     const eventCenter = clusterCenter.event;
     const evDirs = fibDirections(EVENTS.length, 0.1);
+    // Pusat event dipisah lebih jauh + repulsion ringan agar bracket
+    // antar-event tidak hampir bertabrakan, tapi tetap berdekatan.
+    const evCenters: V3[] = EVENTS.map((_, ei) => add(eventCenter, scale(evDirs[ei], 22)));
+    const evMinSep = 26;
+    for (let iter = 0; iter < 4; iter++) {
+      for (let i = 0; i < evCenters.length; i++) {
+        for (let j = i + 1; j < evCenters.length; j++) {
+          const dd = dist(evCenters[i], evCenters[j]);
+          if (dd < evMinSep && dd > 1e-4) {
+            const push = (evMinSep - dd) * 0.5;
+            const dir = scale(normalize(sub(evCenters[j], evCenters[i])), push);
+            evCenters[i] = sub(evCenters[i], dir);
+            evCenters[j] = add(evCenters[j], dir);
+          }
+        }
+      }
+    }
     EVENTS.forEach((ev, ei) => {
-      const evCenter = add(eventCenter, scale(evDirs[ei], 16));
+      const evCenter = evCenters[ei];
       const evNodeId = `event:${ev.id}`;
       nodes.push({ id: evNodeId, label: ev.nama, kind: "subhub", cluster: "event", color: "#fde047", size: 0.42, pos: evCenter, refId: ev.id });
       edges.push({ a: "cluster:event", b: evNodeId, strength: "strong", color: "#fde047" });
       const bracketDirs = fibDirections(ev.brackets.length, 0.35);
       ev.brackets.forEach((br, bi) => {
-        const brCenter = add(evCenter, scale(bracketDirs[bi], 18));
+        const brCenter = add(evCenter, scale(bracketDirs[bi], 13));
         const brId = `event:${ev.id}:${br.id}`;
         const brColor = br.id === "final" ? "#fbbf24" : br.id === "semi" ? "#a78bfa" : "#22d3ee";
         nodes.push({ id: brId, label: br.nama, kind: "bracket", cluster: "event", color: brColor, size: 0.24, pos: brCenter, refId: `${ev.id}/${br.id}` });
         edges.push({ a: evNodeId, b: brId, strength: "strong", color: brColor });
-        // Tidak ada duplikat: hubungan bracket → tim asli memakai hover-only edge.
         br.teams.forEach((teamRawId) => {
           const realTeamId = teamIdMap[teamRawId];
           if (!realTeamId) return;
           edges.push({ a: brId, b: realTeamId, strength: "weak", color: brColor, kind: "link" });
           if (br.id === "final") {
-            // tandai crown juara langsung di node tim/sekolah asli
             const realNode = nodes.find(n => n.id === realTeamId);
             if (realNode) {
               if (ev.prestasi.j1.team === teamRawId) realNode.crown = "j1";

@@ -68,76 +68,67 @@ void main(){
   float lat = d.y;
   float lon = atan(d.z, d.x);
 
-  // ─── Pita disc (gaussian sempit + halo lebar) ───
-  float band = exp(-pow(lat / 0.20, 2.0));
-  float halo = exp(-pow(lat / 0.55, 2.0)) * 0.35;
+  // ─── Pita disc (lebih lebar & lembut, mirip foto astrofoto) ───
+  float band = exp(-pow(lat / 0.28, 2.0));
+  float halo = exp(-pow(lat / 0.65, 2.0)) * 0.40;
 
-  // ─── Struktur awan: FBM + ridge ───
+  // ─── Struktur awan ───
   vec3 q = d * 2.6;
-  float clouds = fbm7(q * 1.5);
-  float ridges = ridgeFbm6(q * 2.2);
-  float structure = mix(clouds, ridges, 0.55);
-  // detail awan kedua (lebih halus)
-  float fineCloud = fbm7(q * 5.2 + vec3(13.0));
+  float clouds = fbm7(q * 1.4);
+  float ridges = ridgeFbm6(q * 2.0);
+  float structure = mix(clouds, ridges, 0.50);
+  float fineCloud = fbm7(q * 5.0 + vec3(13.0));
 
-  // ─── Dust lanes GELAP (tajam, mengikuti pita) ───
-  float dustLane = exp(-pow(lat / 0.05, 2.0));
-  float dustNoise = fbm7(q * 3.6 + vec3(7.0));
-  float dust = dustLane * smoothstep(0.30, 0.78, dustNoise) * 1.0;
+  // ─── Dust lanes ───
+  float dustLane = exp(-pow(lat / 0.06, 2.0));
+  float dustNoise = fbm7(q * 3.4 + vec3(7.0));
+  float dust = dustLane * smoothstep(0.32, 0.78, dustNoise) * 0.95;
 
-  // ─── ASYMMETRIC CORE BULGE: terang di SATU sisi (longitude ~ 0.7 rad) ───
-  // bulge utama + bulge sekunder lebih lebar & redup
-  float coreAng = exp(-pow((lon - 0.7) / 0.55, 2.0));
-  float coreLat = exp(-pow(lat / 0.13, 2.0));
+  // ─── Core bulge: krem netral, BUKAN amber emas ───
+  float coreAng = exp(-pow((lon - 0.7) / 0.50, 2.0));
+  float coreLat = exp(-pow(lat / 0.14, 2.0));
   float bulge = coreAng * coreLat;
-  float coreGlow = bulge * (0.85 + 0.35 * fineCloud);
-  // hotspot inti (sangat kecil & sangat terang)
-  float coreHot = exp(-pow((lon - 0.72) / 0.18, 2.0)) * exp(-pow(lat / 0.06, 2.0));
+  float coreGlow = bulge * (0.75 + 0.30 * fineCloud);
+  float coreHot = exp(-pow((lon - 0.72) / 0.20, 2.0)) * exp(-pow(lat / 0.07, 2.0));
 
-  // ─── Intensitas pita ───
-  float intensity = (band * structure * 1.15 + halo * clouds * 0.55) - dust * 0.85;
-  intensity = clamp(intensity, 0.0, 1.6);
+  float intensity = (band * structure * 1.10 + halo * clouds * 0.55) - dust * 0.80;
+  intensity = clamp(intensity, 0.0, 1.5);
 
-  // ─── Palet (no pink/magenta) ───
-  vec3 colDark   = vec3(0.006, 0.010, 0.028);   // langit gelap
-  vec3 colBlue   = vec3(0.14, 0.22, 0.38);      // pinggir pita
-  vec3 colWhite  = vec3(0.78, 0.80, 0.86);      // bagian terang netral
-  vec3 colCream  = vec3(0.82, 0.70, 0.52);      // tengah pita
-  vec3 colAmber  = vec3(0.95, 0.72, 0.40);      // core
-  vec3 colAmberHot = vec3(1.10, 0.85, 0.55);    // hotspot
-  vec3 colDust   = vec3(0.015, 0.012, 0.022);
+  // ─── Palet: navy gelap → biru-abu → krem netral (sesuai referensi) ───
+  vec3 colDark    = vec3(0.008, 0.012, 0.030);
+  vec3 colNavy    = vec3(0.040, 0.055, 0.095);
+  vec3 colBlueGry = vec3(0.16, 0.18, 0.24);
+  vec3 colDust1   = vec3(0.32, 0.28, 0.26);
+  vec3 colCream   = vec3(0.62, 0.56, 0.48);
+  vec3 colCoreLite= vec3(0.78, 0.70, 0.58);
+  vec3 colCoreHot = vec3(0.92, 0.84, 0.70);
+  vec3 colDust    = vec3(0.012, 0.010, 0.018);
 
   vec3 col = colDark;
-  col = mix(col, colBlue,  smoothstep(0.05, 0.40, intensity));
-  col = mix(col, colWhite, smoothstep(0.40, 0.80, intensity));
-  col = mix(col, colCream, smoothstep(0.55, 0.95, intensity));
-  col = mix(col, colAmber, clamp(coreGlow, 0.0, 1.0));
-  col = mix(col, colAmberHot, clamp(coreHot * 1.2, 0.0, 1.0));
+  col = mix(col, colNavy,    smoothstep(0.02, 0.20, intensity));
+  col = mix(col, colBlueGry, smoothstep(0.18, 0.45, intensity));
+  col = mix(col, colDust1,   smoothstep(0.40, 0.70, intensity));
+  col = mix(col, colCream,   smoothstep(0.60, 0.95, intensity));
+  col = mix(col, colCoreLite,clamp(coreGlow * 0.85, 0.0, 1.0));
+  col = mix(col, colCoreHot, clamp(coreHot * 0.85, 0.0, 1.0));
   col = mix(col, colDust, dust);
 
-  // ─── 3 lapis bintang langsung di shader ───
-  // background haze: padat, lemah, lebih banyak di dalam pita
-  float bgStars = starsLayer(d, 320.0, 0.90, 14.0) * (0.6 + band * 0.8);
-  // mid stars: medium
-  float midStars = starsLayer(d, 180.0, 0.94, 9.0) * (0.7 + band * 0.6);
-  // foreground bright stars: jarang tapi besar & terang
-  float fgStars = starsLayer(d, 60.0, 0.985, 5.0) * 1.4;
+  // ─── Bintang tersebar merata seluruh sky (bukan hanya di pita) ───
+  float bgStars = starsLayer(d, 360.0, 0.88, 14.0) * (0.85 + band * 0.35);
+  float midStars = starsLayer(d, 200.0, 0.93, 9.0) * (0.85 + band * 0.30);
+  float fgStars = starsLayer(d, 70.0, 0.982, 5.0) * 1.25;
 
-  // warna bintang: bias biru-putih di luar pita, krem-amber di dalam pita
-  vec3 starColCool = vec3(0.88, 0.92, 1.10);
-  vec3 starColWarm = vec3(1.10, 0.92, 0.70);
-  vec3 starCol = mix(starColCool, starColWarm, smoothstep(0.0, 0.6, band));
+  vec3 starColCool = vec3(0.90, 0.94, 1.05);
+  vec3 starColWarm = vec3(1.02, 0.92, 0.78);
+  vec3 starCol = mix(starColCool, starColWarm, smoothstep(0.3, 0.85, band) * 0.45);
 
-  vec3 starsAdd = starCol * (bgStars * 0.55 + midStars * 1.0 + fgStars * 1.8);
+  vec3 starsAdd = starCol * (bgStars * 0.55 + midStars * 1.0 + fgStars * 1.7);
 
-  // fade ke gelap pekat di kutub (bintang tetap kelihatan)
-  float poleFade = smoothstep(0.95, 0.55, abs(lat));
-  col *= mix(0.30, 1.0, poleFade);
+  float poleFade = smoothstep(0.95, 0.50, abs(lat));
+  col *= mix(0.55, 1.0, poleFade);
 
-  // tambahkan bintang (additive)
   col += starsAdd;
 
-  // alpha tetap solid (skybox), additive blend di renderer
   gl_FragColor = vec4(col * uOpacity, 1.0);
 }
 `;
@@ -180,10 +171,10 @@ export function MilkyWaySky({ opacity = 0.95 }: { opacity?: number }) {
         />
       </mesh>
 
-      {/* Rim-light dari arah core galaksi (amber) + opposite (cool blue) */}
-      <pointLight position={[300, 30, 80]} intensity={0.55} color="#ffb070" distance={620} decay={1.6} />
-      <pointLight position={[-280, -20, -60]} intensity={0.32} color="#8aa6d8" distance={520} decay={1.8} />
-      <pointLight position={[40, 220, -40]} intensity={0.18} color="#d8b27a" distance={500} decay={2} />
+      {/* Rim-light halus: core krem-netral + sisi dingin */}
+      <pointLight position={[300, 30, 80]} intensity={0.35} color="#e8d8b8" distance={620} decay={1.8} />
+      <pointLight position={[-280, -20, -60]} intensity={0.28} color="#8aa6d8" distance={520} decay={1.8} />
+      <pointLight position={[40, 220, -40]} intensity={0.14} color="#cfd6e4" distance={500} decay={2} />
     </group>
   );
 }
