@@ -14,6 +14,7 @@ export interface Settings {
   nebulaOpacity: number;
   starSize: number;
   showHoverEdges: boolean;
+  showAllLinks: boolean;
   autoRotate: boolean;
   autoRotateSpeed: number;
   damping: number;
@@ -38,6 +39,7 @@ export const DEFAULT_SETTINGS: Settings = {
   nebulaOpacity: 0.95,
   starSize: 1.0,
   showHoverEdges: true,
+  showAllLinks: false,
   autoRotate: true,
   autoRotateSpeed: 0.25,
   damping: 0.1,

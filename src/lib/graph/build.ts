@@ -71,11 +71,14 @@ const GALAXY_LAYOUT: Record<string, GalaxySlot> = {
 function galaxyPosition(key: string): V3 {
   const s = GALAXY_LAYOUT[key];
   if (!s) return [0, 0, 0];
-  const x = s.r * Math.cos(s.theta);
-  const z = s.r * Math.sin(s.theta);
-  // Cakram tipis: ketebalan flares dgn r supaya bagian luar sedikit membesar.
-  const thickness = s.layer === "bulge" ? 4.5 : 1.6 + s.r * 0.012;
-  const yJ = (rand() - 0.5) * thickness;
+  // Jitter kecil pada radius & theta supaya cluster tidak terkesan "tepat di cincin"
+  const rJ    = s.r + (rand() - 0.5) * (4 + s.r * 0.06);
+  const thJ   = s.theta + (rand() - 0.5) * 0.18;
+  const x = rJ * Math.cos(thJ);
+  const z = rJ * Math.sin(thJ);
+  // 3D volume: cakram tipis tapi flares sedikit di luar (lebih organik)
+  const thickness = s.layer === "bulge" ? 5.5 : 2.2 + s.r * 0.018;
+  const yJ = ((rand() + rand() + rand() - 1.5) / 1.5) * thickness;
   return [x, (s.y ?? 0) + yJ, z];
 }
 

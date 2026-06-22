@@ -512,7 +512,7 @@ function Scene({ profile }: { profile: DeviceProfile }) {
 
       <group>
         {graph.edges.map((e: StarEdge, i: number) => {
-          if (e.kind === "link") return null; // hover-only
+          if (e.kind === "link" && !settings.showAllLinks) return null; // hover-only by default
           const a = graph.byId.get(e.a);
           const b = graph.byId.get(e.b);
           if (!a || !b) return null;

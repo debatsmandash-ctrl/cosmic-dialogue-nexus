@@ -118,6 +118,9 @@ export function SettingsPanel() {
               <Slider value={s.starSize} min={0.5} max={1.6} step={0.05} onChange={(v) => update({ starSize: v })} />
             </Row>
             <Row label="Hover edges"><Toggle value={s.showHoverEdges} onChange={(v) => update({ showHoverEdges: v })} /></Row>
+            <Row label="Show all links" hint="Tampilkan semua garis terkait (termasuk hover-only) tanpa dihide">
+              <Toggle value={s.showAllLinks} onChange={(v) => update({ showAllLinks: v })} />
+            </Row>
           </Section>
 
           <Section title="Camera">
