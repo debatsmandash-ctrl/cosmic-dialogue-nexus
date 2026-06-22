@@ -44,6 +44,43 @@ const CLUSTERS: ClusterMeta[] = [
   { key: "meta",          label: "META",         color: "#e8f4ff", dist: 36 },
 ];
 
+// ─── Galaxy layout: assign each cluster to bulge / spiral disc / halo ───
+// Disc lies in XZ plane; Y is the vertical (disc thickness).
+// Spiral arm: r(θ) = a * exp(b * θ). 4 arms, separated by π/2.
+type GalaxyLayer = "bulge" | "disc" | "halo";
+interface GalaxySlot { layer: GalaxyLayer; r: number; theta: number; y?: number }
+const GALAXY_LAYOUT: Record<string, GalaxySlot> = {
+  // Bulge — bright dense centre, slightly above/below plane (3D bulge)
+  meta:          { layer: "bulge", r: 13, theta: 0.4, y:  5 },
+  assistant:     { layer: "bulge", r: 17, theta: 2.3, y: -4 },
+  editor:        { layer: "bulge", r: 15, theta: 4.1, y:  3 },
+  // Thin disc — along 4 spiral arms (arm 0..3 = +i·π/2 offset)
+  matter:        { layer: "disc",  r: 35, theta: 0.00 + 0 * Math.PI / 2 },        // arm 0
+  roles:         { layer: "disc",  r: 42, theta: 0.55 + 0 * Math.PI / 2 },        // arm 0 outer
+  motion:        { layer: "disc",  r: 55, theta: 0.20 + 1 * Math.PI / 2 },        // arm 1
+  styles:        { layer: "disc",  r: 50, theta: 0.70 + 1 * Math.PI / 2 },        // arm 1 outer
+  event:         { layer: "disc",  r: 78, theta: 0.10 + 2 * Math.PI / 2 },        // arm 2
+  competitor:    { layer: "disc",  r: 70, theta: 0.60 + 2 * Math.PI / 2 },        // arm 2 inner
+  kamus:         { layer: "disc",  r: 45, theta: 0.20 + 3 * Math.PI / 2 },        // arm 3
+  active_member: { layer: "disc",  r: 32, theta: 0.75 + 3 * Math.PI / 2 },        // arm 3 inner
+  // Halo — out-of-plane globular clusters
+  practice:      { layer: "halo",  r: 95, theta: 0.8, y:  62 },
+  circuit:       { layer: "halo",  r: 95, theta: 3.4, y: -58 },
+};
+
+function galaxyPosition(key: string): V3 {
+  const s = GALAXY_LAYOUT[key];
+  if (!s) return [0, 0, 0];
+  const x = s.r * Math.cos(s.theta);
+  const z = s.r * Math.sin(s.theta);
+  const yJ = (rand() - 0.5) * (s.layer === "disc" ? 3.0 : 6.0);
+  return [x, (s.y ?? 0) + yJ, z];
+}
+
+function clusterIsDisc(key: string): boolean {
+  return GALAXY_LAYOUT[key]?.layer === "disc";
+}
+
 // Fibonacci sphere directions, then perturbed
 function fibDirections(n: number, jitter = 0.0): V3[] {
   const out: V3[] = [];
@@ -62,7 +99,7 @@ function fibDirections(n: number, jitter = 0.0): V3[] {
 }
 
 // Place N points in a roughly-spherical cloud around center; then relax.
-function placeCloud(center: V3, radius: number, count: number, minSep?: number): V3[] {
+function placeCloud(center: V3, radius: number, count: number, minSep?: number, disc = false): V3[] {
   if (count === 0) return [];
   const dirs = fibDirections(count, 1.4);
   const pts: V3[] = dirs.map((u) => {
@@ -71,7 +108,16 @@ function placeCloud(center: V3, radius: number, count: number, minSep?: number):
     const baseR = 0.45 + rand() * 1.05;
     const rJ = outlier ? baseR * 1.7 : baseR;
     const p = scale(u, radius * rJ);
-    // squash sumbu Y/Z biar oblate, bukan bola sempurna
+    if (disc) {
+      // Disc mode: flatten Y (vertical) — leaves stay near galactic plane
+      const ySquash = 0.12 + rand() * 0.10;
+      return add(center, [
+        p[0] + (rand() - 0.5) * radius * 0.42,
+        p[1] * ySquash + (rand() - 0.5) * radius * 0.10,
+        p[2] + (rand() - 0.5) * radius * 0.42,
+      ]);
+    }
+    // Sphere mode (bulge / halo): keep volumetric
     const zSquash = 0.55 + rand() * 0.45;
     return add(center, [
       p[0] + (rand() - 0.5) * radius * 0.38,
@@ -170,15 +216,14 @@ export function buildGraph(): Graph {
   const edges: StarEdge[] = [];
 
   // ─── Cluster center auto-spread on fibonacci sphere ───
-  const clusterDirs = fibDirections(CLUSTERS.length, 0.08);
   const clusterCenter: Record<string, V3> = {};
   const colorOf: Record<string, string> = {};
 
   // Root
   nodes.push({ id: "root", label: "DEBATE UNIVERSE", kind: "root", cluster: "root", color: "#ffffff", size: 1.4, pos: [0, 0, 0] });
 
-  CLUSTERS.forEach((c, i) => {
-    const center = scale(clusterDirs[i], c.dist);
+  CLUSTERS.forEach((c) => {
+    const center = galaxyPosition(c.key);
     clusterCenter[c.key] = center;
     colorOf[c.key] = c.color;
     nodes.push({ id: `cluster:${c.key}`, label: c.label, kind: "cluster", cluster: c.key, color: c.color, size: 0.7, pos: center });
