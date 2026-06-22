@@ -9,6 +9,8 @@ import { useUniverse, useSettings, type QualityPreset } from "@/lib/store";
 import type { StarNode, StarEdge, NodeKind } from "@/data/types";
 import { MilkyWaySky } from "./MilkyWaySky";
 import { HoverEdges } from "./HoverEdges";
+import { CoreBlackHole } from "./CoreBlackHole";
+import { GalaxyVolume } from "./GalaxyVolume";
 import { useDeviceProfile, type DeviceProfile } from "@/hooks/useDeviceProfile";
 
 // ─── Halo texture (shared canvas radial gradient) ───
@@ -498,10 +500,11 @@ function Scene({ profile }: { profile: DeviceProfile }) {
       <pointLight position={[-140, -60, 100]} intensity={0.22} color="#8aa6d8" distance={320} />
       <pointLight position={[60, -120, 60]} intensity={0.16} color="#38bdf8" distance={300} />
 
-      <StarField />
+      {/* Distant skybox — dimmed so the volumetric disc is dominant */}
+      <MilkyWaySky opacity={Math.min(settings.nebulaOpacity, 0.45)} />
+      {/* Volumetric Milky-Way disc + bulge + halo */}
+      <GalaxyVolume tier={profile.tier} />
       {profile.tier === "desktop" && <Galaxies />}
-      <StarClusters />
-      <MilkyWaySky opacity={settings.nebulaOpacity} />
 
       <group>
         {graph.edges.map((e: StarEdge, i: number) => {
@@ -529,6 +532,7 @@ function Scene({ profile }: { profile: DeviceProfile }) {
 
       <group>
         {graph.nodes.map((n) => (
+          n.id === "root" ? null :
           <StarNodeMesh
             key={n.id}
             node={n}
@@ -543,6 +547,12 @@ function Scene({ profile }: { profile: DeviceProfile }) {
           />
         ))}
       </group>
+
+      {/* Supermassive black hole at the galactic centre, replaces root sphere */}
+      <CoreBlackHole
+        isSelected={selectedId === "root"}
+        isHovered={hoveredId === "root"}
+      />
 
       <CameraController
         targetId={selectedId}
