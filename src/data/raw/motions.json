@@ -1505,5 +1505,761 @@
       "Labor Supply"
     ],
     "ideal": "<strong>PRO UBI (Ideal):</strong> Automation akan displace jobs faster than retraining can respond. UBI replaces fragmented welfare bureaucracy dengan simple universal floor. Eliminates poverty traps dari benefit cliffs. Economic stimulus ke poorest (high marginal propensity to consume).<br><br><strong>OPP (Ideal):</strong> Fiscal cost prohibitive untuk meaningful amount. Work provides meaning dan social connection beyond income — UBI risks meaninglessness epidemic. Better: Job Guarantee provides income AND purpose. Targeted programs more efficient."
+  },
+  {
+    "id": "m061",
+    "title": "Larangan Iklan Judol & Pinjol",
+    "pro": [
+      "Iklan judol/pinjol secara sistematis menyasar kelompok rentan ekonomi lewat algoritma targeting yang predatory",
+      "Korelasi kuat antara paparan iklan dan jeratan utang berbunga ekstrem yang berujung kekerasan domestik hingga bunuh diri",
+      "Larangan iklan adalah intervensi paling cepat dibanding penegakan hukum ke operator yang berbasis di luar yurisdiksi",
+      "Negara wajib melindungi warga dari eksploitasi finansial terstruktur, bukan membiarkan pasar \"mendidik\" korban"
+    ],
+    "kon": [
+      "Melarang iklan tidak menghilangkan permintaan — orang tetap mencari lewat jalur lebih gelap dan tak terlacak",
+      "Risiko overreach: definisi \"judi online\" dan \"pinjol predatory\" bisa disalahgunakan membungkam fintech legal",
+      "Akar masalah adalah kemiskinan struktural dan literasi finansial rendah — larangan ini cuma obati gejala",
+      "Penegakan larangan lintas platform digital global nyaris mustahil, jadi kebijakan simbolik belaka"
+    ],
+    "terms": [
+      "Predatory Lending",
+      "Targeted Advertising",
+      "Financial Exploitation",
+      "Regulatory Capture"
+    ],
+    "orig": "Ban on Online Gambling and Predatory Lending Ads",
+    "cat": "ekonomi",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan melarang iklan judi online dan pinjaman online (pinjol) ilegal di seluruh platform digital — media sosial, mesin pencari, aplikasi streaming. Iklan ini menyasar kelompok rentan ekonomi dengan janji kemenangan instan atau pencairan dana cepat tanpa syarat ketat.",
+    "research": "OJK (2024) mencatat kerugian masyarakat akibat pinjol ilegal mencapai triliunan rupiah per tahun, korban terkonsentrasi di kelompok berpenghasilan rendah. Studi predatory advertising oleh regulator AS menunjukkan iklan finansial yang menarget financial distress secara signifikan mendorong keputusan impulsif merugikan jangka panjang.",
+    "ideal": "<strong>PRO (Ideal):</strong> Frame sebagai perlindungan konsumen terstruktur, bukan soal kebebasan berbisnis. Establish bahwa korban judol/pinjol bukan \"memilih secara rasional\" — mereka ditarget algoritma yang sengaja eksploitasi titik lemah psikologis (urgensi finansial, gambler's fallacy). Analogikan ke larangan iklan rokok: society sudah terima produk berbahaya tak punya \"hak\" dipromosikan bebas. Push burden ke OPP: kenapa industri predatory-by-design layak dapat ruang promosi setara bisnis legitimate?<br><br>\n<strong>OPP (Ideal):</strong> Jangan defend judol/pinjol ilegal langsung. Reframe ke soal presisi kebijakan: larangan blanket gagal bedakan pinjol ilegal predatory dengan fintech lending legal yang justru inklusif bagi unbanked population. Bangun world solusinya regulasi ketat (APR cap, cooling-off period) dibanding larangan total yang gampang dihindari lewat platform luar negeri. Anchor: \"melarang simptom tanpa atasi akar cuma memindahkan masalah ke ruang lebih gelap.\""
+  },
+  {
+    "id": "m062",
+    "title": "Pajak Warisan 100%",
+    "pro": [
+      "Kekayaan warisan adalah unearned advantage yang melanggengkan ketimpangan struktural lintas generasi tanpa kaitan dengan usaha individu",
+      "Equal opportunity society butuh starting line yang relatif setara — dinasti kekayaan menghancurkan meritokrasi",
+      "Dana hasil pajak bisa didistribusikan ke pendidikan dan kesehatan publik yang justru memperluas mobilitas sosial riil",
+      "Negara-negara dengan estate tax tinggi (Jepang era pasca-perang) tetap punya inovasi dan pertumbuhan ekonomi"
+    ],
+    "kon": [
+      "Mendorong capital flight dan migrasi orang kaya ke yurisdiksi pajak rendah — basis pajak negara malah menyusut",
+      "Melanggar hak properti fundamental: orang tua punya hak moral mewariskan hasil kerja kerasnya ke anak",
+      "Bisnis keluarga (UMKM mayoritas ekonomi) akan kolaps karena harus dijual paksa untuk bayar pajak saat pewaris meninggal",
+      "Insentif kerja keras dan menabung jangka panjang terdistorsi kalau hasilnya tidak bisa diwariskan sama sekali"
+    ],
+    "terms": [
+      "Estate Tax",
+      "Unearned Advantage",
+      "Capital Flight",
+      "Intergenerational Mobility"
+    ],
+    "orig": "100% Inheritance Tax",
+    "cat": "ekonomi",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan menghapus warisan kekayaan lintas generasi lewat pajak warisan 100% di atas ambang batas tertentu (misal Rp10 miliar), dengan dana dikembalikan ke negara untuk redistribusi.",
+    "research": "Piketty's \"Capital in the Twenty-First Century\" — tesis r>g menunjukkan return on capital historis melebihi pertumbuhan ekonomi, mempercepat konsentrasi kekayaan lintas generasi. Studi OECD soal estate tax menunjukkan negara dengan tarif warisan sangat tinggi (>80%) mengalami capital flight signifikan kecuali dibarengi kerja sama pajak multilateral.",
+    "ideal": "<strong>PRO (Ideal):</strong> Jangan frame sebagai \"menghukum orang kaya\" — frame sebagai soal level playing field generasi berikutnya. Establish bahwa society yang adil menilai orang dari usaha bukan garis keturunan; warisan besar adalah inherited privilege yang tidak earned. Counter capital flight dengan exit tax dan kerja sama pajak internasional. Win dengan compare ke status quo: ketimpangan kekayaan saat ini sudah ekstrem dan terus membesar—r>g (Piketty).<br><br>\n<strong>OPP (Ideal):</strong> Jangan defend orang superkaya secara langsung — defend prinsip hak properti dan keluarga kecil-menengah yang justru paling terdampak. Bangun world di mana threshold pajak warisan yang terlalu agresif menghancurkan kontinuitas usaha keluarga (yang notabene basis ekonomi riil banyak negara). Tawarkan alternatif: pajak warisan progresif moderat plus closing loophole, bukan 100% blanket yang justru memicu exodus modal dan talent."
+  },
+  {
+    "id": "m063",
+    "title": "Gig Economy & Pekerja",
+    "pro": [
+      "Status \"mitra\" bukan karyawan menghilangkan akses jaminan sosial, pesangon, dan perlindungan hukum ketenagakerjaan dasar",
+      "Algoritma platform mengontrol jam kerja, tarif, dan rating secara sepihak — kontrol kerja tanpa kewajiban majikan",
+      "Race to the bottom: kompetisi antar-mitra menekan tarif terus-menurun sementara biaya hidup naik",
+      "Income volatility ekstrem membuat pekerja gig tidak bisa merencanakan masa depan finansial jangka panjang"
+    ],
+    "kon": [
+      "Gig economy memberi fleksibilitas dan akses pekerjaan bagi kelompok yang sulit masuk pasar kerja formal (ibu rumah tangga, lansia, difabel)",
+      "Status kemitraan justru memberi otonomi memilih jam kerja yang tidak dimiliki pekerja formal konvensional",
+      "Barrier to entry rendah — siapa saja bisa mulai bekerja dalam hitungan hari tanpa kualifikasi formal",
+      "Data menunjukkan banyak pekerja gig sengaja memilih model ini dibanding kembali ke kerja formal kaku"
+    ],
+    "terms": [
+      "Platform Capitalism",
+      "Misclassification",
+      "Algorithmic Management",
+      "Precarity"
+    ],
+    "orig": "The Gig Economy Does More Harm Than Good for Workers",
+    "cat": "ekonomi",
+    "type": "pandangan",
+    "ctx": "Dewan ini berpandangan kapitalisme platform (gig economy — ojek online, kurir, freelance app-based) lebih banyak merugikan pekerja daripada menyejahterakan, dilihat dari kondisi kerja, jaminan sosial, dan stabilitas pendapatan.",
+    "research": "Studi ILO (2023) tentang platform work menunjukkan dualitas — fleksibilitas tinggi namun jaminan sosial nyaris nihil di mayoritas negara berkembang. Kasus hukum Uber BV v Aslam (UK Supreme Court, 2021) menetapkan preseden bahwa driver gig adalah \"worker\" dengan hak upah minimum dan cuti berbayar.",
+    "ideal": "<strong>PRO (Ideal):</strong> Frame sebagai soal misclassification yang disengaja — perusahaan platform mendesain status \"mitra\" justru untuk lepas tanggung jawab, bukan karena sifat kerja yang genuinely fleksibel. Bedakan flexibility (baik) dari precarity (buruk): keduanya tidak harus dikorbankan bersamaan. Anchor ke kasus litigasi global (Uber drivers UK 2021) yang menetapkan gig worker sebagai worker, bukan independent contractor.<br><br>\n<strong>OPP (Ideal):</strong> Jangan romantisasi gig economy secara naif — akui ada masalah, tapi argue bahwa solusinya regulasi yang presisi (portable benefits, minimum wage floor), bukan klaim \"lebih banyak merugikan\" yang menghapus pilihan rasional jutaan pekerja. Bangun world: tanpa platform ini, kelompok marjinal yang sulit masuk kerja formal justru kehilangan akses penghasilan sama sekali."
+  },
+  {
+    "id": "m064",
+    "title": "4 Hari Kerja Per Minggu",
+    "pro": [
+      "Studi pilot di berbagai negara (Islandia, UK) menunjukkan produktivitas per jam naik signifikan meski jam kerja total turun",
+      "Burnout dan masalah kesehatan mental terkait kerja menurun drastis, mengurangi beban sistem kesehatan publik jangka panjang",
+      "Waktu luang tambahan mendorong konsumsi domestik (leisure economy) dan partisipasi keluarga/komunitas",
+      "Otomasi dan AI sudah menggantikan banyak tugas repetitif — distribusi gain produktivitas ke pekerja lewat waktu, bukan cuma profit korporasi"
+    ],
+    "kon": [
+      "Sektor padat karya (manufaktur, layanan kesehatan 24 jam, ritel) tidak bisa fleksibel kompres jam tanpa kompromi output esensial",
+      "UMKM dengan margin tipis tidak mampu menanggung biaya tetap sama dengan output lebih sedikit",
+      "Mandat nasional blanket mengabaikan variasi drastis antar-sektor — solusi satu ukuran untuk semua salah secara struktural",
+      "Negara kompetitor dengan jam kerja lebih panjang bisa unggul dalam daya saing manufaktur ekspor"
+    ],
+    "terms": [
+      "Productivity Paradox",
+      "Work-Life Balance",
+      "Labor Productivity",
+      "Sectoral Variance"
+    ],
+    "orig": "Mandatory 4-Day Work Week",
+    "cat": "ekonomi",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan mewajibkan minimum 4 hari kerja per minggu secara nasional dengan gaji penuh tetap dibayarkan, menggantikan standar 5-6 hari kerja saat ini.",
+    "research": "Pilot nasional Islandia (2015-2019, melibatkan >1% angkatan kerja) menunjukkan produktivitas tetap atau meningkat di mayoritas tempat kerja yang beralih ke jam lebih pendek, dengan laporan kesejahteraan pekerja naik signifikan — hasil ini mendorong >86% pekerja Islandia kini bekerja dengan jam lebih pendek atau berhak melakukannya.",
+    "ideal": "<strong>PRO (Ideal):</strong> Jangan klaim ini berlaku rata sempurna ke semua sektor — fokuskan burden ke sektor kerah putih dan jasa yang dominan di ekonomi modern, sambil terima carve-out terbatas untuk sektor esensial 24 jam. Anchor ke data pilot riil (Islandia 2015-2019: produktivitas stabil/naik, kesejahteraan meningkat tajam) sebagai bukti bahwa mitos \"kerja lebih lama = output lebih besar\" sudah terbantahkan empiris.<br><br>\n<strong>OPP (Ideal):</strong> Akui manfaat untuk sektor tertentu, tapi serang mandat NASIONAL blanket-nya — bukan filosofi 4 hari kerjanya. Bangun world: biarkan sektor dan perusahaan bernegosiasi sendiri (sudah terjadi organically di tech sector), regulasi rigid justru menghambat UMKM dan sektor esensial yang tidak bisa kompres jam tanpa korbankan layanan publik vital (rumah sakit, transportasi)."
+  },
+  {
+    "id": "m065",
+    "title": "Hustle Culture",
+    "pro": [
+      "Status quo: konten \"rise and grind\" di media sosial menormalisasi burnout sebagai badge of honor, bukan red flag kesehatan",
+      "Hustle culture mengaburkan struktur ekonomi yang sebenarnya menekan upah riil — solusi individual (kerja lebih keras) dijual untuk masalah sistemik (stagnasi gaji)",
+      "Generasi muda terjebak self-exploitation tanpa proteksi tenaga kerja karena menganggap diri \"entrepreneur\", bukan pekerja yang dieksploitasi",
+      "Counterfactual: tanpa romantisasi hustle culture, lebih banyak energi muda diarahkan ke advokasi kolektif (serikat, kebijakan publik) dibanding grinding individual yang sia-sia"
+    ],
+    "kon": [
+      "Status quo tidak seburuk itu — hustle culture juga melahirkan generasi entrepreneur dan inovasi startup yang menggerakkan ekonomi digital",
+      "Penyebab sebenarnya bukan budaya hustle, tapi kondisi ekonomi makro (inflasi, biaya hidup) yang memaksa orang cari penghasilan tambahan",
+      "Menyesali hustle culture berisiko meromantisasi kemalasan dan complacency di tengah kompetisi ekonomi global yang makin ketat",
+      "Banyak orang justru menemukan makna dan kepuasan diri lewat side hustle yang sejalan passion mereka"
+    ],
+    "terms": [
+      "Self-Exploitation",
+      "Toxic Productivity",
+      "Gig Romanticization",
+      "Structural Wage Stagnation"
+    ],
+    "orig": "Glorification of Hustle Culture",
+    "cat": "ekonomi",
+    "type": "penyesalan",
+    "ctx": "Dewan ini menyesali maraknya budaya hustle culture (glorifikasi kerja tanpa henti, \"grind 24/7\", side hustle wajib) di kalangan generasi muda sebagai standar kesuksesan.",
+    "research": "Studi tentang \"toxic productivity\" dalam jurnal psikologi organisasi menghubungkan glorifikasi overwork dengan peningkatan burnout klinis pada Gen Z dan milenial, khususnya di ekonomi gig yang minim proteksi sosial.",
+    "ideal": "<strong>PRO (Ideal):</strong> Counterfactual jadi senjata utama — gambarkan dunia tanpa romantisasi hustle: energi yang sama dialihkan ke advokasi kolektif (kenaikan upah minimum, regulasi gig) yang menyelesaikan akar masalah, bukan symptom management individual. Establish bahwa hustle culture secara struktural menguntungkan korporasi (dapat tenaga ekstra tanpa kompensasi proporsional) sambil membebankan risiko burnout sepenuhnya ke individu.<br><br>\n<strong>OPP (Ideal):</strong> Reframe dari \"budaya jahat\" ke \"respons rasional terhadap kondisi ekonomi riil\". Bangun world: tanpa side hustle, kelompok kelas menengah-bawah kehilangan satu-satunya jalur mobilitas ekonomi yang mereka kontrol penuh. Serang counterfactual PRO sebagai naif — advokasi kolektif butuh waktu bertahun-tahun, sementara kebutuhan finansial individu mendesak hari ini."
+  },
+  {
+    "id": "m066",
+    "title": "Pajak Ekstrem Super-rich",
+    "pro": [
+      "Sebagai negara berkembang, kepentingan utama aktor adalah mobilisasi pendapatan domestik untuk infrastruktur dan layanan dasar tanpa terus bergantung pada utang luar negeri",
+      "Ketimpangan ekstrem di negara berkembang secara langsung menghambat pertumbuhan inklusif — konsentrasi kekayaan tidak trickle down ke investasi produktif domestik",
+      "Negara berkembang punya legitimasi moral lebih besar memungut pajak ekstrem karena basis super-rich seringkali terhubung rent-seeking (monopoli sumber daya, kedekatan kekuasaan), bukan inovasi murni",
+      "Dibanding negara maju yang sudah established, negara berkembang dengan populasi besar dan kebutuhan mendesak punya urgensi redistribusi lebih tinggi"
+    ],
+    "kon": [
+      "Sebagai negara berkembang, daya tarik investasi asing dan modal domestik sangat bergantung pada iklim pajak kompetitif — pajak ekstrem mengusir kapital yang justru paling dibutuhkan",
+      "Basis super-rich di negara berkembang sering jadi sumber utama investasi swasta domestik — pajak ekstrem melumpuhkan sektor swasta yang justru jadi mesin pertumbuhan",
+      "Negara berkembang punya kapasitas administrasi pajak lebih lemah — pajak ekstrem cenderung gagal terealisasi efektif dan justru memicu penghindaran pajak masif",
+      "Modal yang lari ke luar negeri (capital flight) lebih sulit ditarik kembali oleh negara berkembang dibanding negara maju dengan sistem keuangan kuat"
+    ],
+    "terms": [
+      "Capital Flight",
+      "Rent-Seeking",
+      "Domestic Resource Mobilization",
+      "Fiscal Capacity"
+    ],
+    "orig": "As a Developing Nation, This House Would Impose Extreme Progressive Taxation on the Super-Rich",
+    "cat": "ekonomi",
+    "type": "aktor",
+    "ctx": "Sebagai negara berkembang, Dewan ini akan menerapkan pajak progresif ekstrem (di atas 60%) terhadap individu super-rich (top 0.1% kekayaan) untuk mendanai pembangunan dan mengurangi ketimpangan.",
+    "research": "Studi IMF tentang fiscal capacity di negara berkembang menunjukkan korelasi antara lemahnya administrasi pajak dan tingginya tax evasion saat tarif pajak progresif dinaikkan drastis tanpa reformasi kelembagaan terlebih dahulu.",
+    "ideal": "<strong>PRO (Ideal):</strong> Linkback konsisten ke kepentingan negara berkembang sebagai aktor: bedakan kekayaan dari inovasi produktif (yang harus dilindungi) dengan kekayaan dari rent-seeking/kedekatan kekuasaan (yang legitimately ditarget pajak ekstrem). Establish bahwa generic worry soal capital flight kurang relevan untuk negara dengan pasar domestik besar yang sulit ditinggalkan investor sepenuhnya.<br><br>\n<strong>OPP (Ideal):</strong> Tetap linkback ke kepentingan aktor (negara berkembang), tapi argue bahwa kebutuhan investasi dan modal asing JUSTRU lebih urgent untuk negara berkembang dibanding negara maju — fiscal capacity yang lemah membuat pajak ekstrem lebih berisiko backfire (penghindaran pajak, capital flight) dibanding di negara maju yang sistem administrasinya kuat."
+  },
+  {
+    "id": "m067",
+    "title": "Resesi Akibat Gelembung Ai",
+    "pro": [
+      "Pola valuasi startup AI saat ini menyerupai dot-com bubble 2000 — capex masif (data center, chip) jauh melebihi revenue actual yang dihasilkan",
+      "Konsentrasi investasi pada segelintir perusahaan teknologi raksasa menciptakan systemic risk — kegagalan satu pemain besar bisa memicu efek domino ke pasar modal global",
+      "Siklus hype teknologi historis (dot-com, crypto 2018, 2022) konsisten menunjukkan pola koreksi tajam setelah periode ekspansi valuasi tidak rasional",
+      "Tingkat utang korporasi yang digunakan untuk mendanai infrastruktur AI (data center) menciptakan leverage risk yang mirip pra-2008"
+    ],
+    "kon": [
+      "Berbeda dengan dot-com bubble, perusahaan AI besar saat ini punya revenue dan cash flow riil yang substansial, bukan murni spekulasi tanpa fundamental",
+      "Permintaan komputasi AI didorong adopsi enterprise riil (otomasi, efisiensi operasional) yang terus tumbuh, bukan sekadar hype konsumen",
+      "Diversifikasi sumber investasi (sovereign wealth fund, korporasi mapan dengan balance sheet kuat) mengurangi risiko sistemik dibanding bubble era sebelumnya yang didominasi investor ritel",
+      "Bank sentral dan regulator sudah belajar dari krisis 2008 dan punya tools makroprudensial lebih baik untuk mencegah penyebaran sistemik"
+    ],
+    "terms": [
+      "Asset Bubble",
+      "Systemic Risk",
+      "Capital Expenditure",
+      "Leverage Ratio"
+    ],
+    "orig": "This House Predicts a Global Recession Triggered by the AI Investment Bubble",
+    "cat": "ekonomi",
+    "type": "prediksi",
+    "ctx": "Dewan ini memprediksi resesi global akibat pecahnya gelembung investasi AI (valuasi startup dan capex infrastruktur AI yang tidak proporsional dengan revenue riil) akan terjadi dalam 5 tahun ke depan.",
+    "research": "Perbandingan rasio price-to-earnings perusahaan teknologi era AI boom dengan era dot-com sering dirujuk analis pasar modal sebagai indikator valuasi berlebih, meski perdebatan soal validitas perbandingan ini tetap terbuka karena perbedaan struktur revenue model. ═══════════════ MATTER BARU — lanjut dari Bab 6 ═══════════════ BAB 7: PAJAK & REDISTRIBUSI LANJUTAN meta: Wealth Tax · Tax Haven · Pajak Karbon · Base Erosion 7.1 Wealth Tax & Pelarian Modal [Badge: Kontroversial] Penjelasan: - Wealth tax (pajak atas total aset, bukan pendapatan) ditujukan menyasar akumulasi kekayaan langsung, berbeda dari income tax yang hanya kena arus pendapatan tahunan. - Masalah utama implementasi: valuasi aset non-likuid (saham privat, real estate, seni) sangat sulit dan mahal dilakukan secara akurat tiap tahun. - Negara seperti Prancis dan Swedia pernah mencabut wealth tax mereka setelah terbukti capital flight melebihi pendapatan pajak yang dihasilkan. Matter a: Wealth tax paling efektif diterapkan secara koordinatif multilateral untuk mencegah race-to-the-bottom kompetisi pajak antarnegara. Matter b: Threshold yang terlalu rendah membuat wealth tax menyasar kelas menengah-atas (rumah, dana pensiun) bukan cuma super-rich yang ditarget. Matter c: Exit tax (pajak saat individu pindah kewarganegaraan untuk hindari pajak) adalah mekanisme krusial agar wealth tax tidak gampang dihindari. Pro: Wealth tax mengoreksi distorsi di mana kekayaan tumbuh lebih cepat dari ekonomi riil (Piketty's r>g), sambil mendanai barang publik esensial. Kon: Empiris di Eropa menunjukkan wealth tax sering gagal — biaya administrasi tinggi, capital flight nyata, dan revenue yang dihasilkan jauh di bawah proyeksi. 7.2 Tax Haven & Base Erosion [Badge: Applied] Penjelasan: - Base Erosion and Profit Shifting (BEPS) adalah praktik korporasi multinasional memindahkan profit secara artifisial ke yurisdiksi pajak rendah lewat transfer pricing dan skema lisensi IP. - OECD memperkirakan negara kehilangan ratusan miliar dolar pendapatan pajak tahunan akibat praktik ini, dengan negara berkembang proporsional paling dirugikan. - Inisiatif pajak minimum global (15% corporate tax floor, disepakati >140 negara) adalah upaya terbaru mengatasi kompetisi pajak destruktif antarnegara. Matter a: Tax haven bukan hanya soal tarif rendah tapi soal opacity (kerahasiaan kepemilikan) yang memfasilitasi pencucian uang dan korupsi lintas negara. Matter b: Pajak minimum global 15% adalah langkah maju tapi masih punya banyak loophole (carve-out substansi ekonomi) yang bisa dieksploitasi korporasi. Matter c: Negara berkembang sering kehilangan leverage negosiasi dalam perjanjian pajak internasional yang didominasi kepentingan negara maju dan korporasi multinasional. Pro: Penutupan tax haven dan base erosion mengembalikan basis pajak legitimate ke negara tempat aktivitas ekonomi riil terjadi, bukan tempat shell company didirikan. Kon: Tarif pajak kompetitif adalah hak kedaulatan fiskal tiap negara — memaksakan floor pajak global mengabaikan perbedaan kebutuhan pembangunan antarnegara. 7.3 Pajak Karbon vs Cap-and-Trade — Perspektif Ekonomi [Badge: Policy] Penjelasan: - Pajak karbon menetapkan harga tetap per ton emisi (kepastian harga, ketidakpastian kuantitas pengurangan), sementara cap-and-trade menetapkan batas total emisi dengan harga mengambang (kepastian kuantitas, ketidakpastian harga). - Revenue recycling — bagaimana pendapatan pajak karbon digunakan kembali (dividen langsung ke warga vs subsidi transisi energi) — menentukan dampak distribusional kebijakan secara signifikan. - Carbon Border Adjustment Mechanism (CBAM) Uni Eropa adalah eksperimen besar mencegah carbon leakage (industri pindah ke negara tanpa regulasi karbon). Matter a: Pajak karbon lebih predictable bagi dunia usaha untuk perencanaan investasi jangka panjang dibanding volatilitas harga di sistem cap-and-trade. Matter b: Regressivity pajak karbon (membebani kelompok berpenghasilan rendah secara proporsional lebih besar) bisa dikoreksi lewat skema dividen karbon langsung ke rumah tangga. Matter c: Cap-and-trade memberi kepastian lebih tinggi mencapai target pengurangan emisi absolut, krusial untuk negara dengan komitmen iklim mengikat secara hukum. Pro: Carbon pricing (bentuk apapun) adalah mekanisme paling cost-effective menginternalisasi eksternalitas negatif emisi dibanding command-and-control regulation. Kon: Tanpa koordinasi global, carbon pricing unilateral hanya memindahkan industri polutan ke negara tanpa regulasi (carbon leakage) tanpa mengurangi emisi global riil. BAB 8: MASA DEPAN KERJA & EKONOMI DIGITAL meta: Gig Economy · Automation · Cryptocurrency · UBI 8.1 Gig Economy & Regulasi Ketenagakerjaan Platform [Badge: Kontemporer] Penjelasan: - Model klasifikasi pekerja platform (employee vs independent contractor) menentukan akses jaminan sosial, upah minimum, dan hak kolektif secara fundamental. - \"Portable benefits\" — jaminan sosial yang menempel pada individu bukan pada satu majikan — diusulkan sebagai jalan tengah antara fleksibilitas platform dan proteksi pekerja. - Algorithmic management (penentuan tarif, rating, deaktivasi akun oleh sistem otomatis) menciptakan power asymmetry baru yang belum tercakup hukum ketenagakerjaan konvensional. Matter a: Reklasifikasi paksa pekerja gig jadi karyawan tetap berisiko mengurangi total lapangan kerja karena platform menaikkan barrier to entry. Matter b: Portable benefits system memungkinkan fleksibilitas kerja tetap terjaga sambil pekerja tetap dapat akses jaminan sosial dasar. Matter c: Transparansi algoritma (hak pekerja tahu kenapa rating/tarif mereka berubah) adalah prasyarat keadilan prosedural dalam algorithmic management. Pro: Regulasi presisi (bukan larangan total) bisa menyeimbangkan fleksibilitas yang dicari pekerja dengan proteksi dasar yang mereka butuhkan. Kon: Selama insentif platform tetap memaksimalkan profit lewat minimalisasi kewajiban tenaga kerja, regulasi parsial akan terus-menerus diakali lewat redesain model bisnis. 8.2 Automation & Future of Work [Badge: Frontier] Penjelasan: - Studi soal dampak otomasi pada lapangan kerja terbelah antara pesimis (displacement masif tanpa penggantian setara) dan optimis (penciptaan kategori kerja baru, historical pattern sejak revolusi industri). - Tugas rutin-kognitif dan rutin-manual paling rentan otomatisasi, sementara tugas non-rutin (kreatif, interpersonal, fisik kompleks) relatif lebih tahan dalam jangka menengah. - Reskilling dan transisi tenaga kerja membutuhkan investasi publik besar dan waktu — periode transisi inilah yang paling berisiko menciptakan ketimpangan tajam. Matter a: Pola historis (mekanisasi pertanian, otomasi manufaktur) menunjukkan penciptaan kerja baru, tapi kecepatan transisi AI generatif jauh lebih cepat dari adaptasi tenaga kerja sebelumnya. Matter b: Sektor jasa kerah putih (administrasi, customer service, bahkan paralegal) kini rentan otomatisasi — kelompok yang sebelumnya dianggap \"aman\" dari disrupsi. Matter c: Negara dengan jaring pengaman sosial kuat (Skandinavia) menghadapi transisi otomasi dengan dislokasi sosial jauh lebih rendah dibanding negara dengan proteksi minim. Pro: Investasi publik masif dalam reskilling dan jaring pengaman sosial adalah prasyarat agar gains produktivitas otomasi tidak berubah jadi krisis sosial. Kon: Intervensi pemerintah berlebihan dalam transisi pasar kerja berisiko melambatkan adopsi teknologi yang justru esensial untuk daya saing ekonomi nasional jangka panjang. 8.3 Cryptocurrency & Decentralized Finance [Badge: Kontroversial] Penjelasan: - DeFi (decentralized finance) menjanjikan disintermediasi layanan keuangan tradisional (pinjaman, trading, asuransi) lewat smart contract tanpa perantara institusi. - Volatilitas ekstrem dan kerentanan terhadap eksploitasi teknis (smart contract bugs, rug pull) jadi argumen utama skeptisisme regulator terhadap adopsi massal. - Di negara dengan inflasi tinggi atau kontrol modal ketat, cryptocurrency kadang berfungsi sebagai alternatif penyimpan nilai riil bagi warga, bukan sekadar spekulasi. Matter a: DeFi berpotensi memperluas inklusi finansial bagi unbanked population yang tidak punya akses ke sistem perbankan tradisional. Matter b: Kurangnya regulasi konsumen di ruang crypto membuat kerugian akibat penipuan dan kegagalan teknis ditanggung penuh oleh individu tanpa perlindungan hukum memadai. Matter c: Konsumsi energi proof-of-work mining (terutama Bitcoin) menciptakan eksternalitas lingkungan signifikan yang sering diabaikan dalam diskursus inovasi finansial. Pro: Desentralisasi finansial adalah koreksi struktural terhadap konsentrasi kekuasaan institusi finansial tradisional yang sejarahnya rentan krisis sistemik. Kon: Tanpa regulasi yang matang, DeFi justru mereplikasi risiko sistemik finansial tradisional sambil menghilangkan safety net (deposit insurance, lender of last resort) yang melindungi konsumen. 8.4 Universal Basic Income — Desain & Trade-off [Badge: Wajib] Penjelasan: - UBI (pembayaran tunai reguler tanpa syarat ke seluruh warga) berbeda dari skema bantuan sosial bersyarat (means-tested) dalam hal universalitas dan tidak adanya stigma administratif. - Pilot UBI di berbagai negara (Finlandia, Kenya — GiveDirectly) menunjukkan hasil beragam: peningkatan kesejahteraan subjektif konsisten, dampak terhadap partisipasi kerja masih diperdebatkan. - Pembiayaan UBI skala nasional membutuhkan trade-off besar — pajak tinggi, pemotongan program sosial existing, atau kombinasi keduanya — yang menentukan siapa sebenarnya net beneficiary kebijakan ini. Matter a: UBI menghilangkan \"welfare trap\" di mana penerima bantuan sosial bersyarat kehilangan insentif bekerja karena bantuan dicabut saat pendapatan naik sedikit. Matter b: Skala pembiayaan UBI yang memadai untuk standar hidup layak membutuhkan reformasi pajak radikal yang secara politis sangat sulit dijalankan di kebanyakan negara. Matter c: UBI parsial (menggantikan sebagian, bukan seluruh, skema bantuan sosial existing) lebih feasible secara fiskal namun kehilangan sebagian manfaat universalitas penuh. Pro: UBI memberi floor keamanan ekonomi yang memungkinkan risk-taking produktif (wirausaha, pendidikan ulang) tanpa rasa takut jatuh miskin ekstrem. Kon: Tanpa disertai reformasi struktural pasar kerja dan pendidikan, UBI berisiko jadi subsidi pasif yang tidak mengatasi akar ketimpangan kesempatan ekonomi. BAB 9: KRISIS & STABILITAS KEUANGAN GLOBAL meta: Debt Crisis · Banking Regulation · Dedolarisasi 9.1 Krisis Utang Negara — IMF Conditionality & Debt Trap [Badge: Kritis] Penjelasan: - Pinjaman IMF kepada negara krisis biasanya disertai conditionality (syarat reformasi struktural — pemotongan subsidi, privatisasi) yang kerap memicu kontroversi soal kedaulatan kebijakan domestik. - \"Debt trap diplomacy\" — tuduhan bahwa pinjaman infrastruktur bilateral (terutama dari Tiongkok) dirancang menciptakan ketergantungan dan leverage geopolitik — diperdebatkan validitasnya oleh berbagai studi empiris. - Mekanisme restrukturisasi utang negara saat ini terfragmentasi antar kreditor (Paris Club, kreditor swasta, kreditor bilateral baru) sehingga proses penyelesaian krisis utang jadi lambat dan tidak terkoordinasi. Matter a: Conditionality IMF yang terlalu rigid sering memperparah resesi domestik dalam jangka pendek meski tujuan stabilitas jangka panjangnya sah. Matter b: Kurangnya mekanisme restrukturisasi utang multilateral yang terkoordinasi membuat negara krisis terjebak negosiasi berkepanjangan dengan multiple kreditor. Matter c: Diversifikasi sumber pinjaman (bilateral non-tradisional) memberi negara berkembang leverage negosiasi lebih besar dibanding bergantung penuh pada lembaga Bretton Woods. Pro: Reformasi arsitektur utang global yang lebih inklusif dan cepat krusial mencegah krisis utang berubah jadi dekade hilang pembangunan (lost decade) seperti Amerika Latin 1980-an. Kon: Conditionality yang ketat, meski tidak populer, secara historis terbukti perlu untuk memastikan pinjaman tidak disalahgunakan dan keberlanjutan fiskal jangka panjang tercapai. 9.2 Regulasi Perbankan Pasca-2008 — Too Big to Fail [Badge: Applied] Penjelasan: - Reformasi pasca krisis 2008 (Basel III, Dodd-Frank) menaikkan persyaratan modal bank dan menciptakan mekanisme resolusi untuk mencegah bailout dengan uang publik di masa depan. - Konsep \"too big to fail\" tetap jadi masalah struktural — bank sistemik penting (systemically important financial institutions/SIFI) masih implisit dijamin negara, menciptakan moral hazard. - Shadow banking (lembaga keuangan non-bank yang melakukan fungsi serupa bank tanpa regulasi setara) berkembang pesat pasca-2008, berpotensi memindahkan risiko sistemik ke area yang kurang teregulasi. Matter a: Regulasi modal yang lebih ketat pasca-2008 terbukti membuat sistem perbankan lebih resilient terhadap guncangan, namun pertumbuhan shadow banking mengkompensasi sebagian efeknya. Matter b: Moral hazard \"too big to fail\" tetap eksis selama tidak ada mekanisme kredibel membiarkan institusi sistemik penting benar-benar gagal tanpa bailout. Matter c: Regulasi yang semakin kompleks justru menciptakan barrier to entry bagi bank kecil dan baru, mempercepat konsentrasi pasar perbankan ke segelintir pemain raksasa. Pro: Regulasi prudensial yang kuat adalah biaya kecil dibanding kerusakan ekonomi masif yang ditimbulkan krisis finansial sistemik seperti 2008. Kon: Over-regulasi pasca krisis menciptakan biaya kepatuhan tinggi yang justru memperkuat dominasi bank besar dan mengurangi kompetisi yang sehat di sektor finansial. 9.3 Dedolarisasi & Mata Uang Alternatif [Badge: Strategic] Penjelasan: - Dominasi dolar AS dalam perdagangan dan cadangan devisa global memberi AS \"exorbitant privilege\" — kemampuan meminjam murah dan memproyeksikan kekuatan finansial lewat sanksi unilateral. - Upaya dedolarisasi (perdagangan bilateral pakai mata uang lokal, mata uang digital bank sentral lintas negara) didorong negara yang ingin mengurangi eksposur terhadap sanksi finansial AS. - Hambatan struktural dedolarisasi: kedalaman pasar modal AS, kepercayaan institusional, dan network effect dolar sebagai medium pertukaran global yang sulit direplikasi alternatif manapun dalam jangka pendek. Matter a: Penggunaan sanksi finansial sebagai alat kebijakan luar negeri AS justru mempercepat upaya negara lain mencari alternatif dari sistem dolar. Matter b: Mata uang digital bank sentral (CBDC) lintas negara berpotensi mempermudah perdagangan bilateral tanpa intermediasi dolar, namun masih dalam tahap eksperimental. Matter c: Tanpa kedalaman pasar modal dan kredibilitas institusional setara, mata uang alternatif manapun sulit menggantikan fungsi dolar sebagai safe haven asset global. Pro: Diversifikasi cadangan devisa dan mekanisme pembayaran global mengurangi risiko sistemik akibat ketergantungan berlebihan pada satu mata uang dan satu yurisdiksi hukum. Kon: Proses dedolarisasi yang dipaksakan tanpa alternatif yang benar-benar kredibel justru menciptakan volatilitas dan fragmentasi sistem keuangan global yang merugikan semua pihak. ################################################ # 🏛 POLITIK ################################################ ═══════════════ MOTION BARU (m068–m074) ═══════════════",
+    "ideal": "<strong>PRO (Ideal):</strong> Ingat — mosi prediksi bukan soal \"AI itu baik/buruk\" tapi soal kemungkinan terjadinya. Bangun analisis pola historis (dot-com, crypto) sebagai precedent kuat, lalu tunjukkan data spesifik kondisi saat ini yang match pola tersebut (rasio capex-to-revenue, konsentrasi investor, leverage). Jangan terjebak debat moral soal AI — fokus murni pada mekanisme ekonomi yang membuat koreksi tajam plausible.<br><br>\n<strong>OPP (Ideal):</strong> Counter dengan membedakan secara konkret kondisi struktural sekarang vs bubble sebelumnya — revenue riil, basis investor terdiversifikasi, demand enterprise yang sustainable. Jangan cuma bilang \"ini beda\" secara general — beri mekanisme spesifik kenapa perbedaan itu signifikan secara kuantitatif untuk mencegah pecahnya bubble dalam skala resesi global."
+  },
+  {
+    "id": "m068",
+    "title": "Dwipartai di Indonesia",
+    "pro": [
+      "Sistem dwipartai menghasilkan pemerintahan lebih stabil dengan mayoritas jelas di parlemen, mengurangi koalisi gemuk yang transaksional",
+      "Akuntabilitas pemilih lebih jelas — pemilih tahu persis siapa bertanggung jawab atas kebijakan tanpa kaburnya tanggung jawab koalisi multipartai",
+      "Mengurangi fragmentasi politik identitas yang sering dieksploitasi partai kecil berbasis SARA untuk meraih kursi minimal",
+      "Biaya transaksi politik (deal-making koalisi pasca-pemilu) berkurang drastis, mempercepat proses legislasi dan eksekusi kebijakan"
+    ],
+    "kon": [
+      "Sistem dwipartai mereduksi representasi suara minoritas dan kelompok kepentingan spesifik yang penting dalam masyarakat majemuk seperti Indonesia",
+      "Transisi dari multipartai mapan ke dwipartai berisiko menciptakan instabilitas politik jangka pendek dan resistensi elite partai existing",
+      "Dwipartai historis rentan terhadap polarisasi ekstrem (lihat AS) karena tidak ada ruang kompromi ideologis di tengah",
+      "Keragaman geografis dan kultural Indonesia butuh representasi partai regional/etnis yang hilang dalam sistem dwipartai rigid"
+    ],
+    "terms": [
+      "Electoral Threshold",
+      "Coalition Government",
+      "Political Fragmentation",
+      "Voter Accountability"
+    ],
+    "orig": "This House Would Shift Indonesia to a Two-Party System",
+    "cat": "politik",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan mengubah sistem multipartai Indonesia menjadi sistem dwipartai melalui reformasi electoral threshold dan sistem pemilu distrik.",
+    "research": "Studi perbandingan sistem electoral (Lijphart, \"Patterns of Democracy\") menunjukkan bahwa masyarakat majemuk (plural societies) cenderung lebih stabil dengan sistem konsensus/proporsional dibanding sistem mayoritarian dwipartai yang berisiko mengecualikan kelompok minoritas signifikan dari representasi.",
+    "ideal": "<strong>PRO (Ideal):</strong> Frame sebagai soal efisiensi tata kelola, bukan soal mengurangi demokrasi. Establish bahwa koalisi gemuk saat ini justru MENGURANGI akuntabilitas (voters tidak tahu siapa bertanggung jawab) dibanding dwipartai yang justru memperjelas pilihan dan tanggung jawab politik. Counter argumen representasi minoritas dengan menunjukkan bahwa partai besar tetap bisa mengakomodasi faksi internal beragam (big tent parties).<br><br>\n<strong>OPP (Ideal):</strong> Jangan defend sistem multipartai existing apa adanya — akui ada masalah koalisi gemuk, tapi serang SOLUSI dwipartai sebagai overcorrection berbahaya. Bangun world: di negara majemuk seperti Indonesia, hilangnya representasi proporsional partai kecil/regional akan memicu ketidakpuasan kelompok yang merasa \"tidak terwakili\", berisiko mendorong politik ekstra-parlementer."
+  },
+  {
+    "id": "m069",
+    "title": "Referendum Vs Demokrasi Perwakilan",
+    "pro": [
+      "Legitimasi keputusan jauh lebih kuat ketika rakyat langsung memilih dibanding diwakilkan elite politik yang punya kepentingan dan bias tersendiri",
+      "Isu krusial jangka panjang sering dihindari politisi karena risiko elektoral jangka pendek — referendum memaksa keputusan transparan tanpa kalkulasi politis sempit",
+      "Partisipasi langsung meningkatkan literasi politik dan keterlibatan sipil warga terhadap isu-isu fundamental kenegaraan",
+      "Referendum mencegah elite capture — keputusan besar tidak bisa dibajak kepentingan kelompok kecil yang mengontrol parlemen"
+    ],
+    "kon": [
+      "Isu kompleks (kebijakan moneter, hubungan internasional) butuh keahlian teknis yang tidak dimiliki mayoritas pemilih awam — referendum rentan dimanipulasi kampanye populis sederhana",
+      "Referendum rentan tirani mayoritas terhadap hak kelompok minoritas yang sebenarnya dilindungi justru oleh proses deliberatif perwakilan",
+      "Brexit dan berbagai referendum kontroversial menunjukkan hasil bisa didorong disinformasi kampanye jangka pendek, bukan deliberasi matang",
+      "Demokrasi perwakilan memungkinkan check and balances serta proses revisi kebijakan yang sulit dilakukan pada keputusan referendum biner (ya/tidak)"
+    ],
+    "terms": [
+      "Direct Democracy",
+      "Tyranny of the Majority",
+      "Deliberative Process",
+      "Populist Manipulation"
+    ],
+    "orig": "Direct Democracy Through Referendums Is Superior to Representative Democracy for Crucial Issues",
+    "cat": "politik",
+    "type": "pandangan",
+    "ctx": "Dewan ini berpandangan demokrasi langsung (referendum) lebih baik daripada demokrasi perwakilan untuk isu-isu krusial yang berdampak jangka panjang bagi masyarakat (perubahan konstitusi, kebijakan energi nasional, status wilayah).",
+    "research": "Analisis pasca-Brexit referendum (2016) banyak menyoroti bagaimana kompleksitas isu (hubungan dagang, migrasi, kedaulatan hukum) direduksi jadi pilihan biner sederhana yang gagal merepresentasikan nuansa kebijakan riil, memicu krisis implementasi bertahun-tahun setelahnya.",
+    "ideal": "<strong>PRO (Ideal):</strong> Bedakan referendum yang dirancang baik (waktu kampanye panjang, informasi seimbang, ambang batas supermajority) dari referendum yang buruk (snap referendum, kampanye singkat). Establish bahwa masalahnya bukan instrumen referendum itu sendiri, tapi desain implementasinya — dengan desain tepat, referendum justru memperkuat bukan melemahkan demokrasi substantif.<br><br>\n<strong>OPP (Ideal):</strong> Anchor ke risiko struktural inherent dalam referendum biner untuk isu kompleks: tidak ada ruang nuansa \"ya, tapi dengan syarat X\". Counter dengan menunjukkan bahwa demokrasi perwakilan modern sudah punya mekanisme akuntabilitas (pemilu berkala, oversight parlemen) yang dirancang khusus menghindari masalah yang coba diselesaikan referendum, tanpa risiko manipulasi populis jangka pendek."
+  },
+  {
+    "id": "m070",
+    "title": "Batas Usia Capres 30 Tahun",
+    "pro": [
+      "Usia tidak berkorelasi linear dengan kapasitas kepemimpinan — banyak negara dipimpin kepala negara di bawah 35 tahun dengan kinerja baik",
+      "Populasi muda Indonesia yang dominan secara demografis berhak mendapat representasi kepemimpinan yang sepadan dengan proporsi populasinya",
+      "Membuka ruang regenerasi politik lebih cepat, mengurangi dominasi elite politik senior yang sama selama puluhan tahun",
+      "Pemimpin muda cenderung lebih reseptif terhadap isu kontemporer (teknologi, perubahan iklim) yang relevan bagi masa depan jangka panjang negara"
+    ],
+    "kon": [
+      "Jabatan presiden membutuhkan pengalaman birokrasi, jaringan diplomatik, dan kematangan krisis yang secara empiris berkorelasi dengan rentang usia lebih matang",
+      "Penurunan batas usia berisiko dieksploitasi dinasti politik untuk mempercepat regenerasi kekuasaan keluarga, bukan murni soal merit generasi muda",
+      "Indonesia sebagai negara dengan tantangan geopolitik dan ekonomi kompleks membutuhkan pemimpin dengan rekam jejak panjang yang teruji",
+      "Perbandingan ke negara lain dengan pemimpin muda mengabaikan perbedaan konteks sistem politik, ukuran negara, dan tingkat kompleksitas tantangan yang dihadapi"
+    ],
+    "terms": [
+      "Political Regeneration",
+      "Demographic Representation",
+      "Executive Experience",
+      "Dynastic Politics"
+    ],
+    "orig": "This House Would Lower the Minimum Presidential Age to 30",
+    "cat": "politik",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan menurunkan batas usia minimum calon presiden Indonesia dari 40 tahun menjadi 30 tahun.",
+    "research": "Studi perbandingan pemimpin dunia usia muda (Sebastian Kurz Austria, Sanna Marin Finlandia) menunjukkan keberhasilan bergantung pada kualitas sistem pendukung kelembagaan (birokrasi profesional, check and balances kuat), bukan semata usia individu — faktor yang variasinya signifikan antarnegara.",
+    "ideal": "<strong>PRO (Ideal):</strong> Pisahkan argumen usia dari argumen kapasitas — gunakan studi psikologi kognitif yang menunjukkan kematangan pengambilan keputusan tidak linear naik setelah usia tertentu. Linkback ke representasi demografis: ketika mayoritas populasi di bawah 35 tahun, sistem yang secara struktural mengecualikan generasi ini dari kepemimpinan tertinggi adalah masalah keadilan representasi, bukan sekadar preferensi.<br><br>\n<strong>OPP (Ideal):</strong> Jangan ageist secara terbuka — argue dari risiko struktural konkret: penurunan batas usia tanpa reformasi pendamping (transparansi pencalonan, pembatasan dinasti) justru jadi alat mempercepat regenerasi kekuasaan dinasti yang sudah established, bukan membuka jalan bagi pemimpin muda independen yang genuinely merit-based."
+  },
+  {
+    "id": "m071",
+    "title": "Politik Dinasti",
+    "pro": [
+      "Status quo: politik dinasti mengkonsolidasi kekuasaan dalam segelintir keluarga, mempersempit ruang kompetisi politik yang sehat berbasis merit",
+      "Normalisasi ini mengikis kepercayaan publik terhadap institusi demokrasi sebagai sistem yang genuinely terbuka bagi siapa saja",
+      "Akses sumber daya negara (jaringan, modal kampanye, birokrasi) yang diwariskan menciptakan unfair advantage struktural bagi kandidat dari keluarga politik",
+      "Counterfactual: tanpa normalisasi dinasti, sirkulasi elite politik akan lebih terbuka dan kompetitif, mendorong kualitas kepemimpinan berbasis kapasitas riil"
+    ],
+    "kon": [
+      "Pemilih tetap memiliki kedaulatan penuh memilih atau menolak kandidat dinasti lewat kotak suara — normalisasi ini sebenarnya cerminan pilihan demokratis rakyat",
+      "Banyak kandidat dari keluarga politik juga punya rekam jejak dan kapasitas individual yang teruji, tidak bisa digeneralisasi sebagai \"warisan\" semata",
+      "Fenomena dinasti politik bukan unik Indonesia — banyak demokrasi mapan (AS, India, Filipina) juga punya pola serupa tanpa merusak fondasi demokrasi mereka",
+      "Menyesali normalisasi ini berisiko menstigma individu kompeten hanya karena kebetulan lahir dalam keluarga politik, padahal merit individual tetap relevan dinilai"
+    ],
+    "terms": [
+      "Political Dynasty",
+      "Elite Circulation",
+      "Incumbency Advantage",
+      "Democratic Erosion"
+    ],
+    "orig": "This House Regrets the Normalization of Dynastic Politics in Indonesia",
+    "cat": "politik",
+    "type": "penyesalan",
+    "ctx": "Dewan ini menyesali normalisasi politik dinasti (pewarisan jabatan dan pengaruh politik dalam satu keluarga lintas generasi) di Indonesia sebagai fenomena yang semakin diterima publik.",
+    "research": "Studi tentang political dynasties di Asia Tenggara (termasuk Indonesia, Filipina) menunjukkan korelasi antara konsentrasi kekuasaan dinasti dengan rendahnya kompetisi elektoral riil di tingkat daerah, meski hubungan kausal dengan kualitas tata kelola masih diperdebatkan akademisi.",
+    "ideal": "<strong>PRO (Ideal):</strong> Gunakan kontrafaktual secara eksplisit: bandingkan dunia status quo (dinasti dinormalisasi, makin banyak keluarga politik dominan) dengan dunia counterfactual (dinasti tetap dipandang sebagai anomali yang harus dijustifikasi ekstra, bukan default yang diterima). Tunjukkan bahwa normalisasi inilah—bukan eksistensi dinasti itu sendiri—yang jadi masalah inti, karena menghilangkan scrutiny publik yang seharusnya melekat pada konsentrasi kekuasaan.<br><br>\n<strong>OPP (Ideal):</strong> Jangan defend dinasti politik secara prinsip — pisahkan critique terhadap \"normalisasi sebagai fenomena\" dari kritik terhadap individu kandidat. Argue bahwa pemilih rasional tetap melakukan scrutiny lewat pemilu kompetitif, dan fenomena dinasti yang bertahan justru menunjukkan sistem demokrasi bekerja (rakyat memilih berdasarkan preferensi mereka), bukan rusak."
+  },
+  {
+    "id": "m072",
+    "title": "Oposisi Menolak Koalisi Gemuk",
+    "pro": [
+      "Sebagai partai oposisi, kepentingan utama aktor adalah menjaga fungsi checks and balances yang esensial bagi kesehatan demokrasi — bergabung koalisi gemuk menghilangkan fungsi ini sepenuhnya",
+      "Identitas politik dan basis pemilih oposisi dibangun di atas diferensiasi kebijakan — bergabung koalisi gemuk mengaburkan identitas ini dan berisiko kehilangan basis dukungan jangka panjang",
+      "Oposisi yang konsisten di luar pemerintahan punya leverage lebih besar mengkritik kebijakan tanpa terikat kompromi koalisi yang melemahkan posisi tawar",
+      "Pengalaman politik menunjukkan partai yang bergabung koalisi gemuk demi kekuasaan jangka pendek sering kehilangan kredibilitas dan basis pemilih di pemilu berikutnya"
+    ],
+    "kon": [
+      "Sebagai aktor politik rasional, partai oposisi juga punya kepentingan mengakses sumber daya negara dan implementasi kebijakan riil yang hanya bisa dicapai dari dalam pemerintahan",
+      "Oposisi permanen tanpa akses kekuasaan eksekutif berisiko menjadi tidak relevan dan kehilangan kemampuan mempengaruhi kebijakan secara substantif",
+      "Kepentingan jangka panjang partai (membangun rekam jejak governance, bukan sekadar kritik) kadang lebih terlayani lewat partisipasi terbatas dalam koalisi dengan syarat tertentu",
+      "Konteks krisis nasional mendesak (ekonomi, keamanan) bisa membenarkan kompromi sementara demi stabilitas, tanpa mengorbankan identitas oposisi jangka panjang"
+    ],
+    "terms": [
+      "Checks and Balances",
+      "Coalition Politics",
+      "Political Identity",
+      "Opposition Leverage"
+    ],
+    "orig": "As an Opposition Political Party, This House Would Reject Any Form of Grand Coalition",
+    "cat": "politik",
+    "type": "aktor",
+    "ctx": "Sebagai partai politik oposisi, Dewan ini akan menolak segala bentuk koalisi besar (koalisi gemuk) pasca-pemilu dan memilih tetap berada di luar pemerintahan.",
+    "research": "Studi ilmu politik tentang grand coalition di sistem parlementer Eropa (Jerman) menunjukkan partai junior dalam koalisi besar sering mengalami penurunan dukungan elektoral signifikan di pemilu berikutnya, dikenal sebagai \"junior partner penalty\".",
+    "ideal": "<strong>PRO (Ideal):</strong> Linkback konsisten ke peran fungsional oposisi dalam sistem demokrasi — bukan soal \"menang atau kalah\" tapi soal menjaga arsitektur akuntabilitas yang sehat. Establish bahwa nilai oposisi justru terletak pada independensinya; begitu masuk koalisi gemuk, kemampuan mengkritik dan mengoreksi kebijakan pemerintah hilang sepenuhnya, merugikan demokrasi secara struktural bukan cuma partai itu sendiri.<br><br>\n<strong>OPP (Ideal):</strong> Tetap linkback ke kepentingan aktor oposisi, tapi reframe \"menolak koalisi gemuk\" sebagai purism politik yang mengorbankan pengaruh riil demi simbol semata. Bangun world: oposisi yang strategis bisa nego syarat partisipasi terbatas (kursi kabinet spesifik, komitmen kebijakan tertulis) yang justru memperbesar pengaruh dibanding sekadar berteriak dari luar tanpa akses kekuasaan implementasi."
+  },
+  {
+    "id": "m073",
+    "title": "Debat Publik Wajib Pilkada",
+    "pro": [
+      "Debat publik memberi pemilih akses langsung membandingkan visi-misi kandidat tanpa filter framing media atau tim sukses",
+      "Mengurangi efektivitas politik uang dan mobilisasi massa sebagai strategi kampanye dominan, mendorong kompetisi berbasis substansi kebijakan",
+      "Transparansi paksa ini melindungi kandidat berkualitas tanpa modal besar dari dominasi kandidat bermodal kuat yang mengandalkan iklan masif",
+      "Standarisasi nasional memastikan daerah terpencil dengan akses media terbatas tetap mendapat informasi setara soal kandidat mereka"
+    ],
+    "kon": [
+      "Mewajibkan debat tidak menjamin kualitas substansi — kandidat bisa tetap menghindar lewat jawaban normatif tanpa komitmen konkret terukur",
+      "Daerah dengan ratusan pilkada serentak menghadapi tantangan logistik dan biaya penyiaran nasional yang sangat besar dan tidak proporsional dengan manfaatnya",
+      "Format debat televisi cenderung menguntungkan kandidat dengan kemampuan public speaking dibanding kandidat dengan rekam jejak kebijakan kuat tapi kurang charismatic",
+      "Standarisasi nasional mengabaikan konteks lokal — isu krusial di satu daerah belum tentu relevan diformat sama di daerah lain"
+    ],
+    "terms": [
+      "Electoral Transparency",
+      "Money Politics",
+      "Media Access",
+      "Substantive Campaigning"
+    ],
+    "orig": "This House Would Mandate Nationally Televised Debates for All Regional Head Candidates",
+    "cat": "politik",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan mewajibkan debat publik calon kepala daerah (gubernur, bupati, walikota) disiarkan secara nasional sebagai syarat administratif pencalonan.",
+    "research": "Studi komunikasi politik tentang dampak debat kandidat terhadap preferensi pemilih menunjukkan hasil campuran — debat efektif meningkatkan pengetahuan pemilih soal isu, namun pengaruhnya terhadap keputusan akhir memilih relatif terbatas dibanding faktor identitas partai dan jaringan sosial yang sudah terbentuk sebelumnya.",
+    "ideal": "<strong>PRO (Ideal):</strong> Establish problem di status quo terlebih dahulu: dominasi politik uang dan minimnya akses informasi substantif pemilih di daerah, terutama luar Jawa. Frame debat wajib sebagai mekanisme paling murah dan scalable untuk mengoreksi information asymmetry ini dibanding alternatif lain (pengawasan dana kampanye yang sulit ditegakkan).<br><br>\n<strong>OPP (Ideal):</strong> Akui masalah money politics itu nyata, tapi serang efektivitas SOLUSI debat wajib — argue bahwa debat televisi performatif tidak benar-benar mengoreksi information asymmetry, hanya memindahkan kompetisi dari \"siapa paling banyak uang\" ke \"siapa paling pandai berbicara di kamera\", yang sama-sama tidak merepresentasikan kapasitas kepemimpinan riil."
+  },
+  {
+    "id": "m074",
+    "title": "Pilpres Tidak Langsung",
+    "pro": [
+      "Sistem ini sudah pernah berjalan di Indonesia sebelum 2004 — bukan proposal baru dari nol, melainkan kembali ke model yang sudah punya preseden kelembagaan",
+      "Mengurangi biaya pemilu nasional yang sangat besar, mengalihkan sumber daya ke prioritas pembangunan lain",
+      "Anggota parlemen yang memilih punya informasi dan akses lebih mendalam menilai kapasitas kandidat dibanding pemilih awam yang rentan terpengaruh kampanye citra",
+      "Mengurangi polarisasi sosial ekstrem yang kerap muncul dalam pemilihan presiden langsung berbasis dua kubu besar"
+    ],
+    "kon": [
+      "Sistem ini menjauhkan rakyat dari proses pemilihan kepala negara tertinggi, mengurangi legitimasi demokratis langsung yang sudah dinikmati sejak 2004",
+      "Berisiko tinggi disalahgunakan elite parlemen untuk transaksi politik tertutup (politik uang antar-anggota DPR) tanpa pengawasan publik langsung",
+      "Kemunduran dari sistem pemilihan langsung dipandang sebagai langkah mundur demokratisasi pasca-reformasi yang sulit diterima secara politik dan sosial",
+      "Akuntabilitas presiden ke rakyat secara langsung berkurang signifikan ketika presiden hanya bertanggung jawab kepada parlemen yang memilihnya"
+    ],
+    "terms": [
+      "Indirect Election",
+      "Parliamentary Mandate",
+      "Democratic Legitimacy",
+      "Elite Capture"
+    ],
+    "orig": "This House Supports Indirect Presidential Elections Through Parliament",
+    "cat": "politik",
+    "type": "dukungan",
+    "ctx": "Dewan ini mendukung pemilihan presiden Indonesia secara tidak langsung melalui parlemen (kembali ke sistem sebelum amandemen UUD 1945), menggantikan pemilihan langsung oleh rakyat.",
+    "research": "Perbandingan sistem pemilihan kepala negara/pemerintahan di berbagai demokrasi (presidensial langsung vs parlementer tidak langsung) menunjukkan bahwa legitimasi bukan ditentukan oleh mekanisme pemilihan semata, melainkan oleh konteks historis dan ekspektasi sosial-politik yang melekat pada sistem tersebut di tiap negara. ═══════════════ MATTER BARU — lanjut dari Bab 4 ═══════════════ BAB 5: SISTEM PEMILU & REPRESENTASI meta: Electoral Systems · Gerrymandering · Direct Democracy 5.1 Proportional vs Majoritarian Representation [Badge: Foundational] Penjelasan: - Sistem proporsional mengalokasikan kursi sesuai persentase suara partai, memaksimalkan representasi keragaman politik tapi sering menghasilkan koalisi rapuh. - Sistem mayoritarian (first-past-the-post) menghasilkan pemerintahan lebih stabil dan akuntabilitas individual jelas, tapi sering menghasilkan parlemen yang tidak proporsional dengan suara nasional. - Sistem campuran (mixed-member proportional, seperti di Jerman dan Selandia Baru) mencoba menggabungkan stabilitas mayoritarian dengan keadilan proporsional representasi. Matter a: Sistem proporsional lebih cocok untuk masyarakat majemuk karena mencegah eksklusi struktural kelompok minoritas dari representasi parlemen. Matter b: Sistem mayoritarian menciptakan hubungan akuntabilitas langsung antara wakil rakyat dan konstituennya di daerah pemilihan spesifik. Matter c: Threshold parlemen (electoral threshold) dalam sistem proporsional adalah trade-off eksplisit antara inklusivitas representasi dan stabilitas pemerintahan. Pro: Desain sistem pemilu bukan netral teknokratis — ia secara langsung membentuk siapa yang terwakili dan siapa yang terpinggirkan secara struktural dalam politik nasional. Kon: Tidak ada sistem pemilu \"sempurna\" — setiap pilihan desain selalu mengorbankan satu nilai demokratis (stabilitas, representasi, akuntabilitas) demi nilai lainnya. 5.2 Gerrymandering & Electoral Manipulation [Badge: Applied] Penjelasan: - Gerrymandering adalah praktik menggambar ulang batas daerah pemilihan untuk menguntungkan partai tertentu, lewat teknik \"packing\" (mengonsentrasikan lawan di sedikit distrik) dan \"cracking\" (menyebar lawan tipis di banyak distrik). - Teknologi data dan analisis geospasial modern membuat gerrymandering jauh lebih presisi dan sulit dideteksi dibanding era manual penggambaran batas wilayah. - Lembaga independen penggambaran batas distrik (independent redistricting commissions) diusulkan sebagai solusi mengurangi konflik kepentingan partai berkuasa dalam proses ini. Matter a: Gerrymandering yang ekstrem secara efektif menghilangkan kompetisi elektoral riil di banyak distrik, membuat pemilu jadi formalitas belaka. Matter b: Lembaga independen penggambaran batas distrik mengurangi konflik kepentingan, namun kriteria \"keadilan\" batas wilayah tetap subjektif dan bisa diperdebatkan. Matter c: Dampak gerrymandering jangka panjang meliputi polarisasi politik karena politisi di distrik aman hanya perlu memuaskan basis ekstrem partainya, bukan pemilih moderat. Pro: Reformasi penggambaran batas distrik yang independen dan transparan adalah prasyarat dasar memastikan integritas kompetisi demokratis yang genuine. Kon: Kriteria \"distrik yang adil\" secara matematis dan politis sangat kontestable — bahkan algoritma \"netral\" bisa menghasilkan hasil yang condong ke satu pihak tergantung variabel yang diprioritaskan. 5.3 Direct Democracy & Referendum [Badge: Kontroversial] Penjelasan: - Referendum dan inisiatif warga (citizen initiative) memungkinkan partisipasi politik langsung di luar siklus pemilihan wakil rakyat reguler. - Swiss adalah contoh penerapan demokrasi langsung paling ekstensif di dunia, dengan referendum rutin di tingkat nasional dan kanton untuk berbagai isu kebijakan. - Risiko utama demokrasi langsung adalah \"tirani mayoritas\" terhadap hak kelompok minoritas yang secara struktural tidak terlindungi proses deliberatif checks and balances konvensional. Matter a: Demokrasi langsung paling efektif diterapkan untuk isu konstitusional fundamental, bukan kebijakan teknis kompleks yang membutuhkan keahlian spesifik. Matter b: Ambang batas partisipasi minimum (quorum) dalam referendum krusial mencegah keputusan signifikan diambil oleh minoritas pemilih yang aktif saja. Matter c: Demokrasi langsung yang sukses (Swiss) butuh budaya politik partisipatif matang yang terbangun selama puluhan tahun, tidak otomatis berhasil ditransplantasi ke konteks lain. Pro: Demokrasi langsung memperkuat legitimasi keputusan besar yang berdampak jangka panjang dengan melibatkan rakyat secara langsung, bukan diwakilkan sepenuhnya. Kon: Tanpa infrastruktur deliberasi yang matang, demokrasi langsung rentan dimanipulasi kampanye populis berbasis emosi jangka pendek dibanding analisis kebijakan substantif. BAB 6: NEGARA, KEDAULATAN & KRISIS LEGITIMASI meta: State Capacity · Authoritarian Resilience · Political Trust · Patronage 6.1 State Capacity & Failed States [Badge: Applied] Penjelasan: - State capacity merujuk pada kemampuan negara menegakkan otoritas, mengumpulkan pajak, dan menyediakan layanan publik dasar secara efektif di seluruh wilayahnya. - \"Failed state\" bukan kategori biner tapi spektrum — banyak negara mengalami state weakness parsial (kontrol penuh di ibu kota, lemah di wilayah pinggiran) tanpa benar-benar kolaps total. - Pembangunan state capacity historis sering melibatkan proses koersif dan tidak demokratis (pembentukan negara-bangsa Eropa) — menciptakan ketegangan antara membangun negara kuat dan menjaga nilai demokratis. Matter a: State capacity yang lemah menciptakan ruang kosong yang sering diisi aktor non-negara (kelompok bersenjata, jaringan kriminal) yang mengambil alih fungsi pemerintahan secara informal. Matter b: Bantuan pembangunan internasional yang fokus pada demokratisasi tanpa memperkuat state capacity dasar sering gagal mencapai stabilitas jangka panjang. Matter c: Desentralisasi yang dilakukan sebelum state capacity pusat cukup kuat berisiko memperburuk fragmentasi otoritas alih-alih meningkatkan layanan publik lokal. Pro: Pembangunan state capacity yang efektif adalah prasyarat dasar bagi demokrasi substantif — tanpa negara yang mampu menegakkan aturan, hak-hak demokratis tetap nominal belaka. Kon: Penguatan state capacity secara berlebihan tanpa pengawasan demokratis kuat berisiko menciptakan aparatus negara represif yang justru mengancam kebebasan sipil. 6.2 Authoritarian Resilience [Badge: Kontemporer] Penjelasan: - Rezim otoriter modern bertahan bukan murni lewat represi, tapi lewat kombinasi kooptasi elite, distribusi selektif kesejahteraan ekonomi, dan kontrol informasi yang canggih. - \"Competitive authoritarianism\" — rezim yang mempertahankan institusi formal demokratis (pemilu, parlemen) namun secara sistematis memanipulasi level playing field — jadi pola dominan otoritarianisme kontemporer dibanding rezim otoriter klasik yang represif terbuka. - Legitimasi performa (delivery pertumbuhan ekonomi dan stabilitas) sering jadi sumber utama dukungan publik terhadap rezim otoriter, menggantikan legitimasi prosedural demokratis. Matter a: Otoritarianisme kompetitif lebih sulit ditantang dibanding otoritarianisme klasik karena oposisi punya ruang formal untuk berkompetisi, mengurangi insentif perlawanan radikal. Matter b: Ketergantungan rezim otoriter pada legitimasi performa ekonomi menciptakan kerentanan struktural — krisis ekonomi bisa mengikis dukungan publik secara cepat. Matter c: Kontrol informasi digital (sensor internet, disinformasi terkoordinasi) jadi alat resilience otoriter yang jauh lebih efektif dan murah dibanding represi fisik langsung. Pro: Memahami mekanisme spesifik resilience otoriter kontemporer krusial untuk merancang strategi demokratisasi yang efektif, bukan sekadar mengandalkan tekanan eksternal yang seringkali kontraproduktif. Kon: Fokus berlebihan pada \"kecanggihan\" otoritarianisme modern berisiko melebih-lebihkan stabilitasnya — banyak rezim yang dianggap resilient akhirnya tetap kolaps akibat krisis ekonomi atau perpecahan elite internal. 6.3 Krisis Kepercayaan Politik & Disinformasi [Badge: Kontemporer] Penjelasan: - Penurunan kepercayaan publik terhadap institusi politik di berbagai demokrasi berkorelasi dengan meningkatnya konsumsi informasi lewat platform media sosial yang algoritmanya memprioritaskan engagement, bukan akurasi. - Disinformasi terkoordinasi (state-sponsored maupun domestik) memanfaatkan polarisasi yang sudah ada untuk memperdalam distrust terhadap institusi demokratis secara sistematis. - \"Post-truth politics\" merujuk pada kondisi di mana fakta objektif kalah pengaruh dibanding resonansi emosional dan identitas dalam membentuk opini publik. Matter a: Penurunan trust institusional bukan semata akibat disinformasi, tapi juga refleksi kegagalan riil delivery kebijakan yang dijanjikan elite politik selama puluhan tahun. Matter b: Regulasi platform digital untuk membatasi penyebaran disinformasi selalu berhadapan dengan trade-off kebebasan berekspresi yang sulit diselesaikan secara teknokratis. Matter c: Literasi media dan pendidikan kritis terhadap sumber informasi jadi pertahanan jangka panjang paling sustainable dibanding regulasi konten semata. Pro: Krisis kepercayaan politik yang dipicu disinformasi adalah ancaman eksistensial terhadap fungsi dasar demokrasi yang membutuhkan respons kelembagaan serius dan terkoordinasi. Kon: Narasi \"krisis disinformasi\" kadang dipakai elite berkuasa untuk melegitimasi pembatasan kebebasan berekspresi yang sebenarnya ditujukan membungkam kritik sah terhadap pemerintah. 6.4 Dinasti Politik & Patronase [Badge: Applied] Penjelasan: - Patronase politik — distribusi sumber daya negara (jabatan, kontrak, anggaran) berdasarkan loyalitas politik bukan merit — sering jadi mekanisme utama yang melanggengkan dinasti politik lintas generasi. - Dinasti politik paling subur tumbuh di sistem dengan partai politik lemah secara institusional, di mana personalisasi kekuasaan menggantikan struktur partai yang programatik. - Reformasi pembatasan dinasti politik (anti-dynasty law) di berbagai negara sering menghadapi resistensi kuat karena harus disahkan oleh parlemen yang justru didominasi figur dinasti itu sendiri. Matter a: Patronase politik menciptakan siklus yang sulit diputus — kekuasaan mempertahankan loyalitas lewat distribusi sumber daya, loyalitas mempertahankan kekuasaan lewat suara. Matter b: Partai politik yang programatik dan terinstitusionalisasi dengan baik secara historis terbukti mengurangi ketergantungan pada figur dinasti individual sebagai sumber legitimasi. Matter c: Pembatasan hukum terhadap dinasti politik (anti-dynasty law) rentan dihindari lewat strategi \"proxy\" — kerabat jauh atau loyalis yang tetap berada dalam kendali figur dinasti utama. Pro: Memutus rantai patronase dinasti memerlukan penguatan kelembagaan partai politik yang programatik, bukan sekadar pelarangan administratif yang mudah diakali. Kon: Pembatasan hukum terhadap pencalonan berdasarkan hubungan keluarga berisiko melanggar hak konstitusional individu untuk dipilih, terlepas dari afiliasi keluarganya. ################################################ # ⚖️ HUKUM ################################################ ═══════════════ MOTION BARU (m075–m081) ═══════════════",
+    "ideal": "<strong>PRO (Ideal):</strong> Jangan frame sebagai \"kemunduran demokrasi\" — frame sebagai pilihan desain institusional yang sama legitimnya dengan sistem parlementer di banyak demokrasi maju (Jerman, India memilih kepala negara/pemerintahan secara tidak langsung). Fokus argumen pada biaya sosial dan finansial pemilihan langsung yang sangat tinggi di negara besar dan majemuk seperti Indonesia.<br><br>\n<strong>OPP (Ideal):</strong> Establish bahwa di Indonesia secara spesifik (bukan demokrasi lain), legitimasi pemilihan langsung presiden sudah jadi bagian fundamental kontrak sosial pasca-reformasi 1998 — mencabutnya bukan netral secara desain institusional, tapi pelanggaran ekspektasi demokratis yang sudah established dan berisiko memicu krisis legitimasi politik."
+  },
+  {
+    "id": "m075",
+    "title": "Penghapusan Sistem Juri",
+    "pro": [
+      "Juri awam rentan bias kognitif dan prasangka yang tidak terlatih dikenali atau dikoreksi, berbeda dengan hakim profesional yang terlatih menerapkan standar pembuktian objektif",
+      "Kasus kompleks (forensik digital, kejahatan finansial) membutuhkan pemahaman teknis yang sulit dicerna juri awam dalam waktu sidang terbatas",
+      "Panel hakim profesional menghasilkan putusan yang lebih konsisten dan dapat diprediksi, mengurangi disparitas hukuman yang tidak masuk akal antarkasus serupa",
+      "Proses peradilan jadi lebih efisien tanpa kebutuhan seleksi juri yang panjang dan mahal"
+    ],
+    "kon": [
+      "Juri merepresentasikan suara komunitas dan mencegah peradilan menjadi domain eksklusif elite hukum yang terputus dari rasa keadilan masyarakat awam",
+      "Hakim profesional tunggal/panel kecil lebih rentan dikooptasi kekuasaan politik dibanding juri acak yang sulit dipengaruhi secara sistematis",
+      "Sistem juri historis terbukti jadi pengaman penting terhadap hukum yang tidak adil (jury nullification) ketika hukum tertulis bertentangan dengan rasa keadilan komunitas",
+      "Kepercayaan publik terhadap sistem peradilan justru menurun ketika rakyat kehilangan peran langsung dalam proses penghukuman sesama warga negara"
+    ],
+    "terms": [
+      "Jury Nullification",
+      "Judicial Bias",
+      "Community Representation",
+      "Procedural Consistency"
+    ],
+    "orig": "This House Would Abolish the Jury System in Criminal Trials",
+    "cat": "hukum",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan menghapus sistem juri dalam pengadilan pidana dan menggantikannya sepenuhnya dengan panel hakim profesional.",
+    "research": "Studi perbandingan sistem peradilan pidana antara negara common law (sistem juri) dan civil law (panel hakim) menunjukkan trade-off konsisten: sistem hakim profesional cenderung lebih konsisten secara statistik, sementara sistem juri menunjukkan resiliensi lebih tinggi terhadap erosi independensi peradilan dalam konteks politik otoriter.",
+    "ideal": "<strong>PRO (Ideal):</strong> Fokus ke masalah konsistensi dan kompetensi teknis sebagai core argumen — bandingkan disparitas putusan kasus serupa di sistem juri vs sistem hakim profesional di yurisdiksi yang sudah menerapkan keduanya. Counter argumen \"representasi komunitas\" dengan menunjukkan bahwa keadilan substantif (hasil yang konsisten dan berbasis bukti) lebih penting daripada keadilan simbolik partisipasi awam.<br><br>\n<strong>OPP (Ideal):</strong> Anchor ke fungsi checks and balances unik yang dimainkan juri terhadap kekuasaan negara — hakim profesional, meski terlatih, tetap bagian dari aparatus negara yang sama yang melakukan penuntutan, menciptakan potensi konflik kepentingan struktural yang tidak dimiliki juri independen dari komunitas."
+  },
+  {
+    "id": "m076",
+    "title": "Amnesti Narapidana Narkotika",
+    "pro": [
+      "Overkapasitas penjara akibat kriminalisasi pengguna narkotika membebani sistem pemasyarakatan dan menghalangi fokus pada kejahatan yang benar-benar membahayakan publik",
+      "Pendekatan kesehatan publik (rehabilitasi) jauh lebih efektif menurunkan tingkat kekambuhan dibanding pemenjaraan yang justru memperburuk siklus kriminalitas pasca-bebas",
+      "Disparitas penegakan hukum narkotika seringkali timpang membebani kelompok berpenghasilan rendah yang tidak mampu membayar pembelaan hukum memadai",
+      "Sumber daya penegakan hukum yang dialihkan dari penindakan pengguna ke pemberantasan jaringan pengedar besar akan lebih efektif menekan suplai narkotika"
+    ],
+    "kon": [
+      "Amnesti massal berisiko mengirim sinyal salah soal keseriusan negara menangani masalah narkotika, berpotensi meningkatkan angka penggunaan",
+      "Sulit secara praktis membedakan secara akurat siapa \"murni pengguna\" dan siapa yang juga terlibat pengedaran skala kecil dalam proses amnesti massal",
+      "Tanpa program rehabilitasi yang memadai menyertai amnesti, risiko residivisme (kembali menggunakan/terlibat narkotika) tetap tinggi",
+      "Korban kejahatan terkait narkotika (keluarga pecandu, komunitas terdampak) berhak atas rasa keadilan yang mungkin terabaikan dalam kebijakan amnesti massal"
+    ],
+    "terms": [
+      "Decriminalization",
+      "Mass Incarceration",
+      "Recidivism",
+      "Harm Reduction"
+    ],
+    "orig": "This House Would Grant Mass Amnesty to Non-Dealer Drug Offenders",
+    "cat": "hukum",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan memberikan amnesti massal bagi narapidana kasus narkotika yang terbukti sebagai pengguna/pecandu, bukan pengedar atau bandar.",
+    "research": "Studi kebijakan narkotika Portugal (dekriminalisasi 2001) menunjukkan penurunan signifikan angka kematian overdosis dan penularan HIV terkait penggunaan jarum suntik, dibarengi investasi besar dalam infrastruktur rehabilitasi — menunjukkan keberhasilan amnesti/dekriminalisasi sangat bergantung pada sistem pendukung yang menyertainya.",
+    "ideal": "<strong>PRO (Ideal):</strong> Bedakan tegas antara amnesti (forgiveness) dan dekriminalisasi penuh — establish bahwa proposal ini spesifik untuk pengguna yang sudah dipenjara akibat kebijakan represif yang terbukti gagal secara empiris, bukan pembiaran penggunaan narkotika ke depan. Anchor ke data overkapasitas penjara dan biaya fiskal pemenjaraan dibanding rehabilitasi.<br><br>\n<strong>OPP (Ideal):</strong> Jangan defend status quo punitif murni — akui masalah overkriminalisasi nyata, tapi serang implementasi AMNESTI MASSAL sebagai blunt instrument yang berisiko tidak presisi. Tawarkan alternatif: review kasus per kasus dengan kriteria jelas, bukan amnesti blanket yang berisiko membebaskan individu yang sebenarnya juga terlibat pengedaran."
+  },
+  {
+    "id": "m077",
+    "title": "Restorative Vs Retributive Justice",
+    "pro": [
+      "Restorative justice secara empiris menunjukkan tingkat residivisme lebih rendah dibanding sistem pemenjaraan murni punitif di berbagai studi internasional",
+      "Korban kejahatan sering melaporkan kepuasan lebih tinggi dari proses restoratif (dialog langsung, pengakuan kesalahan) dibanding proses retributif yang mengabaikan kebutuhan emosional korban",
+      "Pendekatan retributif yang fokus murni hukuman gagal mengatasi akar penyebab kejahatan, menciptakan siklus kriminalitas berulang pasca-pembebasan",
+      "Restorative justice lebih cost-effective dibanding sistem pemenjaraan jangka panjang yang membebani anggaran negara secara masif"
+    ],
+    "kon": [
+      "Restorative justice tidak proporsional untuk kejahatan berat (pembunuhan, kekerasan seksual) di mana keadilan retributif tetap dibutuhkan sebagai pengakuan formal beratnya pelanggaran",
+      "Pendekatan ini berisiko memberi tekanan tidak adil pada korban untuk \"memaafkan\" demi proses restoratif, padahal trauma mereka membutuhkan waktu dan ruang berbeda-beda",
+      "Efektivitas restorative justice sangat bergantung pada kesediaan genuine pelaku introspeksi — tidak semua pelaku punya kapasitas atau kemauan tersebut",
+      "Sistem retributif memberi kepastian hukum dan efek jera yang lebih terukur dibanding proses restoratif yang hasilnya sangat bervariasi kasus per kasus"
+    ],
+    "terms": [
+      "Restorative Justice",
+      "Retributive Justice",
+      "Recidivism",
+      "Victim-Centered Justice"
+    ],
+    "orig": "Restorative Justice Is More Effective Than Retributive Justice in the Criminal Justice System",
+    "cat": "hukum",
+    "type": "pandangan",
+    "ctx": "Dewan ini berpandangan restorative justice (pemulihan hubungan pelaku-korban-komunitas) lebih efektif daripada retributive justice (hukuman sebagai pembalasan proporsional) dalam sistem peradilan pidana.",
+    "research": "Meta-analisis program restorative justice di berbagai yurisdiksi (terutama untuk kejahatan remaja) menunjukkan penurunan residivisme yang konsisten dan tingkat kepuasan korban yang lebih tinggi dibanding proses peradilan konvensional, meski hasil untuk kejahatan kekerasan berat masih lebih terbatas dan kontroversial.",
+    "ideal": "<strong>PRO (Ideal):</strong> Bedakan domain aplikasi — argue bahwa untuk kategori kejahatan tertentu (kejahatan properti, kejahatan remaja, kasus dengan hubungan komunitas berkelanjutan), restorative justice secara empiris superior dalam mengurangi residivisme DAN memuaskan kebutuhan korban dibanding sistem retributif yang terbukti gagal mencapai kedua tujuan tersebut sekaligus.<br><br>\n<strong>OPP (Ideal):</strong> Jangan tolak restorative justice secara total — akui efektivitasnya untuk kategori kejahatan ringan, tapi pertahankan bahwa untuk kejahatan serius, masyarakat punya kepentingan legitimate atas keadilan retributif sebagai pernyataan moral kolektif bahwa pelanggaran berat tidak bisa \"diselesaikan\" lewat dialog semata."
+  },
+  {
+    "id": "m078",
+    "title": "Body Cam Wajib Aparat",
+    "pro": [
+      "Rekaman video objektif mengurangi sengketa \"kata lawan kata\" antara aparat dan warga dalam kasus dugaan penyalahgunaan wewenang",
+      "Studi di berbagai negara menunjukkan kehadiran body cam menurunkan baik insiden kekerasan aparat maupun keluhan palsu terhadap aparat",
+      "Transparansi ini meningkatkan akuntabilitas institusional dan kepercayaan publik terhadap penegakan hukum secara keseluruhan",
+      "Rekaman menjadi bukti krusial dalam proses hukum, mempercepat penyelesaian kasus sengketa interaksi aparat-warga"
+    ],
+    "kon": [
+      "Biaya implementasi (perangkat, penyimpanan data, manajemen) sangat besar terutama untuk daerah dengan anggaran kepolisian terbatas",
+      "Risiko privasi warga yang terekam dalam interaksi sensitif (korban kekerasan domestik, anak di bawah umur) perlu protokol ketat yang kompleks diatur",
+      "Efektivitas body cam sangat bergantung pada kebijakan akses dan rilis rekaman — tanpa transparansi rilis data, perangkat ini bisa jadi alat kontrol sepihak aparat",
+      "Aparat bisa secara teknis \"lupa\" menyalakan kamera pada momen kritis, membuat kewajiban ini mudah dihindari tanpa sanksi tegas"
+    ],
+    "terms": [
+      "Police Accountability",
+      "Surveillance",
+      "Evidentiary Value",
+      "Privacy Protocol"
+    ],
+    "orig": "This House Would Mandate Body Cameras for All Law Enforcement Officers",
+    "cat": "hukum",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan mewajibkan rekaman video (body camera) bagi seluruh aparat penegak hukum saat bertugas di lapangan.",
+    "research": "Studi acak terkontrol body-worn camera di kepolisian Rialto, California (2012) menunjukkan penurunan signifikan penggunaan kekuatan oleh aparat dan keluhan warga selama periode implementasi, menjadi rujukan utama studi kebijakan serupa di berbagai negara.",
+    "ideal": "<strong>PRO (Ideal):</strong> Establish problem akuntabilitas di status quo (kasus sengketa kekerasan aparat yang sulit dibuktikan tanpa rekaman objektif), lalu tunjukkan body cam sebagai solusi paling langsung dan murah dibanding reformasi kelembagaan jangka panjang yang lebih lambat. Push burden ke OPP untuk menjelaskan kenapa transparansi objektif ini harus dihindari.<br><br>\n<strong>OPP (Ideal):</strong> Jangan tolak transparansi secara prinsip — serang implementasinya: tanpa protokol rilis data yang independen dari kontrol kepolisian itu sendiri, body cam berisiko jadi alat selektif (rekaman dirilis saat menguntungkan aparat, \"rusak\" saat merugikan). Push untuk reformasi kelembagaan independen oversight sebagai prasyarat sebelum body cam efektif."
+  },
+  {
+    "id": "m079",
+    "title": "Rendahnya Literasi Hukum",
+    "pro": [
+      "Status quo: masyarakat awam sering tidak menyadari hak dasar mereka (hak diam, hak didampingi kuasa hukum) saat berhadapan dengan aparat penegak hukum",
+      "Rendahnya literasi hukum menciptakan ketimpangan struktural — kelompok berpendidikan dan bermodal memiliki akses keadilan jauh lebih baik dibanding kelompok rentan",
+      "Counterfactual: dengan literasi hukum memadai, masyarakat lebih mampu mencegah eksploitasi kontraktual (perjanjian kerja predatory, pinjaman ilegal) sejak awal",
+      "Ketidaktahuan hukum sering dieksploitasi pihak berkepentingan (debt collector ilegal, oknum aparat) untuk mengintimidasi warga yang tidak paham hak mereka"
+    ],
+    "kon": [
+      "Status quo tidak seburuk itu — banyak inisiatif edukasi hukum komunitas dan bantuan hukum gratis sudah berjalan meski belum merata",
+      "Akar masalah sebenarnya bukan literasi semata, tapi akses terhadap layanan bantuan hukum yang masih sangat terbatas terutama di daerah terpencil",
+      "Sistem hukum yang terlalu kompleks dan menggunakan bahasa teknis sulit dipahami adalah masalah desain sistem, bukan kegagalan individu warga untuk belajar",
+      "Menyesali kondisi ini tanpa solusi konkret berisiko jadi retorika kosong tanpa perubahan struktural nyata dalam akses keadilan"
+    ],
+    "terms": [
+      "Legal Literacy",
+      "Access to Justice",
+      "Legal Aid",
+      "Structural Inequality"
+    ],
+    "orig": "This House Regrets the Low Level of Legal Literacy Among the General Public",
+    "cat": "hukum",
+    "type": "penyesalan",
+    "ctx": "Dewan ini menyesali rendahnya tingkat literasi hukum masyarakat awam terhadap hak dan kewajiban dasar mereka dalam sistem hukum.",
+    "research": "Survei akses keadilan di berbagai negara berkembang konsisten menunjukkan korelasi antara tingkat pendidikan, lokasi geografis (urban-rural), dan akses terhadap bantuan hukum — menggambarkan literasi hukum sebagai isu yang terjalin erat dengan ketimpangan struktural lebih luas, bukan murni soal pengetahuan individual.",
+    "ideal": "<strong>PRO (Ideal):</strong> Gunakan kontrafaktual konkret: bandingkan kasus riil di mana warga kehilangan hak (properti, ketenagakerjaan) akibat ketidaktahuan hukum dengan skenario di mana literasi memadai akan mencegah kerugian tersebut sejak awal. Establish bahwa literasi hukum bukan sekadar \"nice to have\" tapi prasyarat fundamental partisipasi setara dalam sistem hukum yang adil.<br><br>\n<strong>OPP (Ideal):</strong> Reframe dari \"kesalahan individu tidak belajar hukum\" ke \"kegagalan sistem menyediakan akses dan bahasa hukum yang dapat dipahami\". Argue bahwa fokus pada penyesalan literasi individual berisiko mengalihkan tanggung jawab dari negara (yang seharusnya menyediakan bantuan hukum dan menyederhanakan sistem) ke warga yang justru menjadi korban kompleksitas sistem itu sendiri."
+  },
+  {
+    "id": "m080",
+    "title": "Hapus Kadaluarsa Kejahatan Seksual",
+    "pro": [
+      "Korban kejahatan seksual sering butuh waktu bertahun-tahun (trauma, tekanan sosial, ketergantungan ekonomi pada pelaku) sebelum mampu melapor — batas kadaluarsa secara struktural menghukum korban atas trauma mereka sendiri",
+      "Kemajuan forensik (tes DNA) memungkinkan pembuktian kejahatan lama yang sebelumnya mustahil diverifikasi secara ilmiah",
+      "Gerakan #MeToo global menunjukkan pola sistemik pelaku berulang yang baru terungkap bertahun-tahun kemudian lewat keberanian kolektif korban melapor bersama",
+      "Penghapusan kadaluarsa mengirim sinyal kuat bahwa kejahatan seksual tidak punya \"tanggal kedaluwarsa\" keadilan, mendorong pelaporan dan efek jera jangka panjang"
+    ],
+    "kon": [
+      "Bukti dan saksi semakin tidak reliable seiring waktu, meningkatkan risiko kesalahan penuntutan terhadap individu yang sebenarnya tidak bersalah",
+      "Tanpa batas waktu, terdakwa kehilangan kepastian hukum mendasar — risiko dituntut atas tuduhan puluhan tahun lalu tanpa kemampuan membela diri secara memadai",
+      "Statute of limitations ada untuk alasan praktis fundamental sistem hukum: bukti yang segar menghasilkan proses peradilan yang lebih adil bagi semua pihak",
+      "Beban pembuktian yang semakin sulit seiring waktu berisiko menciptakan persepsi keadilan palsu — kasus dibuka tapi sulit dimenangkan, menciptakan trauma ulang bagi korban tanpa hasil substantif"
+    ],
+    "terms": [
+      "Statute of Limitations",
+      "Forensic Evidence",
+      "Due Process",
+      "Survivor Justice"
+    ],
+    "orig": "This House Would Abolish the Statute of Limitations for Sexual Crimes",
+    "cat": "hukum",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan menghapus batas kadaluarsa (statute of limitations) untuk kejahatan seksual, memungkinkan penuntutan kapan saja terlepas dari berapa lama waktu berlalu sejak kejadian.",
+    "research": "Riset psikologi trauma (terutama terkait kejahatan seksual pada anak dan kekerasan dalam relasi kuasa) konsisten menunjukkan delayed disclosure sebagai pola umum, bukan pengecualian — mendorong banyak yurisdiksi merevisi atau menghapus statute of limitations khusus untuk kategori kejahatan ini dalam dekade terakhir.",
+    "ideal": "<strong>PRO (Ideal):</strong> Anchor ke realitas psikologis trauma kejahatan seksual (delayed disclosure adalah norma, bukan anomali) didukung riset psikologi forensik. Counter argumen \"bukti tidak reliable\" dengan menunjukkan bahwa kemajuan forensik DNA modern justru membuat banyak kasus lama LEBIH bisa dibuktikan secara objektif dibanding mengandalkan testimoni semata.<br><br>\n<strong>OPP (Ideal):</strong> Jangan minimalisir trauma korban — akui validitasnya, tapi pertahankan bahwa due process bagi terdakwa adalah prinsip fundamental yang tidak boleh dikorbankan demi kategori kejahatan manapun. Tawarkan kompromi: perpanjangan signifikan batas waktu (bukan penghapusan total) yang mengakomodasi delayed disclosure tanpa menghilangkan kepastian hukum sepenuhnya."
+  },
+  {
+    "id": "m081",
+    "title": "Korban Menolak Restorative Justice",
+    "pro": [
+      "Sebagai korban, kepentingan utama aktor adalah validasi penuh atas penderitaan yang dialami — restorative justice berisiko memaksakan narasi \"pemaafan\" yang belum tentu sesuai proses emosional korban",
+      "Hukuman maksimal memberi rasa keadilan dan penutupan (closure) yang dibutuhkan korban untuk melanjutkan hidup, dibanding proses restoratif yang hasilnya tidak pasti dan berkepanjangan",
+      "Korban berhak menolak interaksi langsung dengan pelaku yang dipersyaratkan banyak proses restoratif — trauma tidak harus \"diselesaikan\" lewat konfrontasi",
+      "Sebagai aktor yang paling dirugikan, suara korban soal bentuk keadilan yang mereka inginkan harus diprioritaskan di atas preferensi sistem terhadap efisiensi rehabilitasi pelaku"
+    ],
+    "kon": [
+      "Sebagai korban, kepentingan jangka panjang yang sebenarnya (rasa aman komunitas, mencegah residivisme pelaku) lebih terlayani lewat rehabilitasi yang terbukti menurunkan kejahatan berulang dibanding hukuman murni punitif",
+      "Tuntutan hukuman maksimal yang didorong emosi pasca-trauma belum tentu merefleksikan kepentingan korban dalam jangka panjang yang lebih tenang dan reflektif",
+      "Proses restoratif bersifat opsional, bukan paksaan — korban yang menolak partisipasi tetap bisa memilih jalur retributif tanpa kehilangan hak apapun",
+      "Fokus murni pada hukuman maksimal mengabaikan kepentingan korban lain (korban masa depan) yang berisiko terkena residivisme pelaku yang tidak direhabilitasi"
+    ],
+    "terms": [
+      "Victim Agency",
+      "Closure",
+      "Punitive Justice",
+      "Long-term Safety"
+    ],
+    "orig": "As a Crime Victim, This House Would Reject Restorative Justice and Demand Maximum Punishment",
+    "cat": "hukum",
+    "type": "aktor",
+    "ctx": "Sebagai korban kejahatan, Dewan ini akan menolak sistem pemaafan/restorative justice dan menuntut hukuman maksimal terhadap pelaku.",
+    "research": "Studi viktimologi menunjukkan respons emosional korban terhadap kejahatan sangat bervariasi — sebagian korban melaporkan kepuasan lebih tinggi dari proses restoratif (pengakuan langsung pelaku), sementara sebagian lain melaporkan kebutuhan jelas akan hukuman formal sebagai bentuk validasi sosial atas pelanggaran yang dialami. ═══════════════ MATTER BARU — lanjut dari Bab 5 ═══════════════ BAB 6: HUKUM PIDANA LANJUTAN & REFORMASI meta: Mass Incarceration · Drug Policy · Statute of Limitations 6.1 Mass Incarceration & Reformasi Pemasyarakatan [Badge: Kritis] Penjelasan: - Mass incarceration merujuk pada fenomena tingkat pemenjaraan yang sangat tinggi secara historis dan komparatif internasional, sering terkonsentrasi pada kelompok minoritas dan berpenghasilan rendah. - Kebijakan \"tough on crime\" era 1980-90an (mandatory minimum sentencing, three-strikes law) terbukti secara empiris meningkatkan populasi penjara drastis tanpa korelasi proporsional terhadap penurunan tingkat kejahatan. - Reformasi pemasyarakatan modern bergeser ke pendekatan evidence-based: program reentry, alternatif non-custodial untuk kejahatan ringan, dan investasi rehabilitasi vokasional. Matter a: Mandatory minimum sentencing menghilangkan diskresi hakim mempertimbangkan konteks spesifik kasus, menghasilkan hukuman yang sering tidak proporsional dengan tingkat keseriusan kejahatan. Matter b: Privatisasi penjara menciptakan insentif finansial perverse — operator swasta diuntungkan dari tingkat hunian tinggi, bertentangan dengan tujuan rehabilitasi dan pengurangan residivisme. Matter c: Program reentry yang efektif (pelatihan kerja, dukungan perumahan pasca-bebas) terbukti secara signifikan menurunkan tingkat residivisme dibanding pemenjaraan tanpa persiapan reintegrasi sosial. Pro: Reformasi menuju decarceration yang terukur untuk kejahatan non-kekerasan mengurangi beban fiskal negara sambil meningkatkan keamanan publik jangka panjang lewat rehabilitasi efektif. Kon: Penurunan drastis populasi penjara tanpa investasi memadai dalam sistem pendukung sosial berisiko meningkatkan tingkat kejahatan jalanan dan mengikis rasa aman publik. 6.2 Reformasi Kebijakan Narkotika [Badge: Kontroversial] Penjelasan: - Spektrum kebijakan narkotika berkisar dari kriminalisasi penuh, dekriminalisasi (penggunaan tidak dipidana tapi tetap ilegal), hingga legalisasi penuh dengan regulasi ketat. - \"War on Drugs\" yang dimulai era 1970an di berbagai negara terbukti secara luas gagal menurunkan tingkat penggunaan narkotika sambil menciptakan biaya sosial masif (mass incarceration, kekerasan terkait perdagangan ilegal). - Model harm reduction (jarum suntik steril, naloxone untuk overdosis opioid, supervised injection sites) berfokus mengurangi dampak kesehatan tanpa syarat penghentian penggunaan total. Matter a: Dekriminalisasi penggunaan personal memungkinkan alokasi sumber daya penegakan hukum dialihkan ke pemberantasan jaringan distribusi skala besar yang lebih membahayakan publik. Matter b: Legalisasi dengan regulasi ketat (model ganja di beberapa negara bagian AS) menciptakan pendapatan pajak signifikan sambil mengurangi pasar gelap dan kekerasan terkait. Matter c: Harm reduction tidak sama dengan endorsement penggunaan narkotika — fokusnya murni pada penyelamatan nyawa dan pencegahan penularan penyakit terkait penggunaan jarum. Pro: Pendekatan kesehatan publik terbukti secara empiris lebih efektif menurunkan dampak negatif penggunaan narkotika dibanding pendekatan kriminalisasi murni yang terbukti gagal selama lima dekade. Kon: Liberalisasi kebijakan narkotika berisiko mengirim sinyal normalisasi yang bisa meningkatkan angka penggunaan baru, terutama di kalangan remaja yang rentan. 6.3 Statute of Limitations untuk Kejahatan Seksual [Badge: Applied] Penjelasan: - Justifikasi tradisional statute of limitations meliputi kepastian hukum bagi terdakwa, kualitas bukti yang menurun seiring waktu, dan dorongan pelaporan cepat dari korban. - Riset psikologi trauma menunjukkan delayed disclosure (pelaporan tertunda bertahun-tahun) adalah pola umum pada korban kejahatan seksual, terutama yang melibatkan relasi kuasa atau korban anak-anak. - Tren legislatif di berbagai negara bergerak ke arah perpanjangan signifikan atau penghapusan total statute of limitations khusus kategori kejahatan seksual, berbeda dari kejahatan lain. Matter a: Revisi undang-undang yang memperpanjang (bukan menghapus total) batas waktu pelaporan adalah jalan tengah yang mengakomodasi realitas psikologis korban tanpa mengorbankan due process sepenuhnya. Matter b: Ketersediaan bukti forensik modern (DNA, rekam digital) mengubah kalkulasi tradisional soal \"bukti yang memudar seiring waktu\" untuk kategori kejahatan tertentu. Matter c: Perbedaan perlakuan statute of limitations antara kejahatan seksual dan kejahatan lain membutuhkan justifikasi yang konsisten secara prinsip, bukan respons ad-hoc terhadap tekanan publik. Pro: Reformasi statute of limitations yang mengakomodasi delayed disclosure adalah koreksi terhadap sistem hukum yang secara struktural dirancang tanpa mempertimbangkan realitas psikologis korban kejahatan seksual. Kon: Pengecualian kategori kejahatan tertentu dari prinsip umum statute of limitations berisiko menciptakan precedent yang mengikis konsistensi dan prediktabilitas sistem hukum secara keseluruhan. BAB 7: TEKNOLOGI & HUKUM meta: AI Liability · Digital Privacy Law · Cybercrime Jurisdiction 7.1 Tanggung Jawab Hukum atas Keputusan AI [Badge: Frontier] Penjelasan: - Sistem hukum tanggung jawab tradisional (liability law) dirancang dengan asumsi agen pengambil keputusan adalah manusia atau entitas korporasi yang jelas — AI sebagai pengambil keputusan otonom menciptakan celah hukum baru. - Pertanyaan kunci: ketika sistem AI membuat keputusan merugikan (kecelakaan kendaraan otonom, diskriminasi algoritmik dalam kredit), siapa yang bertanggung jawab — pengembang, operator, atau entitas AI itu sendiri? - Beberapa yurisdiksi mulai mengeksplorasi kerangka \"strict liability\" bagi pengembang AI berisiko tinggi, mirip kerangka tanggung jawab produk cacat dalam hukum konsumen. Matter a: Strict liability bagi pengembang AI mendorong investasi keamanan lebih besar sejak tahap desain, namun berisiko menghambat inovasi terutama bagi pengembang skala kecil. Matter b: Transparansi algoritma (explainability requirement) jadi prasyarat penting menentukan tanggung jawab hukum — sulit menentukan kesalahan dalam sistem \"black box\" yang keputusannya tidak bisa ditelusuri. Matter c: Kerangka tanggung jawab berlapis (pengembang, operator, pengguna) yang proporsional terhadap tingkat kontrol masing-masing pihak lebih adil dibanding membebankan tanggung jawab penuh ke satu pihak saja. Pro: Kerangka hukum tanggung jawab AI yang jelas adalah prasyarat penting bagi adopsi teknologi yang bertanggung jawab dan melindungi korban kerugian akibat keputusan algoritmik. Kon: Regulasi tanggung jawab yang terlalu ketat sejak dini berisiko menghambat inovasi AI yang justru berpotensi besar menyelesaikan masalah sosial signifikan (diagnosis medis, efisiensi energi). 7.2 Hukum Privasi Digital [Badge: Kontemporer] Penjelasan: - Regulasi privasi data modern (seperti GDPR Uni Eropa) memberi individu hak kontrol signifikan atas data pribadi mereka — hak akses, hak dilupakan (right to be forgotten), hak portabilitas data. - Tension struktural antara model bisnis platform digital (yang bergantung pada monetisasi data pengguna) dan hak privasi individu menciptakan insentif perverse dalam kepatuhan regulasi. - Yurisdiksi lintas negara jadi tantangan signifikan — perusahaan teknologi global beroperasi di banyak negara dengan standar privasi yang sangat bervariasi. Matter a: Hak dilupakan (right to be forgotten) menciptakan ketegangan dengan kebebasan informasi publik dan akurasi catatan historis yang perlu diselesaikan kasus per kasus. Matter b: Regulasi privasi yang ketat (GDPR-style) menciptakan biaya kepatuhan tinggi yang proporsional lebih membebani startup kecil dibanding korporasi teknologi raksasa yang sudah punya infrastruktur kepatuhan. Matter c: Consent-based privacy framework (persetujuan pengguna) sering gagal secara praktis karena kompleksitas kebijakan privasi yang jarang benar-benar dibaca dan dipahami pengguna. Pro: Regulasi privasi data yang kuat mengembalikan keseimbangan kekuasaan antara individu dan korporasi teknologi yang selama ini secara struktural timpang dalam ekonomi data. Kon: Fragmentasi regulasi privasi antarnegara menciptakan kompleksitas kepatuhan yang menghambat inovasi dan interoperabilitas layanan digital lintas batas. 7.3 Bukti Digital & Pengawasan Aparat [Badge: Applied] Penjelasan: - Bukti digital (rekaman body cam, CCTV, data lokasi ponsel) semakin jadi elemen sentral proses peradilan pidana modern, menggantikan ketergantungan murni pada testimoni saksi. - Chain of custody (rantai penyimpanan bukti) untuk bukti digital menghadapi tantangan unik — kemudahan manipulasi/edit digital membutuhkan protokol verifikasi keaslian yang lebih ketat dibanding bukti fisik tradisional. - Akses publik terhadap rekaman pengawasan aparat (body cam, CCTV milik negara) jadi area abu-abu hukum — antara kepentingan transparansi publik dan privasi individu yang terekam. Matter a: Standar verifikasi keaslian bukti digital (digital forensics protocol) perlu terus diperbarui seiring kemajuan teknologi manipulasi (deepfake, editing canggih). Matter b: Kebijakan retensi data rekaman pengawasan (berapa lama disimpan, siapa yang punya akses) sama pentingnya dengan kebijakan pengumpulan data itu sendiri dalam melindungi privasi. Matter c: Bukti digital yang dikumpulkan tanpa surat perintah yang sah (warrant) menciptakan perdebatan signifikan soal batas pengawasan negara yang sah secara konstitusional. Pro: Bukti digital yang terverifikasi dengan baik secara signifikan meningkatkan akurasi dan objektivitas proses peradilan dibanding ketergantungan murni pada testimoni manusia yang rentan bias dan memori tidak akurat. Kon: Ketergantungan berlebihan pada bukti digital tanpa kerangka hukum privasi yang kuat berisiko menciptakan masyarakat pengawasan (surveillance society) yang mengikis kebebasan sipil fundamental. 7.4 Yurisdiksi Lintas Negara untuk Kejahatan Siber [Badge: Applied] Penjelasan: - Kejahatan siber secara inheren bersifat lintas batas — pelaku, infrastruktur, dan korban sering berada di yurisdiksi hukum yang berbeda, menciptakan kompleksitas penegakan hukum signifikan. - Perjanjian ekstradisi dan kerja sama hukum mutual (Mutual Legal Assistance Treaty/MLAT) sering terlalu lambat untuk mengimbangi kecepatan kejahatan siber yang bisa terjadi dalam hitungan detik. - Konvensi Budapest tentang kejahatan siber adalah salah satu kerangka kerja sama internasional utama, namun tidak diratifikasi seluruh negara, menciptakan \"safe haven\" digital di yurisdiksi yang tidak ikut serta. Matter a: Kerja sama penegakan hukum siber internasional yang efektif membutuhkan harmonisasi definisi kejahatan siber antarnegara yang saat ini masih sangat bervariasi. Matter b: Negara dengan kapasitas teknis forensik digital terbatas seringkali bergantung pada kerja sama dengan negara maju, menciptakan ketimpangan kapasitas penegakan hukum global. Matter c: Prinsip kedaulatan data (data sovereignty) — di mana data harus disimpan dan hukum mana yang berlaku — menciptakan ketegangan dengan kebutuhan investigasi kejahatan siber lintas batas yang cepat. Pro: Harmonisasi kerangka hukum siber internasional krusial mencegah pelaku kejahatan siber memanfaatkan celah yurisdiksi sebagai perlindungan dari penegakan hukum. Kon: Harmonisasi hukum siber internasional yang dipaksakan berisiko mengabaikan perbedaan legitimate nilai dan prioritas hukum antarnegara, terutama terkait kebebasan berekspresi digital. ################################################ # 🔮 FILSAFAT ################################################ ═══════════════ MOTION BARU (m082–m087) ═══════════════",
+    "ideal": "<strong>PRO (Ideal):</strong> Linkback konsisten ke otonomi dan agency korban sebagai aktor utama — argue bahwa sistem peradilan yang memaksa atau bahkan secara halus \"mendorong\" korban ke arah restorative justice (demi statistik residivisme rendah) mengabaikan hak korban menentukan sendiri bentuk keadilan yang mereka butuhkan secara emosional dan psikologis.<br><br>\n<strong>OPP (Ideal):</strong> Tetap linkback ke kepentingan korban, tapi reframe \"kepentingan korban\" secara lebih luas — bukan cuma kepuasan emosional jangka pendek, tapi juga keamanan jangka panjang dari residivisme pelaku dan keamanan calon korban masa depan, yang secara empiris lebih terlayani oleh pendekatan rehabilitatif."
+  },
+  {
+    "id": "m082",
+    "title": "Keadilan Distributif Vs Prosedural",
+    "pro": [
+      "Proses yang \"adil secara prosedural\" bisa tetap menghasilkan ketimpangan ekstrem ketika starting point para pihak sudah sangat timpang sejak awal",
+      "Keadilan distributif lebih langsung mengatasi penderitaan riil (kemiskinan, akses kesehatan) dibanding sekadar memastikan aturan main diterapkan konsisten",
+      "Rawls' veil of ignorance menunjukkan bahwa di balik tabir ketidaktahuan posisi sosial kita, rasional untuk memprioritaskan hasil akhir yang adil bagi yang paling dirugikan",
+      "Fokus murni pada prosedur sering jadi alibi mempertahankan status quo yang tidak adil selama prosesnya \"terlihat\" netral"
+    ],
+    "kon": [
+      "Keadilan distributif yang mengabaikan proses berisiko membenarkan otoritarianisme — pemerintah bisa mengklaim \"hasil adil\" untuk membenarkan pelanggaran proses hukum dan hak individu",
+      "Tanpa keadilan prosedural yang kuat, tidak ada cara objektif menentukan distribusi seperti apa yang sebenarnya \"adil\" — ini jadi keputusan sewenang-wenang penguasa",
+      "Keadilan prosedural melindungi hak individu dari pengorbanan demi \"kebaikan kolektif\" yang didefinisikan sepihak oleh mereka yang berkuasa",
+      "Secara historis, sistem yang mengorbankan proses demi hasil (rezim komunis abad 20) justru menghasilkan ketidakadilan distributif yang lebih parah dalam praktiknya"
+    ],
+    "terms": [
+      "Distributive Justice",
+      "Procedural Justice",
+      "Veil of Ignorance",
+      "Rawlsian Theory"
+    ],
+    "orig": "Distributive Justice Is More Important Than Procedural Justice",
+    "cat": "filosofi",
+    "type": "pandangan",
+    "ctx": "Dewan ini berpandangan keadilan distributif (hasil akhir yang adil bagi semua pihak) lebih penting daripada keadilan prosedural (proses pengambilan keputusan yang adil dan konsisten).",
+    "research": "John Rawls dalam \"A Theory of Justice\" mengusulkan dua prinsip keadilan yang saling melengkapi — kebebasan dasar yang setara (terkait prosedural) dan prinsip perbedaan yang memprioritaskan kelompok paling dirugikan (terkait distributif) — menunjukkan bahwa dikotomi distributif-prosedural mungkin lebih bersifat saling melengkapi daripada saling bertentangan dalam teori keadilan yang matang.",
+    "ideal": "<strong>PRO (Ideal):</strong> Gunakan Rawls secara presisi — bukan untuk mengabaikan prosedur sepenuhnya, tapi untuk establish bahwa prosedur HANYA bernilai instrumental terhadap hasil yang adil, bukan bernilai intrinsik. Bangun dunia di mana ketika prosedur \"adil\" konsisten menghasilkan ketimpangan struktural (kemiskinan antargenerasi), maka prosedur itu sendiri perlu dikoreksi demi keadilan distributif yang lebih substantif.<br><br>\n<strong>OPP (Ideal):</strong> Pertahankan nilai intrinsik prosedur sebagai pelindung terhadap arbitrary power — argue bahwa begitu masyarakat menerima \"hasil adil\" sebagai justifikasi mengabaikan proses, tidak ada batasan prinsipiil mencegah penyalahgunaan kekuasaan atas nama \"keadilan\" yang didefinisikan sepihak oleh penguasa."
+  },
+  {
+    "id": "m083",
+    "title": "Dunia Tanpa Kepemilikan Pribadi",
+    "pro": [
+      "Tanpa kepemilikan pribadi, konflik dan kekerasan terkait akumulasi dan pertahanan kekayaan individual yang menjadi sumber utama ketimpangan sosial sepanjang sejarah tidak akan pernah muncul",
+      "Dunia tanpa kepemilikan pribadi menghilangkan insentif eksploitasi sumber daya alam demi akumulasi pribadi, berpotensi menciptakan hubungan manusia-alam yang lebih berkelanjutan",
+      "Struktur sosial berbasis kebutuhan kolektif (bukan akumulasi individual) bisa mendorong kerja sama dan solidaritas komunitas yang lebih kuat sebagai norma dasar peradaban",
+      "Tanpa konsep kepemilikan, hierarki sosial berbasis kekayaan warisan tidak akan terbentuk, menciptakan starting point yang lebih setara bagi setiap generasi"
+    ],
+    "kon": [
+      "Tanpa insentif kepemilikan pribadi, motivasi inovasi dan produktivitas individual berkurang drastis — sejarah ekonomi komando menunjukkan stagnasi yang konsisten",
+      "Kepemilikan pribadi memberi ruang otonomi dan identitas individual yang esensial bagi perkembangan psikologis manusia yang sehat",
+      "Pengelolaan kolektif sumber daya tanpa kepemilikan jelas secara historis rentan terhadap \"tragedy of the commons\" — eksploitasi berlebih karena tidak ada yang merasa bertanggung jawab penuh",
+      "Dunia tanpa kepemilikan pribadi membutuhkan otoritas kolektif yang sangat kuat untuk mengelola distribusi, menciptakan risiko konsentrasi kekuasaan politik yang justru lebih berbahaya"
+    ],
+    "terms": [
+      "Private Property",
+      "Commons",
+      "Collective Ownership",
+      "Tragedy of the Commons"
+    ],
+    "orig": "This House Would Choose a World Without the Concept of Private Property",
+    "cat": "filosofi",
+    "type": "memilih",
+    "ctx": "Dewan ini memilih dunia di mana konsep kepemilikan pribadi tidak pernah ada — segala sumber daya dikelola secara kolektif/komunal sejak awal peradaban manusia.",
+    "research": "Antropolog Elinor Ostrom (Nobel Ekonomi 2009) menunjukkan lewat studi empiris bahwa pengelolaan sumber daya bersama (commons) BISA berkelanjutan tanpa kepemilikan privat penuh, asalkan ada institusi komunal yang kuat — menantang asumsi \"tragedy of the commons\" sebagai hasil inevitable, namun tetap menekankan pentingnya struktur kelembagaan yang dirancang baik.",
+    "ideal": "<strong>PRO (Ideal):</strong> Manfaatkan fiat penuh worldbuilding — bangun dunia dari nol di mana norma sosial, psikologi manusia, dan struktur insentif SEMUA terbentuk dalam konteks tanpa kepemilikan pribadi sejak awal (bukan transisi paksa dari dunia yang sudah terbiasa kepemilikan). Establish bahwa \"tragedy of the commons\" adalah fenomena spesifik konteks tertentu (sumber daya tanpa norma sosial kuat), bukan hukum besi yang inevitable dalam segala desain masyarakat kolektif.<br><br>\n<strong>OPP (Ideal):</strong> Bertahan di status quo dengan kepemilikan pribadi yang ada — argue bahwa bahkan dalam dunia hipotetis yang dibangun dari nol, motivasi psikologis dasar manusia (rasa kepemilikan, otonomi individual) bersifat universal lintas budaya dan periode sejarah, bukan semata konstruksi sosial yang bisa dihapus lewat worldbuilding."
+  },
+  {
+    "id": "m084",
+    "title": "Free Will Sebagai Ilusi Berbahaya",
+    "pro": [
+      "Determinisme ilmiah (neurosains, fisika klasik) menunjukkan setiap keputusan manusia adalah hasil rantai sebab-akibat yang secara prinsip bisa ditelusuri, bukan kehendak bebas murni",
+      "Penelitian psikologi menunjukkan ketika orang diberitahu free will tidak nyata, kecenderungan perilaku tidak etis (curang, agresi) meningkat — menunjukkan kepercayaan pada free will berfungsi sebagai pengikat moral sosial",
+      "Sistem hukuman pidana yang berbasis \"tanggung jawab moral penuh\" individual menjadi tidak koheren secara filosofis jika free will adalah ilusi",
+      "Society yang mengetahui free will adalah ilusi berisiko kehilangan basis motivasional untuk perbaikan diri dan pertanggungjawaban personal yang krusial bagi kohesi sosial"
+    ],
+    "kon": [
+      "Determinisme di level fisika tidak otomatis berarti tidak ada free will yang relevan secara moral — compatibilism menunjukkan kehendak bebas bisa koheren dalam kerangka deterministik",
+      "Bahaya sosial dari kepercayaan terhadap \"tidak ada free will\" adalah masalah komunikasi dan edukasi filosofis, bukan argumen menolak kebenaran ilmiah itu sendiri",
+      "Masyarakat bisa membangun sistem moral dan hukum yang koheren berbasis tanggung jawab kausal (bukan free will metafisik), tanpa kehilangan basis akuntabilitas sosial",
+      "Menyembunyikan kebenaran filosofis/ilmiah demi \"menjaga moralitas sosial\" adalah paternalisme epistemik yang berbahaya dan tidak konsisten dengan nilai pencarian kebenaran"
+    ],
+    "terms": [
+      "Determinism",
+      "Compatibilism",
+      "Moral Responsibility",
+      "Neuroscience of Decision-Making"
+    ],
+    "orig": "Free Will Is an Illusion That Endangers Social Morality",
+    "cat": "filosofi",
+    "type": "pandangan",
+    "ctx": "Dewan ini berpandangan kebebasan berkehendak (free will) adalah ilusi yang membahayakan moralitas sosial ketika masyarakat secara luas menyadari dan menginternalisasi fakta ini.",
+    "research": "Studi psikologi sosial oleh Vohs & Schooler (2008) yang sering dirujuk menunjukkan priming \"tidak ada free will\" meningkatkan perilaku curang dalam eksperimen laboratorium, namun penelitian replikasi berikutnya (termasuk dalam proyek replikasi besar psikologi) menunjukkan hasil yang jauh lebih lemah dan tidak konsisten, menambah kompleksitas debat empiris ini.",
+    "ideal": "<strong>PRO (Ideal):</strong> Pisahkan klaim metafisik (apakah free will benar-benar ada) dari klaim sosial (apa dampak kepercayaan terhadap free will pada perilaku masyarakat) — fokuskan case ke klaim kedua yang lebih defensible dan didukung data empiris psikologi sosial, hindari terjebak debat metafisika murni yang sulit dimenangkan definitif.<br><br>\n<strong>OPP (Ideal):</strong> Serang langsung asumsi causal PRO — tunjukkan bahwa studi psikologi soal \"priming\" kepercayaan free will punya replikasi yang kontroversial dan ukuran efek kecil, sementara compatibilism menawarkan jalan keluar filosofis yang mempertahankan baik kebenaran ilmiah determinisme MAUPUN basis moral masyarakat yang koheren."
+  },
+  {
+    "id": "m085",
+    "title": "Utilitarianisme Sebagai Dasar Kebijakan",
+    "pro": [
+      "Utilitarianisme memberi kerangka pengambilan keputusan yang konsisten dan dapat diukur secara empiris, mengurangi arbitrer dan bias ideologis dalam kebijakan publik",
+      "Fokus pada maksimalisasi kesejahteraan agregat secara langsung mengatasi pertanyaan inti kebijakan publik: bagaimana mengalokasikan sumber daya terbatas demi manfaat terbesar",
+      "Kerangka cost-benefit analysis berbasis utilitarian sudah jadi standar de facto evaluasi kebijakan modern (analisis QALY kesehatan, analisis biaya-manfaat infrastruktur)",
+      "Pendekatan tunggal yang konsisten mengurangi inkonsistensi kebijakan yang muncul dari kompromi ad-hoc antara kerangka etika yang saling bertentangan"
+    ],
+    "kon": [
+      "Utilitarianisme murni bisa membenarkan pengorbanan hak fundamental minoritas demi kebahagiaan agregat mayoritas — masalah klasik \"tirani mayoritas\" dalam bentuk filosofis",
+      "Kesejahteraan dan kebahagiaan sangat sulit diukur secara objektif dan dibandingkan antarindividu (problem interpersonal utility comparison), membuat aplikasi praktisnya problematik",
+      "Beberapa hak (kebebasan beragama, hak hidup) seharusnya bersifat non-negotiable, tidak bisa dikalkulasi ulang setiap kali muncul skenario \"manfaat agregat lebih besar\"",
+      "Kebijakan publik real-world butuh kombinasi kerangka etika (utilitarian untuk efisiensi, deontologis untuk hak fundamental) karena tidak ada kerangka tunggal yang mencakup seluruh kompleksitas moral kebijakan"
+    ],
+    "terms": [
+      "Utilitarianism",
+      "Aggregate Welfare",
+      "Interpersonal Utility Comparison",
+      "Rights-Based Constraints"
+    ],
+    "orig": "This House Would Adopt Utilitarianism as the Sole Basis for Public Policy",
+    "cat": "filosofi",
+    "type": "kebijakan",
+    "ctx": "Dewan ini akan menerapkan prinsip utilitarianisme (memaksimalkan kebahagiaan/kesejahteraan agregat) sebagai dasar tunggal pengambilan kebijakan publik, menggantikan kerangka campuran yang ada saat ini.",
+    "research": "Filsuf John Rawls mengkritik utilitarianisme murni karena gagal menghormati \"keterpisahan personal\" (separateness of persons) — agregasi kesejahteraan mengabaikan fakta bahwa pengorbanan satu individu tidak benar-benar \"dikompensasi\" oleh manfaat yang diterima individu lain, kritik fundamental yang mendasari banyak kerangka kebijakan publik kontemporer yang menggabungkan elemen utilitarian dan rights-based.",
+    "ideal": "<strong>PRO (Ideal):</strong> Jangan klaim utilitarianisme \"murni tanpa batasan\" — argue untuk rule utilitarianism (aturan yang secara umum memaksimalkan kesejahteraan, termasuk aturan melindungi hak individu karena perlindungan hak terbukti secara agregat meningkatkan kesejahteraan jangka panjang) dibanding act utilitarianism naif yang rentan masalah tirani mayoritas.<br><br>\n<strong>OPP (Ideal):</strong> Tunjukkan bahwa act utilitarianism maupun rule utilitarianism tetap menghadapi masalah pengukuran utilitas yang fundamental — tanpa metrik objektif membandingkan kesejahteraan antarindividu, \"kebijakan berbasis utilitarianisme murni\" pada praktiknya tetap akan jadi keputusan subjektif pembuat kebijakan yang menyamarkan diri sebagai kalkulasi objektif."
+  },
+  {
+    "id": "m086",
+    "title": "Dominasi Filsafat Barat",
+    "pro": [
+      "Status quo: kurikulum filsafat di banyak universitas global (termasuk di negara non-Barat) didominasi tradisi Yunani-Eropa, mengabaikan tradisi filsafat Afrika, Asia, dan pribumi yang sama kayanya",
+      "Dominasi ini menciptakan epistemic injustice — sistem pengetahuan non-Barat secara sistematis dianggap \"kurang rigorous\" atau \"sekadar budaya\" dibanding filsafat Barat yang dianggap universal",
+      "Banyak isu kontemporer global (keadilan lingkungan, etika komunitas) bisa mendapat perspektif lebih kaya dari tradisi non-Barat (Ubuntu Afrika, filsafat Konfusian) yang justru lebih relevan untuk konteks tersebut",
+      "Counterfactual: tanpa dominasi ini, wacana filsafat global akan jauh lebih plural dan kaya perspektif, menghasilkan analisis kebijakan dan etika yang lebih kontekstual dan inklusif"
+    ],
+    "kon": [
+      "Dominasi tradisi tertentu dalam disiplin akademik bukan unik filsafat Barat — setiap tradisi keilmuan punya kanon yang berkembang historis berdasarkan dokumentasi dan diseminasi tekstual yang tersedia",
+      "Banyak konsep filsafat Barat (hak asasi manusia, demokrasi liberal) sudah terbukti punya aplikasi universal yang bermanfaat lintas budaya, terlepas dari asal-usul geografisnya",
+      "Upaya \"dekolonisasi\" kurikulum filsafat berisiko jadi tokenism dangkal jika tidak disertai engagement substantif dan rigorous dengan tradisi non-Barat, bukan sekadar checklist representasi",
+      "Filsafat sebagai disiplin akademik modern memang berakar historis di tradisi tertentu — ini fakta historis, bukan otomatis berarti tradisi lain \"ditekan\" secara aktif"
+    ],
+    "terms": [
+      "Epistemic Injustice",
+      "Western-Centrism",
+      "Comparative Philosophy",
+      "Decolonization of Knowledge"
+    ],
+    "orig": "This House Regrets the Western-Centric Dominance in Global Philosophical Discourse",
+    "cat": "filosofi",
+    "type": "penyesalan",
+    "ctx": "Dewan ini menyesali dominasi pemikiran Barat (Western-centric) dalam wacana filsafat global, termasuk dalam kurikulum akademik dan kerangka analisis isu-isu kontemporer.",
+    "research": "Filsuf Miranda Fricker dalam \"Epistemic Injustice\" (2007) mengembangkan konsep testimonial injustice dan hermeneutical injustice — menunjukkan bagaimana kelompok tertentu secara sistematis kehilangan kredibilitas sebagai penghasil pengetahuan, kerangka yang banyak diaplikasikan kritikus dekolonial terhadap dominasi epistemik Barat dalam akademia global.",
+    "ideal": "<strong>PRO (Ideal):</strong> Gunakan kontrafaktual untuk menunjukkan loss konkret — pilih satu isu kontemporer spesifik (misal etika lingkungan) dan tunjukkan bagaimana tradisi non-Barat (filsafat ekologis pribumi, Ubuntu) menawarkan kerangka yang secara substantif berbeda dan berpotensi lebih efektif dibanding kerangka individualis Barat yang dominan saat ini. Anchor ke konsep epistemic injustice (Miranda Fricker) sebagai kerugian nyata, bukan sekadar soal representasi simbolik.<br><br>\n<strong>OPP (Ideal):</strong> Akui ada masalah representasi, tapi serang frame \"penyesalan\" sebagai terlalu sederhana — argue bahwa solusinya bukan menyesali dominasi historis (yang punya akar kompleks: kolonialisme, tradisi tekstual, infrastruktur akademik), tapi investasi aktif ke depan dalam riset dan pengajaran filsafat komparatif, tanpa perlu kerangka \"penyesalan\" yang implikasinya retrospektif dan kurang konstruktif."
+  },
+  {
+    "id": "m087",
+    "title": "Nihilisme Eksistensial",
+    "pro": [
+      "Tanpa makna objektif yang dipaksakan dari luar (agama, tradisi, ekspektasi sosial), individu memiliki kebebasan radikal menciptakan makna mereka sendiri secara otentik",
+      "Nihilisme membebaskan individu dari beban mencari \"tujuan kosmik\" yang sering menjadi sumber kecemasan eksistensial ketika pencarian tersebut gagal menemukan jawaban memuaskan",
+      "Penerimaan terhadap ketiadaan makna objektif mendorong penghargaan lebih dalam terhadap momen dan pengalaman konkret kehidupan, bukan penundaan kebahagiaan demi tujuan abstrak masa depan",
+      "Filsuf eksistensialis (Camus, Sartre) menunjukkan bahwa justru dari pengakuan absurditas inilah lahir kebebasan otentik untuk hidup sesuai nilai yang dipilih sendiri, bukan diwariskan"
+    ],
+    "kon": [
+      "Tanpa kerangka makna yang stabil, individu rentan terhadap nihilisme destruktif — apati, depresi eksistensial, dan hilangnya motivasi bertindak secara bermakna",
+      "Masyarakat membutuhkan kerangka makna kolektif (nilai bersama, narasi budaya) untuk menjaga kohesi sosial — nihilisme radikal yang diinternalisasi luas berisiko mengikis solidaritas komunitas",
+      "\"Menciptakan makna sendiri\" secara praktis sangat sulit bagi kebanyakan orang tanpa privilese filosofis (waktu, pendidikan, stabilitas) yang dimiliki para filsuf eksistensialis itu sendiri",
+      "Penelitian psikologi menunjukkan rasa memiliki makna hidup (meaning in life) berkorelasi kuat dengan kesejahteraan mental — nihilisme yang tidak diimbangi konstruksi makna baru berisiko merugikan kesehatan mental"
+    ],
+    "terms": [
+      "Existential Nihilism",
+      "Absurdism",
+      "Self-Created Meaning",
+      "Existential Anxiety"
+    ],
+    "orig": "Existential Nihilism Is More Liberating Than Destructive to the Meaning of Life",
+    "cat": "filosofi",
+    "type": "pandangan",
+    "ctx": "Dewan ini berpandangan nihilisme eksistensial (pandangan bahwa hidup secara inheren tidak memiliki makna objektif) lebih membebaskan daripada menghancurkan makna hidup individu.",
+    "research": "Albert Camus dalam \"The Myth of Sisyphus\" mengartikulasikan absurdism — bukan menyerah pada ketiadaan makna (nihilisme pasif) atau lompatan iman religius, melainkan \"pemberontakan\" terus-menerus menciptakan makna meski mengetahui absurditas fundamental eksistensi, kerangka yang berbeda signifikan dari nihilisme destruktif murni. ═══════════════ MATTER BARU — lanjut dari Bab 4 ═══════════════ BAB 5: FILSAFAT PIKIRAN & KEHENDAK BEBAS meta: Free Will · Determinism · Personal Identity · Nihilism 5.1 Free Will vs Determinism — Implikasi Moral [Badge: Foundational] Penjelasan: - Determinisme keras (hard determinism) berpendapat seluruh peristiwa termasuk keputusan manusia ditentukan sepenuhnya oleh sebab-akibat sebelumnya, menghilangkan ruang bagi kehendak bebas genuine. - Libertarianisme metafisik (berbeda dari libertarianisme politik) mempertahankan bahwa manusia memiliki kehendak bebas genuine yang tidak sepenuhnya ditentukan sebab-akibat fisik. - Compatibilism mencoba mendamaikan keduanya — berargumen bahwa kehendak bebas yang relevan secara moral kompatibel dengan determinisme kausal, selama tindakan berasal dari keinginan dan deliberasi internal individu (bukan paksaan eksternal). Matter a: Implikasi praktis determinisme keras terhadap sistem hukum pidana sangat signifikan — jika tidak ada kehendak bebas genuine, konsep \"kesalahan moral\" yang mendasari hukuman retributif menjadi problematik secara filosofis. Matter b: Compatibilism menawarkan jalan tengah praktis yang mempertahankan akuntabilitas moral sambil mengakui realitas ilmiah determinisme kausal di level neurologis dan fisik. Matter c: Eksperimen neurosains (seperti studi Libet tentang aktivitas otak sebelum kesadaran keputusan) memicu perdebatan signifikan soal kapan sebenarnya \"keputusan\" terjadi dalam proses neurologis. Pro: Memahami implikasi determinisme terhadap moralitas krusial untuk merancang sistem hukum dan etika sosial yang koheren secara filosofis, bukan berbasis asumsi metafisik yang tidak teruji. Kon: Perdebatan metafisik tentang free will, meski menarik secara filosofis, memiliki dampak praktis terbatas — masyarakat tetap perlu sistem akuntabilitas fungsional terlepas dari resolusi perdebatan metafisik tersebut. 5.2 Personal Identity & Teleportasi Pikiran [Badge: Advanced] Penjelasan: - Teori identitas personal mempertanyakan apa yang membuat seseorang tetap \"orang yang sama\" sepanjang waktu meski sel tubuh dan pikiran terus berubah — psychological continuity theory vs biological continuity theory. - Thought experiment teleportasi (Star Trek-style: tubuh dihancurkan di satu tempat, direkonstruksi identik di tempat lain) menguji intuisi kita soal apakah \"orang yang sama\" benar-benar berpindah atau sekadar kopi identik tercipta. - Implikasi praktis muncul dalam konteks teknologi mind-uploading dan AI yang mengklaim mereplikasi kesadaran manusia — apakah replika digital adalah \"kelanjutan\" identitas asli atau entitas baru sepenuhnya? Matter a: Psychological continuity theory (identitas didasarkan kesinambungan memori dan kepribadian) menghadapi masalah serius pada kasus amnesia total atau perubahan kepribadian drastis. Matter b: Thought experiment teleportasi mengungkap intuisi yang terpecah — sebagian orang menganggap proses ini sebagai \"kematian diikuti penciptaan kopi\", sementara lainnya menganggapnya kelanjutan identitas yang sah. Matter c: Pertanyaan identitas personal punya implikasi etis langsung terhadap teknologi mind-uploading masa depan — apakah \"mengunggah kesadaran\" benar-benar menyelamatkan individu atau sekadar menciptakan duplikat yang percaya dirinya adalah orang asli. Pro: Kejelasan filosofis tentang identitas personal penting mengantisipasi dilema etis yang akan muncul seiring kemajuan teknologi neurosains dan kecerdasan buatan yang semakin mendekati simulasi kesadaran manusia. Kon: Thought experiment ekstrem seperti teleportasi mungkin tidak memberikan panduan praktis bermakna karena terlalu jauh dari pengalaman dan teknologi nyata yang akan dihadapi masyarakat dalam waktu dekat. 5.3 Nihilisme Eksistensial & Makna Hidup [Badge: Klasik] Penjelasan: - Nihilisme eksistensial dibedakan dari nihilisme moral (tidak ada nilai moral objektif) dan nihilisme epistemologis (tidak ada pengetahuan objektif) — fokusnya spesifik pada ketiadaan makna atau tujuan inheren dalam eksistensi. - Tradisi eksistensialis (Kierkegaard, Nietzsche, Sartre, Camus) merespons \"krisis makna\" modern dengan cara berbeda — dari lompatan iman religius hingga penciptaan makna otentik lewat kebebasan radikal. - Psikologi eksistensial kontemporer (Viktor Frankl, logotherapy) berargumen bahwa pencarian makna adalah kebutuhan psikologis fundamental manusia, terlepas dari pertanyaan metafisik apakah makna tersebut objektif atau diciptakan. Matter a: Nietzsche's \"death of God\" merujuk pada hilangnya kerangka makna transenden tradisional dalam masyarakat modern sekuler, memaksa individu menciptakan nilai mereka sendiri (\"revaluation of all values\"). Matter b: Logotherapy Viktor Frankl (dikembangkan dari pengalamannya di kamp konsentrasi) menunjukkan bahwa pencarian makna tetap memungkinkan bahkan dalam kondisi penderitaan ekstrem, menjadi sumber resiliensi psikologis. Matter c: Perbedaan antara nihilisme pasif (penyerahan diri pada ketiadaan makna) dan nihilisme aktif/absurdism (pemberontakan terus-menerus menciptakan makna meski mengetahui absurditas) krusial dalam evaluasi dampak psikologis nihilisme. Pro: Konfrontasi jujur dengan ketiadaan makna objektif, meski awalnya mencemaskan, pada akhirnya bisa membebaskan individu dari beban ekspektasi eksternal dan mendorong penciptaan makna yang lebih otentik. Kon: Bagi mayoritas manusia tanpa pelatihan filosofis khusus, konfrontasi langsung dengan nihilisme berisiko menghasilkan keputusasaan dan apati dibanding pembebasan kreatif yang dialami para filsuf eksistensialis. BAB 6: FILSAFAT NON-BARAT & DEKOLONISASI PENGETAHUAN meta: Comparative Philosophy · Ubuntu · Epistemic Justice 6.1 Dekolonisasi Wacana Filsafat [Badge: Kontemporer] Penjelasan: - Gerakan dekolonisasi kurikulum filsafat menuntut representasi lebih besar tradisi pemikiran non-Barat (Afrika, Asia, pribumi Amerika) dalam pengajaran dan riset filsafat akademik global. - Kritik utama terhadap kanon filsafat Barat adalah klaim universalitasnya yang sering menyembunyikan partikularitas historis dan kultural asal-usulnya sendiri (filsafat Yunani-Eropa diperlakukan sebagai \"filsafat\" generik, sementara tradisi lain dilabeli \"etnofilosofi\" atau \"kebijaksanaan budaya\"). - Dekolonisasi bukan berarti penolakan total filsafat Barat, melainkan dekonstruksi hierarki implisit yang menempatkan satu tradisi sebagai standar universal dan tradisi lain sebagai subordinat atau eksotis. Matter a: Filsafat Barat sendiri historis dipengaruhi tradisi non-Barat (pengaruh filsafat Arab-Islam terhadap skolastisisme Eropa abad pertengahan) yang sering tidak diakui secara eksplisit dalam narasi standar sejarah filsafat. Matter b: Engagement substantif dengan filsafat non-Barat membutuhkan lebih dari sekadar menambahkan teks ke silabus — butuh kerangka metodologis yang menghormati konteks epistemologis asli tradisi tersebut. Matter c: Risiko tokenisme dalam upaya dekolonisasi yang dangkal — memasukkan satu-dua teks non-Barat tanpa mengubah kerangka analisis fundamental yang tetap menggunakan standar evaluasi filsafat Barat. Pro: Dekolonisasi wacana filsafat yang genuine memperkaya kapasitas analitis kolektif manusia menghadapi masalah kontemporer global dengan perspektif yang lebih plural dan kontekstual. Kon: Fokus berlebihan pada identitas geografis-kultural asal pemikiran berisiko mengaburkan evaluasi berbasis kualitas argumen itu sendiri, yang seharusnya menjadi kriteria utama dalam disiplin filsafat. 6.2 Ubuntu & Etika Komunitarian Afrika [Badge: Komparatif] Penjelasan: - Filsafat Ubuntu (tradisi Bantu Afrika Selatan, sering diringkas \"umuntu ngumuntu ngabantu\" — seseorang adalah seseorang melalui orang lain) menekankan keterhubungan fundamental identitas individual dengan komunitas, berbeda signifikan dari individualisme liberal Barat. - Etika Ubuntu memberikan kerangka alternatif untuk konsep keadilan transisional — diterapkan secara terkenal dalam Komisi Kebenaran dan Rekonsiliasi Afrika Selatan pasca-apartheid, memprioritaskan pemulihan hubungan komunal dibanding hukuman retributif murni. - Kritik terhadap romantisasi Ubuntu memperingatkan terhadap esensialisasi berlebihan — Afrika bukan monolit budaya tunggal, dan penerapan Ubuntu perlu mempertimbangkan konteks spesifik tanpa generalisasi berlebihan. Matter a: Ubuntu menawarkan kerangka keadilan transisional yang secara empiris terbukti efektif dalam konteks rekonsiliasi pasca-konflik Afrika Selatan, menunjukkan aplikabilitas praktis filsafat komunitarian non-Barat. Matter b: Tension antara etika Ubuntu (prioritas komunal) dan hak individual liberal (privasi, otonomi personal) perlu dinavigasi hati-hati untuk menghindari pengorbanan hak individual demi harmoni kolektif yang dipaksakan. Matter c: Penerapan prinsip Ubuntu di luar konteks asalnya (misal dalam kebijakan publik negara lain) membutuhkan adaptasi kontekstual, bukan transplantasi langsung tanpa mempertimbangkan perbedaan struktur sosial. Pro: Ubuntu menawarkan resource filosofis substantif untuk masyarakat yang mencari alternatif terhadap individualisme ekstrem, khususnya dalam konteks rekonsiliasi dan pembangunan kohesi sosial pasca-konflik. Kon: Kerangka komunitarian seperti Ubuntu berisiko dimanfaatkan secara politis untuk menekan dissent individual atas nama \"harmoni komunal\", sebuah risiko yang perlu kerangka pengaman hak individual yang jelas. 6.3 Epistemic Injustice (Miranda Fricker) [Badge: Advanced] Penjelasan: - Miranda Fricker membedakan dua bentuk epistemic injustice: testimonial injustice (kredibilitas seseorang sebagai sumber pengetahuan dikurangi karena prasangka identitas — ras, gender, kelas) dan hermeneutical injustice (kelompok kekurangan kerangka konseptual kolektif untuk memahami dan mengartikulasikan pengalaman mereka sendiri karena marjinalisasi struktural). - Konsep ini banyak diaplikasikan dalam kritik dekolonial terhadap dominasi epistemik Barat — argumen bahwa sistem pengetahuan non-Barat secara sistematis kehilangan kredibilitas bukan karena kualitas argumennya, tapi karena posisi struktural penghasil pengetahuannya. - Implikasi praktis epistemic injustice meluas ke berbagai domain — dari sistem peradilan (kredibilitas saksi diragukan karena identitas) hingga akademia (riset dari scholar non-Barat dianggap kurang \"rigorous\"). Matter a: Testimonial injustice secara empiris terdokumentasi dalam berbagai konteks institusional — dari sistem peradilan hingga layanan kesehatan, di mana kredibilitas pasien/saksi dari kelompok marjinal secara sistematis diragukan. Matter b: Hermeneutical injustice menjelaskan fenomena di mana pengalaman kolektif tertentu (misal pelecehan seksual di tempat kerja sebelum era #MeToo) sulit diartikulasikan karena tidak ada kerangka konseptual yang diakui secara luas untuk menamainya. Matter c: Koreksi terhadap epistemic injustice membutuhkan perubahan struktural dalam institusi penghasil dan validasi pengetahuan (akademia, media, sistem hukum), bukan sekadar kesadaran individual semata. Pro: Kerangka epistemic injustice memberikan alat analitis presisi untuk mengidentifikasi dan mengoreksi bentuk-bentuk ketidakadilan yang sebelumnya sulit diartikulasikan secara filosofis maupun hukum. Kon: Aplikasi konsep epistemic injustice yang terlalu luas berisiko mendiskreditkan kritik legitimate terhadap kualitas argumen tertentu dengan melabelinya sebagai \"bias identitas\" semata, mengaburkan standar evaluasi argumen yang objektif. 6.4 Utilitarianisme sebagai Dasar Kebijakan Publik [Badge: Applied] Penjelasan: - Aplikasi praktis utilitarianisme dalam kebijakan publik modern terlihat jelas dalam cost-benefit analysis, quality-adjusted life years (QALY) dalam kebijakan kesehatan, dan value of statistical life dalam regulasi keselamatan. - Kritik utama terhadap utilitarianisme sebagai dasar kebijakan tunggal adalah masalah pengukuran (bagaimana mengkuantifikasi kesejahteraan secara objektif dan membandingkannya antarindividu) dan masalah distribusi (utilitarianisme agregat bisa mengabaikan ketimpangan distribusi kesejahteraan). - Pendekatan campuran (utilitarian untuk efisiensi alokasi sumber daya, dibatasi constraint rights-based untuk melindungi hak fundamental) jadi praktik dominan kebijakan publik kontemporer di banyak negara demokratis. Matter a: QALY (Quality-Adjusted Life Year) sebagai metrik kebijakan kesehatan menunjukkan aplikasi praktis utilitarianisme yang berguna namun kontroversial — terutama soal bagaimana menilai kualitas hidup penyandang disabilitas. Matter b: Cost-benefit analysis berbasis utilitarian sering implisit memberi bobot lebih besar pada preferensi yang termonetisasi (willingness to pay), yang secara struktural menguntungkan kelompok berpenghasilan tinggi. Matter c: Constraint rights-based (hak fundamental yang tidak bisa dikalkulasi ulang) yang membatasi penerapan utilitarian murni adalah kompromi praktis yang diterima luas dalam desain kebijakan publik demokratis modern. Pro: Elemen utilitarian dalam kebijakan publik memberikan disiplin analitis penting memastikan sumber daya terbatas digunakan secara efisien untuk manfaat sosial maksimal. Kon: Penerapan utilitarianisme tanpa constraint rights-based yang kuat berisiko sistematis mengabaikan kepentingan kelompok minoritas yang preferensinya secara matematis \"kalah\" dalam kalkulasi agregat mayoritas. ================================================================ [BATCH 1 SELESAI — Ekonomi, Politik, Hukum, Filsafat] Lanjut Batch 2: Sosial, Sains & Teknologi, Hubungan Internasional ================================================================",
+    "ideal": "<strong>PRO (Ideal):</strong> Bedakan nihilisme pasif (destruktif, mengarah ke apati) dari nihilisme aktif/eksistensialis (Camus' absurdism — pengakuan ketiadaan makna objektif justru sebagai titik awal penciptaan makna otentik). Establish bahwa \"kebebasan\" di sini bukan kebebasan tanpa struktur, tapi kebebasan dari struktur makna yang dipaksakan eksternal yang sering tidak otentik bagi individu.<br><br>\n<strong>OPP (Ideal):</strong> Counter dengan menunjukkan bahwa secara empiris psikologis, manusia BUTUH kerangka makna untuk berfungsi optimal — \"menciptakan makna sendiri\" bukan netral secara psikologis, melainkan proses yang sangat berat dan gagal bagi banyak orang tanpa dukungan struktural. Bangun world: society yang mengadopsi nihilisme eksistensial secara luas berisiko kehilangan kerangka kolektif yang justru menjadi sumber makna paling accessible bagi mayoritas orang."
   }
 ]

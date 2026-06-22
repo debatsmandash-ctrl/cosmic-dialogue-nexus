@@ -7,6 +7,27 @@ import { PanelContent } from "./panels/PanelContent";
 import { setOverride, loadOverrides, clearOverrides, exportOverrides } from "@/lib/editor/overrides";
 import { usePointerDrag } from "@/hooks/usePointerDrag";
 
+const KIND_GLYPH: Record<string, string> = {
+  cluster: "✦", subhub: "◈", root: "★",
+  motion: "◉", jenis: "▣",
+  vocab: "A", letter: "α",
+  domain: "◆", bab: "❋", subbab: "•",
+  style: "✺",
+  role: "◐", roleskill: "◦",
+  school: "▲", team: "▶", speaker: "✪",
+  bracket: "♛",
+  section: "◇",
+};
+function kindGlyph(k: string) { return KIND_GLYPH[k] || "★"; }
+function crownLabel(c: string) {
+  if (c === "best-speaker") return "★ BEST SPEAKER";
+  if (c === "j1") return "🥇 JUARA 1";
+  if (c === "j2") return "🥈 JUARA 2";
+  if (c === "j3") return "🥉 JUARA 3";
+  return c.toUpperCase();
+}
+
+
 export function SidePanel() {
   const selectedId = useUniverse((s) => s.selectedId);
   const select = useUniverse((s) => s.select);
@@ -47,67 +68,82 @@ export function SidePanel() {
         >
           <header
             style={{
-              padding: "20px 24px 16px",
-              borderBottom: `1px solid ${node.color}33`,
-              display: "flex",
-              alignItems: "flex-start",
-              gap: 14,
+              position: "relative",
+              padding: "26px 24px 22px",
+              borderBottom: `1px solid ${node.color}40`,
+              background: `
+                radial-gradient(140% 100% at 0% 0%, ${node.color}28, transparent 55%),
+                radial-gradient(120% 90% at 100% 100%, ${node.color}18, transparent 60%),
+                linear-gradient(135deg, ${node.color}10, transparent 75%)
+              `,
+              overflow: "hidden",
             }}
           >
+            {/* dekorasi orbit halus */}
             <div
+              aria-hidden
               style={{
-                width: 12,
-                height: 12,
-                borderRadius: 999,
-                background: node.color,
-                boxShadow: `0 0 14px ${node.color}, 0 0 28px ${node.color}66`,
-                marginTop: 8,
-                flexShrink: 0,
+                position: "absolute", inset: 0, pointerEvents: "none",
+                background: `repeating-linear-gradient(115deg, transparent 0 14px, ${node.color}10 14px 15px)`,
+                opacity: 0.35, mixBlendMode: "screen",
               }}
             />
-            <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 16, position: "relative", zIndex: 1 }}>
               <div
                 style={{
-                  fontFamily: "Space Mono",
-                  fontSize: 9,
-                  letterSpacing: "0.4em",
-                  color: node.color,
-                  opacity: 0.8,
+                  width: 54, height: 54, borderRadius: 12,
+                  background: `radial-gradient(circle at 30% 30%, ${node.color}, ${node.color}55 60%, transparent 100%)`,
+                  boxShadow: `0 0 22px ${node.color}88, inset 0 0 18px ${node.color}55`,
+                  border: `1px solid ${node.color}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontFamily: "Bebas Neue", fontSize: 26, color: "#05080f",
+                  textShadow: `0 0 8px ${node.color}`,
+                  flexShrink: 0,
                 }}
               >
-                {node.kind.toUpperCase()} · {node.cluster.toUpperCase()}
+                {kindGlyph(node.kind)}
               </div>
-              <h2
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    fontFamily: "Space Mono", fontSize: 9, letterSpacing: "0.4em",
+                    color: node.color, opacity: 0.9,
+                  }}
+                >
+                  {node.kind.toUpperCase()} · {node.cluster.toUpperCase()}
+                </div>
+                <h2
+                  style={{
+                    fontFamily: "Bebas Neue", fontSize: 32, lineHeight: 1.02,
+                    letterSpacing: "0.05em", color: "#f6faff", marginTop: 6,
+                    textShadow: `0 0 18px ${node.color}66`,
+                  }}
+                >
+                  {node.label}
+                </h2>
+                {node.crown && (
+                  <div style={{ marginTop: 8, fontFamily: "Space Mono", fontSize: 10, letterSpacing: "0.2em", color: "#fde047" }}>
+                    {crownLabel(node.crown)}
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={() => select(null)}
+                aria-label="Close panel"
                 style={{
-                  fontFamily: "Bebas Neue",
-                  fontSize: 30,
-                  lineHeight: 1.05,
-                  letterSpacing: "0.05em",
-                  color: "#e8f4ff",
-                  marginTop: 4,
+                  background: "rgba(5,8,15,0.5)",
+                  border: `1px solid ${node.color}55`,
+                  color: node.color,
+                  width: 34, height: 34, borderRadius: 6,
+                  cursor: "pointer", fontSize: 16, fontFamily: "Space Mono",
+                  flexShrink: 0,
                 }}
               >
-                {node.label}
-              </h2>
+                ✕
+              </button>
             </div>
-            <button
-              onClick={() => select(null)}
-              aria-label="Close panel"
-              style={{
-                background: "transparent",
-                border: `1px solid ${node.color}33`,
-                color: node.color,
-                width: 32,
-                height: 32,
-                borderRadius: 4,
-                cursor: "pointer",
-                fontSize: 16,
-                fontFamily: "Space Mono",
-              }}
-            >
-              ✕
-            </button>
           </header>
+
 
           <div className="panel-scroll" style={{ flex: 1, overflowY: "auto", padding: "20px 24px 40px" }}>
             <PanelContent node={node} />

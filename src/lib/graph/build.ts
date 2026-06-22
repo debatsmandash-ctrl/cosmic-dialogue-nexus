@@ -502,7 +502,8 @@ export function buildGraph(): Graph {
     schools.forEach((s, si) => {
       const schoolPos = schoolPositions[si];
       const isChaos = s.tag === "halaldebate-chaos";
-      // Setiap school dapat warna unik (sub-hub level)
+      // Coach roster = bukan speaker debat — jangan kasih peran AP/BP.
+      const isCoach = /coach/i.test(s.id);
       const schoolColor = isChaos ? "#a855f7" : paletteColor(cluster, s.id);
       const schoolNodeId = `${cluster}:school:${s.id}`;
       const schoolImp = isChaos ? 0.85 : 0.6;
@@ -510,12 +511,10 @@ export function buildGraph(): Graph {
       edges.push({ a: `cluster:${cluster}`, b: schoolNodeId, strength: "strong", color: schoolColor });
       if (isChaos) edges.push({ a: schoolNodeId, b: "style:chaos", strength: "weak", color: "#a855f7", kind: "link" });
       const teamCount = s.teams.length;
-      // Lebih rapat: team & speaker tetap dekat school
-      const teamPositions = teamCount === 1 ? [schoolPos] : placeBranch(schoolPos, center, teamCount, 6.5, 11.5);
+      const teamPositions = teamCount === 1 ? [schoolPos] : placeBranch(schoolPos, center, teamCount, 5.5, 9.5);
       s.teams.forEach((t, ti) => {
         const teamPos = teamPositions[ti];
         const teamNodeId = `${cluster}:team:${t.id}`;
-        // Warna tim = shade dari warna school (per sub-hub) bukan random palette
         const teamColor = isChaos ? "#c084fc" : paletteColor(`${cluster}:${s.id}`, t.id);
         if (teamCount > 1) {
           teamIdMap[t.id] = teamNodeId;
@@ -526,25 +525,28 @@ export function buildGraph(): Graph {
         }
         const parentId = teamCount > 1 ? teamNodeId : schoolNodeId;
         const parentPos = teamCount > 1 ? teamPos : schoolPos;
-        const speakerPositions = placeBranch(parentPos, center, t.speakers.length, 4.5, 8.5);
+        const speakerPositions = placeBranch(parentPos, center, t.speakers.length, 3.8, 7.2);
         t.speakers.forEach((sp, spi) => {
           const spNodeId = `${cluster}:speaker:${sp.id}`;
           speakerIdMap[sp.id] = spNodeId;
-          // Speaker pakai shade dari warna team/school
           const spColor = isChaos ? "#a855f7" : paletteColor(`${cluster}:${s.id}:${t.id}`, sp.id);
-          const roleShort = sp.role.toUpperCase() + ((sp as any).replyOf ? "·REPLY" : "");
           const teamTag = teamCount > 1 ? ` (${t.label})` : "";
           const spImp = sp.crown === "best-speaker" ? 0.85 : 0.4;
-          nodes.push({ id: spNodeId, label: `${sp.nama} · ${roleShort}${teamTag}`, kind: "speaker", cluster, color: spColor, size: 0.09, pos: speakerPositions[spi], refId: sp.id, tag: s.tag, crown: sp.crown, importance: spImp });
+          const label = isCoach
+            ? `${sp.nama}${teamTag}`
+            : `${sp.nama} · ${sp.role.toUpperCase()}${(sp as any).replyOf ? "·REPLY" : ""}${teamTag}`;
+          nodes.push({ id: spNodeId, label, kind: "speaker", cluster, color: spColor, size: 0.09, pos: speakerPositions[spi], refId: sp.id, tag: s.tag, crown: sp.crown, importance: spImp });
           edges.push({ a: parentId, b: spNodeId, strength: "weak", color: spColor });
-          const pair = roleSideMap[sp.role];
-          if (pair) {
-            edges.push({ a: spNodeId, b: pair[0], strength: "weak", color: "#ff6b6b", kind: "link" });
-            edges.push({ a: spNodeId, b: pair[1], strength: "weak", color: "#38bdf8", kind: "link" });
-          }
-          if ((sp as any).replyOf) {
-            edges.push({ a: spNodeId, b: "role:ap:gr", strength: "weak", color: "#fde047", kind: "link" });
-            edges.push({ a: spNodeId, b: "role:ap:or", strength: "weak", color: "#fde047", kind: "link" });
+          if (!isCoach) {
+            const pair = roleSideMap[sp.role];
+            if (pair) {
+              edges.push({ a: spNodeId, b: pair[0], strength: "weak", color: "#ff6b6b", kind: "link" });
+              edges.push({ a: spNodeId, b: pair[1], strength: "weak", color: "#38bdf8", kind: "link" });
+            }
+            if ((sp as any).replyOf) {
+              edges.push({ a: spNodeId, b: "role:ap:gr", strength: "weak", color: "#fde047", kind: "link" });
+              edges.push({ a: spNodeId, b: "role:ap:or", strength: "weak", color: "#fde047", kind: "link" });
+            }
           }
           if (sp.crown === "best-speaker" && isChaos) {
             edges.push({ a: spNodeId, b: "style:chaos", strength: "weak", color: "#a855f7", kind: "link" });
@@ -553,9 +555,9 @@ export function buildGraph(): Graph {
       });
     });
   }
-  // Competitor: cluster→sekolah lebih DEKAT lagi (16) sesuai request.
-  buildSchoolTree("competitor", COMPETITORS, clusterCenter.competitor, 16);
-  buildSchoolTree("active_member", ACTIVE_MEMBERS, clusterCenter.active_member, 24);
+  // Competitor: cluster→sekolah lebih DEKAT (12) sesuai request user.
+  buildSchoolTree("competitor", COMPETITORS, clusterCenter.competitor, 12);
+  buildSchoolTree("active_member", ACTIVE_MEMBERS, clusterCenter.active_member, 22);
 
   // ─── WANGY (MAN IC Siak) — bintang merah headline, paling terang ───
   {
