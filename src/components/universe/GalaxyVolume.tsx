@@ -247,6 +247,75 @@ function genGlobulars() {
   return blobs;
 }
 
+// Distribusi merata di cakram — "kabut bintang" latar belakang yang mengisi
+// area di antara lengan spiral. Density meningkat ke pusat (eksponensial).
+function genDiscBackground(n: number) {
+  const pos = new Float32Array(n * 3);
+  const col = new Float32Array(n * 3);
+  const siz = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    // Eksponensial inward bias → padat di tengah, jarang di pinggir
+    const r = 12 + Math.pow(Math.random(), 0.7) * 230;
+    const t = Math.random() * Math.PI * 2;
+    const scaleHeight = 1.4 + r * 0.014;
+    pos[i*3+0] = r * Math.cos(t);
+    pos[i*3+1] = gauss() * scaleHeight;
+    pos[i*3+2] = r * Math.sin(t);
+    const [cr, cg, cb] = pickStellarColor();
+    const b = 0.35 + Math.random() * 0.4;
+    col[i*3+0] = cr * b;
+    col[i*3+1] = cg * b;
+    col[i*3+2] = cb * b;
+    siz[i] = 0.28 + Math.random() * 0.55;
+  }
+  return makeLayer(pos, col, siz);
+}
+
+// HII regions — gumpalan pink/merah H-alpha sepanjang lengan spiral
+// (titik-titik merah muda di referensi galaksi #3).
+function genHIIRegions(n: number) {
+  const pos = new Float32Array(n * 3);
+  const col = new Float32Array(n * 3);
+  const siz = new Float32Array(n);
+  const ARMS = 4;
+  const ARM_OFFSETS = [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2];
+  const b = 0.22;
+  // Cluster center untuk efek "gumpalan" — bukan satu-satu
+  const NUM_CLUMPS = Math.floor(n / 12);
+  const clumps: Array<{ x: number; z: number; y: number; r: number }> = [];
+  for (let i = 0; i < NUM_CLUMPS; i++) {
+    const r = 20 + Math.pow(Math.random(), 0.55) * 210;
+    const arm = i % ARMS;
+    const a = 6;
+    const armTheta = Math.log(Math.max(1, r) / a) / b + ARM_OFFSETS[arm];
+    const spread = 3 + r * 0.05;
+    const off = gauss() * spread;
+    clumps.push({
+      x: r * Math.cos(armTheta) + Math.cos(armTheta + Math.PI / 2) * off,
+      z: r * Math.sin(armTheta) + Math.sin(armTheta + Math.PI / 2) * off,
+      y: gauss() * 1.0,
+      r,
+    });
+  }
+  for (let i = 0; i < n; i++) {
+    const c = clumps[i % clumps.length];
+    pos[i*3+0] = c.x + gauss() * 2.2;
+    pos[i*3+1] = c.y + gauss() * 0.7;
+    pos[i*3+2] = c.z + gauss() * 2.2;
+    // H-alpha pink-merah dengan jitter
+    const hot = Math.random();
+    const cr = 1.0;
+    const cg = 0.35 + hot * 0.25;
+    const cb = 0.55 + hot * 0.30;
+    const br = 0.55 + Math.random() * 0.4;
+    col[i*3+0] = cr * br;
+    col[i*3+1] = cg * br;
+    col[i*3+2] = cb * br;
+    siz[i] = 0.6 + Math.random() * 1.2;
+  }
+  return makeLayer(pos, col, siz);
+}
+
 function StarLayer({ geometry, opacity, sizeScale, dust = false }: {
   geometry: THREE.BufferGeometry; opacity: number; sizeScale: number; dust?: boolean;
 }) {
@@ -272,11 +341,12 @@ function StarLayer({ geometry, opacity, sizeScale, dust = false }: {
 export function GalaxyVolume({ tier = "desktop" }: { tier?: "desktop" | "mobile" | "tablet" }) {
   const mobile = tier === "mobile";
   const counts = {
-    bulge: mobile ? 2500 : 6000,
-    thin:  mobile ? 6000 : 18000,
-    thick: mobile ? 1800 : 5000,
-    halo:  mobile ? 1500 : 4000,
-    dust:  mobile ? 0    : 7500,
+    bulge: mobile ? 3000  : 10000,
+    thin:  mobile ? 10000 : 55000,
+    thick: mobile ? 2500  : 15000,
+    halo:  mobile ? 2000  : 10000,
+    dust:  mobile ? 0     : 20000,
+    bg:    mobile ? 8000  : 35000,
   };
 
   const layers = useMemo(() => ({
@@ -286,21 +356,34 @@ export function GalaxyVolume({ tier = "desktop" }: { tier?: "desktop" | "mobile"
     halo:  genHalo(counts.halo),
     dust:  counts.dust ? genDustLanes(counts.dust) : null,
     globs: !mobile ? genGlobulars() : [],
-  }), [counts.bulge, counts.thin, counts.thick, counts.halo, counts.dust, mobile]);
+    bg:    genDiscBackground(counts.bg),
+    hii:   !mobile ? genHIIRegions(6000) : null,
+  }), [counts.bulge, counts.thin, counts.thick, counts.halo, counts.dust, counts.bg, mobile]);
 
   const groupRef = useRef<THREE.Group>(null);
+  const dustRef  = useRef<THREE.Group>(null);
   useFrame((_, dt) => {
-    if (groupRef.current) groupRef.current.rotation.y += dt * 0.010;
+    // Rotasi galaksi sangat lambat — terasa epic & cinematic
+    if (groupRef.current) groupRef.current.rotation.y += dt * 0.006;
+    // Dust lane rotasi sedikit berbeda (efek differential rotation)
+    if (dustRef.current)  dustRef.current.rotation.y  += dt * 0.0035;
   });
 
   // Slight tilt of the whole galaxy plane (XZ) — gives 3D look at default camera
   return (
-    <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(8), 0, THREE.MathUtils.degToRad(6)]}>
+    <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(6), 0, THREE.MathUtils.degToRad(4)]}>
+      {/* background disc particles — distribusi merata di cakram */}
+      <StarLayer geometry={layers.bg}    opacity={0.55} sizeScale={0.75} />
       <StarLayer geometry={layers.bulge} opacity={0.95} sizeScale={1.05} />
       <StarLayer geometry={layers.thick} opacity={0.55} sizeScale={0.9} />
       <StarLayer geometry={layers.thin}  opacity={0.85} sizeScale={1.0} />
+      {layers.hii && <StarLayer geometry={layers.hii} opacity={0.9} sizeScale={2.2} />}
       <StarLayer geometry={layers.halo}  opacity={0.5}  sizeScale={0.8} />
-      {layers.dust && <StarLayer geometry={layers.dust} opacity={0.55} sizeScale={1.4} dust />}
+      {layers.dust && (
+        <group ref={dustRef}>
+          <StarLayer geometry={layers.dust} opacity={0.65} sizeScale={1.6} dust />
+        </group>
+      )}
       {layers.globs.map((g, i) => (
         <StarLayer key={`gl-${i}`} geometry={g.geom} opacity={0.85} sizeScale={1.0} />
       ))}

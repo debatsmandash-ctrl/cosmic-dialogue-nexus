@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Html } from "@react-three/drei";
-import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postprocessing";
+import { EffectComposer, Bloom, ChromaticAberration, Vignette, SMAA } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import { useMemo, useRef, useEffect, useState, Suspense } from "react";
 import * as THREE from "three";
@@ -11,6 +11,8 @@ import { MilkyWaySky } from "./MilkyWaySky";
 import { HoverEdges } from "./HoverEdges";
 import { CoreBlackHole } from "./CoreBlackHole";
 import { GalaxyVolume } from "./GalaxyVolume";
+import { GalaxyGlow } from "./GalaxyGlow";
+import { NebulaClouds } from "./NebulaClouds";
 import { useDeviceProfile, type DeviceProfile } from "@/hooks/useDeviceProfile";
 
 // ─── Halo texture (shared canvas radial gradient) ───
@@ -502,8 +504,10 @@ function Scene({ profile }: { profile: DeviceProfile }) {
 
       {/* Distant skybox — dimmed so the volumetric disc is dominant */}
       <MilkyWaySky opacity={Math.min(settings.nebulaOpacity, 0.45)} />
-      {/* Volumetric Milky-Way disc + bulge + halo */}
+      {/* Volumetric Milky-Way disc + bulge + halo + glow + nebulae */}
+      <GalaxyGlow />
       <GalaxyVolume tier={profile.tier} />
+      <NebulaClouds tier={profile.tier} />
       {profile.tier === "desktop" && <Galaxies />}
 
       <group>
@@ -569,9 +573,17 @@ function Scene({ profile }: { profile: DeviceProfile }) {
 
       {bloomEnabled && (
         <EffectComposer multisampling={quality === "ultra" ? 4 : 0}>
-          <Bloom intensity={profile.bloomIntensity * settings.bloomIntensity * qScale} luminanceThreshold={0.32} luminanceSmoothing={0.7} mipmapBlur radius={profile.bloomRadius} />
+          <Bloom
+            intensity={profile.bloomIntensity * settings.bloomIntensity * qScale * 1.4}
+            luminanceThreshold={0.18}
+            luminanceSmoothing={0.8}
+            mipmapBlur
+            radius={profile.bloomRadius * 1.1}
+          />
+          {quality === "ultra" ? <SMAA /> : <></>}
+          <Vignette eskil={false} offset={0.18} darkness={0.78} />
           {profile.chromaticAberration && quality === "ultra" ? (
-            <ChromaticAberration offset={[0.0008, 0.0008]} radialModulation={false} modulationOffset={0} blendFunction={BlendFunction.NORMAL} />
+            <ChromaticAberration offset={[0.0006, 0.0006]} radialModulation={false} modulationOffset={0} blendFunction={BlendFunction.NORMAL} />
           ) : <></>}
         </EffectComposer>
       )}
@@ -628,7 +640,7 @@ export function Universe() {
   return (
     <>
     <Canvas
-      camera={{ position: [120, 70, 200], fov: 55, near: 0.1, far: 2400 }}
+      camera={{ position: [160, 95, 230], fov: 52, near: 0.1, far: 2400 }}
       dpr={profile.dpr}
       frameloop={fpsCap ? "demand" : "always"}
       gl={{
@@ -636,13 +648,14 @@ export function Universe() {
         alpha: true,
         powerPreference: "high-performance",
         toneMapping: THREE.ACESFilmicToneMapping,
-        toneMappingExposure: 1.15,
+        toneMappingExposure: 1.25,
         outputColorSpace: THREE.SRGBColorSpace,
+        logarithmicDepthBuffer: true,
       }}
       style={{ position: "absolute", inset: 0, background: "transparent" }}
     >
       <color attach="background" args={["#05080f"]} />
-      <fog attach="fog" args={["#05080f", 360, 1100]} />
+      <fog attach="fog" args={["#05080f", 480, 1400]} />
       <Suspense fallback={null}>
         <Scene profile={profile} />
       </Suspense>

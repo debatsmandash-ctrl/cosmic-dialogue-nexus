@@ -50,22 +50,22 @@ const CLUSTERS: ClusterMeta[] = [
 type GalaxyLayer = "bulge" | "disc" | "halo";
 interface GalaxySlot { layer: GalaxyLayer; r: number; theta: number; y?: number }
 const GALAXY_LAYOUT: Record<string, GalaxySlot> = {
-  // Bulge — bright dense centre, slightly above/below plane (3D bulge)
-  meta:          { layer: "bulge", r: 13, theta: 0.4, y:  5 },
-  assistant:     { layer: "bulge", r: 17, theta: 2.3, y: -4 },
-  editor:        { layer: "bulge", r: 15, theta: 4.1, y:  3 },
-  // Thin disc — along 4 spiral arms (arm 0..3 = +i·π/2 offset)
-  matter:        { layer: "disc",  r: 35, theta: 0.00 + 0 * Math.PI / 2 },        // arm 0
-  roles:         { layer: "disc",  r: 42, theta: 0.55 + 0 * Math.PI / 2 },        // arm 0 outer
-  motion:        { layer: "disc",  r: 55, theta: 0.20 + 1 * Math.PI / 2 },        // arm 1
-  styles:        { layer: "disc",  r: 50, theta: 0.70 + 1 * Math.PI / 2 },        // arm 1 outer
-  event:         { layer: "disc",  r: 78, theta: 0.10 + 2 * Math.PI / 2 },        // arm 2
-  competitor:    { layer: "disc",  r: 70, theta: 0.60 + 2 * Math.PI / 2 },        // arm 2 inner
-  kamus:         { layer: "disc",  r: 45, theta: 0.20 + 3 * Math.PI / 2 },        // arm 3
-  active_member: { layer: "disc",  r: 32, theta: 0.75 + 3 * Math.PI / 2 },        // arm 3 inner
-  // Halo — out-of-plane globular clusters
-  practice:      { layer: "halo",  r: 95, theta: 0.8, y:  62 },
-  circuit:       { layer: "halo",  r: 95, theta: 3.4, y: -58 },
+  // Cincin orbit — semua cluster mengelilingi BH di pusat, beda jari-jari per kategori.
+  // Sudut θ disebar dengan golden angle (~137.5°) supaya tidak saling tabrak.
+  // Semua di plane disc (y=0 ± jitter kecil) supaya membentuk cakram tipis.
+  meta:          { layer: "bulge", r: 22, theta: 0.40 },
+  assistant:     { layer: "bulge", r: 28, theta: 2.80 },
+  editor:        { layer: "bulge", r: 32, theta: 5.10 },
+  roles:         { layer: "disc",  r: 55, theta: 0.30 },
+  styles:        { layer: "disc",  r: 65, theta: 1.40 },
+  motion:        { layer: "disc",  r: 95, theta: 2.50 },
+  kamus:         { layer: "disc",  r: 130, theta: 3.80 },
+  active_member: { layer: "disc",  r: 165, theta: 4.95 },
+  matter:        { layer: "disc",  r: 195, theta: 0.80 },
+  competitor:    { layer: "disc",  r: 220, theta: 2.10 },
+  event:         { layer: "disc",  r: 250, theta: 3.45 },
+  practice:      { layer: "disc",  r: 175, theta: 5.85 },
+  circuit:       { layer: "disc",  r: 145, theta: 1.95 },
 };
 
 function galaxyPosition(key: string): V3 {
@@ -73,7 +73,9 @@ function galaxyPosition(key: string): V3 {
   if (!s) return [0, 0, 0];
   const x = s.r * Math.cos(s.theta);
   const z = s.r * Math.sin(s.theta);
-  const yJ = (rand() - 0.5) * (s.layer === "disc" ? 3.0 : 6.0);
+  // Cakram tipis: ketebalan flares dgn r supaya bagian luar sedikit membesar.
+  const thickness = s.layer === "bulge" ? 4.5 : 1.6 + s.r * 0.012;
+  const yJ = (rand() - 0.5) * thickness;
   return [x, (s.y ?? 0) + yJ, z];
 }
 
@@ -712,6 +714,24 @@ export function buildGraph(): Graph {
           }
         }
       }
+    }
+  }
+
+  // ─── Disc flatten pass: paksa semua node masuk ke cakram tipis ───
+  // Y dipress proporsional terhadap r (radius di plane XZ) — tipis di tengah,
+  // sedikit melebar di pinggir, menghasilkan tampilan galaksi cincin orbit.
+  for (const n of nodes) {
+    if (n.id === "root") continue;
+    const r = Math.hypot(n.pos[0], n.pos[2]);
+    // base thickness 1.4 di pusat, flare ringan: 1.4 + r*0.018
+    const maxY = 1.4 + r * 0.018;
+    // squash factor: kalau abs(y) > maxY, kompres ke ±maxY
+    const ay = Math.abs(n.pos[1]);
+    if (ay > maxY) {
+      const sign = Math.sign(n.pos[1]);
+      // log-compress: keep some volume cue but stay in disc
+      const compressed = maxY + Math.log1p(ay - maxY) * 0.6;
+      n.pos = [n.pos[0], sign * compressed, n.pos[2]];
     }
   }
 

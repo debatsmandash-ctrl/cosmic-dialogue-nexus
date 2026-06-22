@@ -52,28 +52,28 @@ const ACCRETION_FRAG = /* glsl */ `
     float ang = vUv.x * 6.2831853;
 
     // Differential rotation: inner spins faster
-    float spin = uTime * (1.6 / (0.25 + r));
+    float spin = uTime * (1.2 / (0.22 + r));
     vec2 p = vec2(cos(ang + spin), sin(ang + spin)) * (1.0 + r * 3.0);
     float n  = fbm(p * 2.4 + vec2(uTime*0.15, 0.0));
     float n2 = fbm(p * 6.0 - vec2(0.0, uTime*0.25));
     float swirl = 0.55 + 0.45 * (n*0.7 + n2*0.5);
 
-    // colour: amber-cream inner → magenta mid → cool blue outer fade
+    // colour: white-hot inner → amber → deep orange-red outer (EHT-style)
     vec3 col = mix(uColorInner, uColorMid, smoothstep(0.0, 0.55, r));
     col      = mix(col,         uColorOuter, smoothstep(0.55, 1.0, r));
 
     // brightness profile: bright at inner edge, fade to outer
-    float bright = pow(1.0 - r, 1.4) * 1.4 + 0.25;
+    float bright = pow(1.0 - r, 1.3) * 1.8 + 0.30;
     bright *= swirl;
 
-    // Doppler beaming (fake): boost side moving toward camera
+    // Doppler beaming: sisi mendekat kamera jauh lebih terang (EHT signature)
     vec3 toCam = normalize(uCamPos - vWorldPos);
-    float doppler = 0.65 + 0.55 * max(0.0, dot(toCam, vec3(cos(ang+1.57), 0.0, sin(ang+1.57))));
+    float doppler = 0.45 + 0.95 * max(0.0, dot(toCam, vec3(cos(ang+1.57), 0.0, sin(ang+1.57))));
     bright *= doppler;
 
     // soft alpha at edges
-    float alpha = smoothstep(0.0, 0.08, r) * smoothstep(1.0, 0.85, r);
-    alpha *= 0.85;
+    float alpha = smoothstep(0.0, 0.06, r) * smoothstep(1.0, 0.80, r);
+    alpha *= 0.95;
 
     gl_FragColor = vec4(col * bright, alpha);
   }
@@ -83,9 +83,9 @@ function AccretionDisc() {
   const matRef = useRef<THREE.ShaderMaterial>(null);
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
-    uColorInner: { value: new THREE.Color("#fff0c8") },
-    uColorMid:   { value: new THREE.Color("#ff7ad6") },
-    uColorOuter: { value: new THREE.Color("#5a8cff") },
+    uColorInner: { value: new THREE.Color("#fff4d6") },  // white-hot
+    uColorMid:   { value: new THREE.Color("#ffa040") },  // amber
+    uColorOuter: { value: new THREE.Color("#c43820") },  // deep orange-red
     uCamPos:     { value: new THREE.Vector3() },
   }), []);
 
@@ -100,8 +100,8 @@ function AccretionDisc() {
   return (
     <group rotation={[-Math.PI / 2, 0, 0]}>
       {[0, 1].map((i) => (
-        <mesh key={i} position={[0, 0, (i - 0.5) * 0.5]} renderOrder={2}>
-          <ringGeometry args={[4.4, 14, 192, 1]} />
+        <mesh key={i} position={[0, 0, (i - 0.5) * 0.18]} renderOrder={2}>
+          <ringGeometry args={[1.7, 5.5, 256, 1]} />
           <shaderMaterial
             ref={i === 0 ? matRef : undefined}
             vertexShader={ACCRETION_VERT}
@@ -118,25 +118,51 @@ function AccretionDisc() {
   );
 }
 
+// Fresnel lensing rim — Einstein-ring style halo around the event horizon.
+const RIM_VERT = /* glsl */ `
+  varying vec3 vNormal;
+  varying vec3 vViewDir;
+  void main() {
+    vec4 mv = modelViewMatrix * vec4(position, 1.0);
+    vNormal = normalize(normalMatrix * normal);
+    vViewDir = normalize(-mv.xyz);
+    gl_Position = projectionMatrix * mv;
+  }
+`;
+const RIM_FRAG = /* glsl */ `
+  precision mediump float;
+  varying vec3 vNormal;
+  varying vec3 vViewDir;
+  uniform vec3 uColor;
+  uniform float uPower;
+  uniform float uIntensity;
+  void main() {
+    float f = pow(1.0 - max(0.0, dot(vNormal, vViewDir)), uPower);
+    gl_FragColor = vec4(uColor * f * uIntensity, f);
+  }
+`;
+
 export function CoreBlackHole({ isSelected, isHovered }: { isSelected: boolean; isHovered: boolean }) {
   const select = useUniverse((s) => s.select);
   const hover = useUniverse((s) => s.hover);
   const horizonRef = useRef<THREE.Mesh>(null);
   const photonRingRef = useRef<THREE.Mesh>(null);
-  const jetTopRef = useRef<THREE.Mesh>(null);
-  const jetBotRef = useRef<THREE.Mesh>(null);
 
   useFrame((_, dt) => {
     if (photonRingRef.current) photonRingRef.current.rotation.z += dt * 0.08;
-    if (jetTopRef.current) jetTopRef.current.rotation.y += dt * 0.12;
-    if (jetBotRef.current) jetBotRef.current.rotation.y -= dt * 0.12;
   });
 
-  const horizonScale = isSelected ? 1.18 : isHovered ? 1.08 : 1.0;
+  const horizonScale = isSelected ? 1.15 : isHovered ? 1.07 : 1.0;
+
+  const rimUniforms = useMemo(() => ({
+    uColor: { value: new THREE.Color("#ffd5a0") },
+    uPower: { value: 3.2 },
+    uIntensity: { value: 1.8 },
+  }), []);
 
   return (
-    <group rotation={[0, 0, THREE.MathUtils.degToRad(12)]}>
-      {/* Event horizon — opaque sphere */}
+    <group rotation={[0, 0, THREE.MathUtils.degToRad(18)]}>
+      {/* Event horizon — kecil, hitam pekat */}
       <mesh
         ref={horizonRef}
         scale={horizonScale}
@@ -145,48 +171,52 @@ export function CoreBlackHole({ isSelected, isHovered }: { isSelected: boolean; 
         onClick={(e) => { e.stopPropagation(); select("root"); }}
         renderOrder={3}
       >
-        <sphereGeometry args={[3.6, 64, 48]} />
+        <sphereGeometry args={[1.4, 64, 48]} />
         <meshBasicMaterial color="#000000" depthWrite={true} />
       </mesh>
 
-      {/* Photon ring — bright thin torus around horizon */}
-      <mesh ref={photonRingRef} rotation={[Math.PI / 2, 0, 0]} renderOrder={4}>
-        <torusGeometry args={[4.3, 0.18, 16, 192]} />
+      {/* Gravitational lensing rim — Fresnel halo, very tipis seperti foto EHT */}
+      <mesh scale={1.18} renderOrder={4}>
+        <sphereGeometry args={[1.4, 64, 48]} />
+        <shaderMaterial
+          vertexShader={RIM_VERT}
+          fragmentShader={RIM_FRAG}
+          uniforms={rimUniforms}
+          transparent
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          side={THREE.FrontSide}
+        />
+      </mesh>
+
+      {/* Photon ring — torus tipis di sekitar horizon */}
+      <mesh ref={photonRingRef} rotation={[Math.PI / 2, 0, 0]} renderOrder={5}>
+        <torusGeometry args={[1.55, 0.05, 16, 256]} />
         <meshBasicMaterial color="#ffd9a0" toneMapped={false} />
       </mesh>
-      {/* Outer halo ring */}
-      <mesh rotation={[Math.PI / 2, 0, 0]} renderOrder={4}>
-        <torusGeometry args={[4.7, 0.05, 12, 192]} />
-        <meshBasicMaterial color="#ffb070" transparent opacity={0.6} toneMapped={false} />
+      {/* Outer halo ring sangat halus */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} renderOrder={5}>
+        <torusGeometry args={[1.68, 0.018, 12, 192]} />
+        <meshBasicMaterial color="#ffb070" transparent opacity={0.55} toneMapped={false} />
       </mesh>
 
       {/* Accretion disc — animated shader */}
       <AccretionDisc />
 
-      {/* Bipolar jets — thin cones along Y */}
-      <mesh ref={jetTopRef} position={[0, 14, 0]} renderOrder={1}>
-        <coneGeometry args={[1.4, 26, 24, 1, true]} />
-        <meshBasicMaterial color="#8ac6ff" transparent opacity={0.18} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
-      </mesh>
-      <mesh ref={jetBotRef} position={[0, -14, 0]} rotation={[Math.PI, 0, 0]} renderOrder={1}>
-        <coneGeometry args={[1.4, 26, 24, 1, true]} />
-        <meshBasicMaterial color="#8ac6ff" transparent opacity={0.18} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
-      </mesh>
-
       {/* Label */}
-      <Html center distanceFactor={70} style={{ pointerEvents: "none" }} position={[0, 18, 0]}>
+      <Html center distanceFactor={50} style={{ pointerEvents: "none" }} position={[0, 7, 0]}>
         <div style={{
           fontFamily: "Bebas Neue, sans-serif",
-          fontSize: 26,
+          fontSize: 22,
           fontWeight: 700,
           letterSpacing: "0.32em",
           color: "#ffe6c4",
-          textShadow: "0 0 14px #ffb070, 0 0 32px #ff7ad6aa, 0 0 60px #ff7ad666",
+          textShadow: "0 0 10px #ffb070, 0 0 24px #ff8040aa, 0 0 48px #ff604066",
           whiteSpace: "nowrap",
-          padding: "3px 14px",
+          padding: "2px 12px",
           borderRadius: 4,
-          background: "rgba(5,8,15,0.55)",
-          border: "1px solid #ffb07055",
+          background: "rgba(5,8,15,0.6)",
+          border: "1px solid #ffb07044",
         }}>
           DEBATE UNIVERSE
         </div>
