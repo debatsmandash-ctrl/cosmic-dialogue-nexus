@@ -247,6 +247,75 @@ function genGlobulars() {
   return blobs;
 }
 
+// Distribusi merata di cakram — "kabut bintang" latar belakang yang mengisi
+// area di antara lengan spiral. Density meningkat ke pusat (eksponensial).
+function genDiscBackground(n: number) {
+  const pos = new Float32Array(n * 3);
+  const col = new Float32Array(n * 3);
+  const siz = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    // Eksponensial inward bias → padat di tengah, jarang di pinggir
+    const r = 12 + Math.pow(Math.random(), 0.7) * 230;
+    const t = Math.random() * Math.PI * 2;
+    const scaleHeight = 1.4 + r * 0.014;
+    pos[i*3+0] = r * Math.cos(t);
+    pos[i*3+1] = gauss() * scaleHeight;
+    pos[i*3+2] = r * Math.sin(t);
+    const [cr, cg, cb] = pickStellarColor();
+    const b = 0.35 + Math.random() * 0.4;
+    col[i*3+0] = cr * b;
+    col[i*3+1] = cg * b;
+    col[i*3+2] = cb * b;
+    siz[i] = 0.28 + Math.random() * 0.55;
+  }
+  return makeLayer(pos, col, siz);
+}
+
+// HII regions — gumpalan pink/merah H-alpha sepanjang lengan spiral
+// (titik-titik merah muda di referensi galaksi #3).
+function genHIIRegions(n: number) {
+  const pos = new Float32Array(n * 3);
+  const col = new Float32Array(n * 3);
+  const siz = new Float32Array(n);
+  const ARMS = 4;
+  const ARM_OFFSETS = [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2];
+  const b = 0.22;
+  // Cluster center untuk efek "gumpalan" — bukan satu-satu
+  const NUM_CLUMPS = Math.floor(n / 12);
+  const clumps: Array<{ x: number; z: number; y: number; r: number }> = [];
+  for (let i = 0; i < NUM_CLUMPS; i++) {
+    const r = 20 + Math.pow(Math.random(), 0.55) * 210;
+    const arm = i % ARMS;
+    const a = 6;
+    const armTheta = Math.log(Math.max(1, r) / a) / b + ARM_OFFSETS[arm];
+    const spread = 3 + r * 0.05;
+    const off = gauss() * spread;
+    clumps.push({
+      x: r * Math.cos(armTheta) + Math.cos(armTheta + Math.PI / 2) * off,
+      z: r * Math.sin(armTheta) + Math.sin(armTheta + Math.PI / 2) * off,
+      y: gauss() * 1.0,
+      r,
+    });
+  }
+  for (let i = 0; i < n; i++) {
+    const c = clumps[i % clumps.length];
+    pos[i*3+0] = c.x + gauss() * 2.2;
+    pos[i*3+1] = c.y + gauss() * 0.7;
+    pos[i*3+2] = c.z + gauss() * 2.2;
+    // H-alpha pink-merah dengan jitter
+    const hot = Math.random();
+    const cr = 1.0;
+    const cg = 0.35 + hot * 0.25;
+    const cb = 0.55 + hot * 0.30;
+    const br = 0.55 + Math.random() * 0.4;
+    col[i*3+0] = cr * br;
+    col[i*3+1] = cg * br;
+    col[i*3+2] = cb * br;
+    siz[i] = 0.6 + Math.random() * 1.2;
+  }
+  return makeLayer(pos, col, siz);
+}
+
 function StarLayer({ geometry, opacity, sizeScale, dust = false }: {
   geometry: THREE.BufferGeometry; opacity: number; sizeScale: number; dust?: boolean;
 }) {
