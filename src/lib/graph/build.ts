@@ -151,6 +151,10 @@ function placeCloud(center: V3, radius: number, count: number, minSep?: number, 
 function placeBranch(center: V3, hubCenter: V3, count: number, distMin: number, distMax: number): V3[] {
   if (count === 0) return [];
   const out = normalize(sub(center, hubCenter));
+  // Spread multiplier — sebaran ranting lebih lebar tapi tetap "berisi" (tidak jauh sekali)
+  const SPREAD = 1.55;
+  distMin = distMin * SPREAD;
+  distMax = distMax * SPREAD;
   // pick two perpendicular axes to `out`
   const tmp: V3 = Math.abs(out[1]) < 0.95 ? [0, 1, 0] : [1, 0, 0];
   const u: V3 = normalize([
@@ -168,8 +172,8 @@ function placeBranch(center: V3, hubCenter: V3, count: number, distMin: number, 
     // azimuth ∈ [10°, 350°] — avoid degenerate stacking at the poles
     const azDeg = 10 + rand() * 340;
     const az = azDeg * Math.PI / 180;
-    // elevation away from hub: bias forward but allow ±70° tilt
-    const elev = (rand() - 0.5) * (Math.PI * 0.78); // ~±70°
+    // elevation away from hub — sebaran melebar (~±82°) supaya feels organik & nyebar
+    const elev = (rand() - 0.5) * (Math.PI * 0.92);
     const forwardWeight = Math.cos(elev);
     const sideU = Math.sin(elev) * Math.cos(az);
     const sideV = Math.sin(elev) * Math.sin(az);

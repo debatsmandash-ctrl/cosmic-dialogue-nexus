@@ -128,6 +128,15 @@ export function SettingsPanel() {
             <Row label={`Damping ${s.damping.toFixed(2)}`}>
               <Slider value={s.damping} min={0.04} max={0.2} step={0.01} onChange={(v) => update({ damping: v })} />
             </Row>
+            <Row label={`Drag sensitivity ×${s.cameraRotateSpeed.toFixed(2)}`} hint="Kecepatan rotasi saat menyeret">
+              <Slider value={s.cameraRotateSpeed} min={0.3} max={3.0} step={0.05} onChange={(v) => update({ cameraRotateSpeed: v })} />
+            </Row>
+            <Row label={`Zoom sensitivity ×${s.cameraZoomSpeed.toFixed(2)}`}>
+              <Slider value={s.cameraZoomSpeed} min={0.3} max={3.0} step={0.05} onChange={(v) => update({ cameraZoomSpeed: v })} />
+            </Row>
+            <Row label={`Pan sensitivity ×${s.cameraPanSpeed.toFixed(2)}`}>
+              <Slider value={s.cameraPanSpeed} min={0.3} max={3.0} step={0.05} onChange={(v) => update({ cameraPanSpeed: v })} />
+            </Row>
           </Section>
 
           <Section title="Audio">

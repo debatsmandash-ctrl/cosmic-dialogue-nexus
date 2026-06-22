@@ -382,7 +382,7 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
 }
 
 // ─── Camera flyer ───
-function CameraController({ targetId, profile, autoRotate, autoRotateSpeed, damping }: { targetId: string | null; profile: DeviceProfile; autoRotate: boolean; autoRotateSpeed: number; damping: number }) {
+function CameraController({ targetId, profile, autoRotate, autoRotateSpeed, damping, rotateSpeed, zoomSpeed, panSpeed }: { targetId: string | null; profile: DeviceProfile; autoRotate: boolean; autoRotateSpeed: number; damping: number; rotateSpeed: number; zoomSpeed: number; panSpeed: number }) {
   const controls = useRef<any>(null);
   const { camera } = useThree();
   const graph = useMemo(() => buildGraph(), []);
@@ -450,9 +450,9 @@ function CameraController({ targetId, profile, autoRotate, autoRotateSpeed, damp
       enableDamping
       dampingFactor={damping}
       zoomToCursor
-      zoomSpeed={0.8}
-      rotateSpeed={profile.rotateSpeed}
-      panSpeed={0.7}
+      zoomSpeed={zoomSpeed}
+      rotateSpeed={rotateSpeed}
+      panSpeed={panSpeed}
       maxDistance={500}
       minDistance={3}
       autoRotate={autoRotate && !interacting && !targetId}
@@ -564,6 +564,9 @@ function Scene({ profile }: { profile: DeviceProfile }) {
         autoRotate={settings.autoRotate && !settings.reducedMotion}
         autoRotateSpeed={settings.autoRotateSpeed}
         damping={settings.damping}
+        rotateSpeed={settings.cameraRotateSpeed}
+        zoomSpeed={settings.cameraZoomSpeed}
+        panSpeed={settings.cameraPanSpeed}
       />
 
       <mesh onPointerMissed={() => select(null)} visible={false}>
