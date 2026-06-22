@@ -68,7 +68,7 @@ export function GalaxyGlow() {
         <meshBasicMaterial
           map={discTex}
           transparent
-          opacity={0.55}
+          opacity={0.42}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           side={THREE.DoubleSide}
@@ -82,32 +82,32 @@ export function GalaxyGlow() {
           map={discTex}
           color="#ffd8a0"
           transparent
-          opacity={0.4}
+          opacity={0.28}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           side={THREE.DoubleSide}
           toneMapped={false}
         />
       </mesh>
-      {/* Bulge glow — bola sprite cahaya krem di pusat (di atas BH) */}
-      <sprite scale={[58, 58, 1]}>
+      {/* Bulge glow — bola sprite cahaya krem di pusat (lebih kecil & lembut biar gak "kaset") */}
+      <sprite scale={[38, 38, 1]}>
         <spriteMaterial
           map={bulgeTex}
           color="#ffe0a8"
           transparent
-          opacity={0.85}
+          opacity={0.55}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           toneMapped={false}
         />
       </sprite>
-      {/* Bulge inner core glow — kecil & sangat terang */}
-      <sprite scale={[22, 22, 1]}>
+      {/* Bulge inner core glow — kecil & terang tapi tidak ngeblok */}
+      <sprite scale={[14, 14, 1]}>
         <spriteMaterial
           map={bulgeTex}
           color="#fff4d0"
           transparent
-          opacity={0.95}
+          opacity={0.7}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           toneMapped={false}

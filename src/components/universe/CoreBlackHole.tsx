@@ -156,8 +156,15 @@ export function CoreBlackHole({ isSelected, isHovered }: { isSelected: boolean; 
 
   const rimUniforms = useMemo(() => ({
     uColor: { value: new THREE.Color("#ffd5a0") },
-    uPower: { value: 3.2 },
-    uIntensity: { value: 1.8 },
+    uPower: { value: 2.2 },
+    uIntensity: { value: 3.2 },
+  }), []);
+
+  // Outer lensing halo — distorsi cahaya gravitasi lebih luas (Einstein ring suggestion)
+  const outerRimUniforms = useMemo(() => ({
+    uColor: { value: new THREE.Color("#a8c8ff") },
+    uPower: { value: 4.5 },
+    uIntensity: { value: 1.6 },
   }), []);
 
   return (
@@ -175,8 +182,8 @@ export function CoreBlackHole({ isSelected, isHovered }: { isSelected: boolean; 
         <meshBasicMaterial color="#000000" depthWrite={true} />
       </mesh>
 
-      {/* Gravitational lensing rim — Fresnel halo, very tipis seperti foto EHT */}
-      <mesh scale={1.18} renderOrder={4}>
+      {/* Gravitational lensing rim — Fresnel halo tebal (EHT-style bright ring) */}
+      <mesh scale={1.22} renderOrder={4}>
         <sphereGeometry args={[1.4, 64, 48]} />
         <shaderMaterial
           vertexShader={RIM_VERT}
@@ -188,16 +195,34 @@ export function CoreBlackHole({ isSelected, isHovered }: { isSelected: boolean; 
           side={THREE.FrontSide}
         />
       </mesh>
+      {/* Outer einstein-ring suggestion — biru pucat, jangkauan lebih luas */}
+      <mesh scale={1.55} renderOrder={4}>
+        <sphereGeometry args={[1.4, 64, 48]} />
+        <shaderMaterial
+          vertexShader={RIM_VERT}
+          fragmentShader={RIM_FRAG}
+          uniforms={outerRimUniforms}
+          transparent
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          side={THREE.FrontSide}
+        />
+      </mesh>
 
-      {/* Photon ring — torus tipis di sekitar horizon */}
+      {/* Photon ring — torus tipis terang di sekitar horizon */}
       <mesh ref={photonRingRef} rotation={[Math.PI / 2, 0, 0]} renderOrder={5}>
-        <torusGeometry args={[1.55, 0.05, 16, 256]} />
-        <meshBasicMaterial color="#ffd9a0" toneMapped={false} />
+        <torusGeometry args={[1.58, 0.07, 16, 256]} />
+        <meshBasicMaterial color="#ffe6b8" toneMapped={false} />
       </mesh>
       {/* Outer halo ring sangat halus */}
       <mesh rotation={[Math.PI / 2, 0, 0]} renderOrder={5}>
-        <torusGeometry args={[1.68, 0.018, 12, 192]} />
-        <meshBasicMaterial color="#ffb070" transparent opacity={0.55} toneMapped={false} />
+        <torusGeometry args={[1.74, 0.025, 12, 192]} />
+        <meshBasicMaterial color="#ffc890" transparent opacity={0.75} toneMapped={false} />
+      </mesh>
+      {/* Lensing arc kedua di luar (faint, biru-putih) → kesan pembelokan cahaya */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} renderOrder={5}>
+        <torusGeometry args={[2.05, 0.012, 12, 192]} />
+        <meshBasicMaterial color="#cfe0ff" transparent opacity={0.45} toneMapped={false} />
       </mesh>
 
       {/* Accretion disc — animated shader */}

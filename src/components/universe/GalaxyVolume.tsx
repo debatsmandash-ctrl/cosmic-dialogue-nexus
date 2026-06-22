@@ -345,8 +345,10 @@ export function GalaxyVolume({ tier = "desktop" }: { tier?: "desktop" | "mobile"
     thin:  mobile ? 10000 : 55000,
     thick: mobile ? 2500  : 15000,
     halo:  mobile ? 2000  : 10000,
-    dust:  mobile ? 0     : 20000,
-    bg:    mobile ? 8000  : 35000,
+    // Dust lane dark dots dihapus → diganti ekstra bintang bebas latar
+    dust:  0,
+    bg:    mobile ? 14000 : 60000,
+    free:  mobile ? 6000  : 22000, // bintang bebas tidak terkait komponen
   };
 
   const layers = useMemo(() => ({
@@ -354,36 +356,27 @@ export function GalaxyVolume({ tier = "desktop" }: { tier?: "desktop" | "mobile"
     thin:  genThinDisc(counts.thin),
     thick: genThickDisc(counts.thick),
     halo:  genHalo(counts.halo),
-    dust:  counts.dust ? genDustLanes(counts.dust) : null,
     globs: !mobile ? genGlobulars() : [],
     bg:    genDiscBackground(counts.bg),
+    free:  genDiscBackground(counts.free),
     hii:   !mobile ? genHIIRegions(6000) : null,
-  }), [counts.bulge, counts.thin, counts.thick, counts.halo, counts.dust, counts.bg, mobile]);
+  }), [counts.bulge, counts.thin, counts.thick, counts.halo, counts.bg, counts.free, mobile]);
 
   const groupRef = useRef<THREE.Group>(null);
-  const dustRef  = useRef<THREE.Group>(null);
   useFrame((_, dt) => {
-    // Rotasi galaksi sangat lambat — terasa epic & cinematic
     if (groupRef.current) groupRef.current.rotation.y += dt * 0.006;
-    // Dust lane rotasi sedikit berbeda (efek differential rotation)
-    if (dustRef.current)  dustRef.current.rotation.y  += dt * 0.0035;
   });
 
-  // Slight tilt of the whole galaxy plane (XZ) — gives 3D look at default camera
   return (
     <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(6), 0, THREE.MathUtils.degToRad(4)]}>
-      {/* background disc particles — distribusi merata di cakram */}
       <StarLayer geometry={layers.bg}    opacity={0.55} sizeScale={0.75} />
+      {/* bintang bebas tambahan — mengisi area antar komponen biar feels "berisi" */}
+      <StarLayer geometry={layers.free}  opacity={0.45} sizeScale={0.65} />
       <StarLayer geometry={layers.bulge} opacity={0.95} sizeScale={1.05} />
       <StarLayer geometry={layers.thick} opacity={0.55} sizeScale={0.9} />
       <StarLayer geometry={layers.thin}  opacity={0.85} sizeScale={1.0} />
       {layers.hii && <StarLayer geometry={layers.hii} opacity={0.9} sizeScale={2.2} />}
       <StarLayer geometry={layers.halo}  opacity={0.5}  sizeScale={0.8} />
-      {layers.dust && (
-        <group ref={dustRef}>
-          <StarLayer geometry={layers.dust} opacity={0.65} sizeScale={1.6} dust />
-        </group>
-      )}
       {layers.globs.map((g, i) => (
         <StarLayer key={`gl-${i}`} geometry={g.geom} opacity={0.85} sizeScale={1.0} />
       ))}
