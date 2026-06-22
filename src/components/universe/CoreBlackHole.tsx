@@ -1,0 +1,196 @@
+import { useMemo, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
+import * as THREE from "three";
+import { useUniverse } from "@/lib/store";
+
+/**
+ * CoreBlackHole — Sagittarius-A* style SMBH at galactic centre.
+ * Volumetric: opaque event horizon sphere + photon-ring torus + animated
+ * accretion disc (custom shader) + thin bipolar jets. Clickable → select root.
+ */
+
+const ACCRETION_VERT = /* glsl */ `
+  varying vec2 vUv;
+  varying vec3 vWorldPos;
+  void main() {
+    vUv = uv;
+    vec4 wp = modelMatrix * vec4(position, 1.0);
+    vWorldPos = wp.xyz;
+    gl_Position = projectionMatrix * viewMatrix * wp;
+  }
+`;
+
+const ACCRETION_FRAG = /* glsl */ `
+  precision highp float;
+  varying vec2 vUv;
+  varying vec3 vWorldPos;
+  uniform float uTime;
+  uniform vec3 uColorInner;
+  uniform vec3 uColorMid;
+  uniform vec3 uColorOuter;
+  uniform vec3 uCamPos;
+
+  // hash + value noise
+  float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
+  float vnoise(vec2 p){
+    vec2 i=floor(p), f=fract(p);
+    float a=hash(i), b=hash(i+vec2(1.,0.)), c=hash(i+vec2(0.,1.)), d=hash(i+vec2(1.,1.));
+    vec2 u=f*f*(3.-2.*f);
+    return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+  }
+  float fbm(vec2 p){
+    float v=0., a=0.5;
+    for(int i=0;i<5;i++){ v+=a*vnoise(p); p*=2.07; a*=0.5; }
+    return v;
+  }
+
+  void main() {
+    // radial coord (0 = inner edge, 1 = outer edge)
+    float r = vUv.y;
+    // angular coord
+    float ang = vUv.x * 6.2831853;
+
+    // Differential rotation: inner spins faster
+    float spin = uTime * (1.6 / (0.25 + r));
+    vec2 p = vec2(cos(ang + spin), sin(ang + spin)) * (1.0 + r * 3.0);
+    float n  = fbm(p * 2.4 + vec2(uTime*0.15, 0.0));
+    float n2 = fbm(p * 6.0 - vec2(0.0, uTime*0.25));
+    float swirl = 0.55 + 0.45 * (n*0.7 + n2*0.5);
+
+    // colour: amber-cream inner → magenta mid → cool blue outer fade
+    vec3 col = mix(uColorInner, uColorMid, smoothstep(0.0, 0.55, r));
+    col      = mix(col,         uColorOuter, smoothstep(0.55, 1.0, r));
+
+    // brightness profile: bright at inner edge, fade to outer
+    float bright = pow(1.0 - r, 1.4) * 1.4 + 0.25;
+    bright *= swirl;
+
+    // Doppler beaming (fake): boost side moving toward camera
+    vec3 toCam = normalize(uCamPos - vWorldPos);
+    float doppler = 0.65 + 0.55 * max(0.0, dot(toCam, vec3(cos(ang+1.57), 0.0, sin(ang+1.57))));
+    bright *= doppler;
+
+    // soft alpha at edges
+    float alpha = smoothstep(0.0, 0.08, r) * smoothstep(1.0, 0.85, r);
+    alpha *= 0.85;
+
+    gl_FragColor = vec4(col * bright, alpha);
+  }
+`;
+
+function AccretionDisc() {
+  const matRef = useRef<THREE.ShaderMaterial>(null);
+  const uniforms = useMemo(() => ({
+    uTime: { value: 0 },
+    uColorInner: { value: new THREE.Color("#fff0c8") },
+    uColorMid:   { value: new THREE.Color("#ff7ad6") },
+    uColorOuter: { value: new THREE.Color("#5a8cff") },
+    uCamPos:     { value: new THREE.Vector3() },
+  }), []);
+
+  useFrame((state, dt) => {
+    if (matRef.current) {
+      uniforms.uTime.value += dt;
+      uniforms.uCamPos.value.copy(state.camera.position);
+    }
+  });
+
+  // ring lies in XZ plane (rotateX -π/2). Two thin layers for subtle thickness.
+  return (
+    <group rotation={[-Math.PI / 2, 0, 0]}>
+      {[0, 1].map((i) => (
+        <mesh key={i} position={[0, 0, (i - 0.5) * 0.5]} renderOrder={2}>
+          <ringGeometry args={[4.4, 14, 192, 1]} />
+          <shaderMaterial
+            ref={i === 0 ? matRef : undefined}
+            vertexShader={ACCRETION_VERT}
+            fragmentShader={ACCRETION_FRAG}
+            uniforms={uniforms}
+            transparent
+            depthWrite={false}
+            side={THREE.DoubleSide}
+            blending={THREE.AdditiveBlending}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+export function CoreBlackHole({ isSelected, isHovered }: { isSelected: boolean; isHovered: boolean }) {
+  const select = useUniverse((s) => s.select);
+  const hover = useUniverse((s) => s.hover);
+  const horizonRef = useRef<THREE.Mesh>(null);
+  const photonRingRef = useRef<THREE.Mesh>(null);
+  const jetTopRef = useRef<THREE.Mesh>(null);
+  const jetBotRef = useRef<THREE.Mesh>(null);
+
+  useFrame((_, dt) => {
+    if (photonRingRef.current) photonRingRef.current.rotation.z += dt * 0.08;
+    if (jetTopRef.current) jetTopRef.current.rotation.y += dt * 0.12;
+    if (jetBotRef.current) jetBotRef.current.rotation.y -= dt * 0.12;
+  });
+
+  const horizonScale = isSelected ? 1.18 : isHovered ? 1.08 : 1.0;
+
+  return (
+    <group rotation={[0, 0, THREE.MathUtils.degToRad(12)]}>
+      {/* Event horizon — opaque sphere */}
+      <mesh
+        ref={horizonRef}
+        scale={horizonScale}
+        onPointerOver={(e) => { e.stopPropagation(); hover("root"); document.body.style.cursor = "pointer"; }}
+        onPointerOut={() => { hover(null); document.body.style.cursor = ""; }}
+        onClick={(e) => { e.stopPropagation(); select("root"); }}
+        renderOrder={3}
+      >
+        <sphereGeometry args={[3.6, 64, 48]} />
+        <meshBasicMaterial color="#000000" depthWrite={true} />
+      </mesh>
+
+      {/* Photon ring — bright thin torus around horizon */}
+      <mesh ref={photonRingRef} rotation={[Math.PI / 2, 0, 0]} renderOrder={4}>
+        <torusGeometry args={[4.3, 0.18, 16, 192]} />
+        <meshBasicMaterial color="#ffd9a0" toneMapped={false} />
+      </mesh>
+      {/* Outer halo ring */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} renderOrder={4}>
+        <torusGeometry args={[4.7, 0.05, 12, 192]} />
+        <meshBasicMaterial color="#ffb070" transparent opacity={0.6} toneMapped={false} />
+      </mesh>
+
+      {/* Accretion disc — animated shader */}
+      <AccretionDisc />
+
+      {/* Bipolar jets — thin cones along Y */}
+      <mesh ref={jetTopRef} position={[0, 14, 0]} renderOrder={1}>
+        <coneGeometry args={[1.4, 26, 24, 1, true]} />
+        <meshBasicMaterial color="#8ac6ff" transparent opacity={0.18} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
+      </mesh>
+      <mesh ref={jetBotRef} position={[0, -14, 0]} rotation={[Math.PI, 0, 0]} renderOrder={1}>
+        <coneGeometry args={[1.4, 26, 24, 1, true]} />
+        <meshBasicMaterial color="#8ac6ff" transparent opacity={0.18} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
+      </mesh>
+
+      {/* Label */}
+      <Html center distanceFactor={70} style={{ pointerEvents: "none" }} position={[0, 18, 0]}>
+        <div style={{
+          fontFamily: "Bebas Neue, sans-serif",
+          fontSize: 26,
+          fontWeight: 700,
+          letterSpacing: "0.32em",
+          color: "#ffe6c4",
+          textShadow: "0 0 14px #ffb070, 0 0 32px #ff7ad6aa, 0 0 60px #ff7ad666",
+          whiteSpace: "nowrap",
+          padding: "3px 14px",
+          borderRadius: 4,
+          background: "rgba(5,8,15,0.55)",
+          border: "1px solid #ffb07055",
+        }}>
+          DEBATE UNIVERSE
+        </div>
+      </Html>
+    </group>
+  );
+}
