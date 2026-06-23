@@ -369,7 +369,7 @@ export function GalaxyVolume({ tier = "desktop" }: { tier?: "desktop" | "mobile"
   });
 
   return (
-    <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(6), 0, THREE.MathUtils.degToRad(4)]}>
+    <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(14), 0, THREE.MathUtils.degToRad(4)]}>
       <StarLayer geometry={layers.bg}    opacity={0.55} sizeScale={0.75} />
       {/* bintang bebas tambahan — mengisi area antar komponen biar feels "berisi" */}
       <StarLayer geometry={layers.free}  opacity={0.45} sizeScale={0.65} />

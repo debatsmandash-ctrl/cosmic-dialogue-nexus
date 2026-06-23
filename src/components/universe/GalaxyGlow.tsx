@@ -63,7 +63,7 @@ export function GalaxyGlow() {
   });
 
   return (
-    <group rotation={[THREE.MathUtils.degToRad(6), 0, THREE.MathUtils.degToRad(4)]}>
+    <group rotation={[THREE.MathUtils.degToRad(14), 0, THREE.MathUtils.degToRad(4)]}>
       {/* Disc glow layer 1 — luas, krem-biru */}
       <mesh ref={disc1Ref} rotation={[-Math.PI / 2, 0, 0]} renderOrder={-2}>
         <planeGeometry args={[640, 640]} />
