@@ -697,23 +697,8 @@ export function buildGraph(): Graph {
     }
   }
 
-  // ─── Disc flatten pass: paksa semua node masuk ke cakram tipis ───
-  // Y dipress proporsional terhadap r (radius di plane XZ) — tipis di tengah,
-  // sedikit melebar di pinggir, menghasilkan tampilan galaksi cincin orbit.
-  for (const n of nodes) {
-    if (n.id === "root") continue;
-    const r = Math.hypot(n.pos[0], n.pos[2]);
-    // base thickness 1.4 di pusat, flare ringan: 1.4 + r*0.018
-    const maxY = 1.4 + r * 0.018;
-    // squash factor: kalau abs(y) > maxY, kompres ke ±maxY
-    const ay = Math.abs(n.pos[1]);
-    if (ay > maxY) {
-      const sign = Math.sign(n.pos[1]);
-      // log-compress: keep some volume cue but stay in disc
-      const compressed = maxY + Math.log1p(ay - maxY) * 0.6;
-      n.pos = [n.pos[0], sign * compressed, n.pos[2]];
-    }
-  }
+  // (Disc-flatten pass dihapus — user pilih Fibonacci sphere per level:
+  // node mengisi volume bola 3D merata, bukan dipipihkan ke cakram.)
 
   // ─── Apply overrides (label/desc) ───
   for (const n of nodes) {
