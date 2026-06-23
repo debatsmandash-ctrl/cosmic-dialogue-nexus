@@ -118,7 +118,7 @@ export function NebulaClouds({ tier = "desktop" }: { tier?: "desktop" | "mobile"
   });
 
   return (
-    <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(6), 0, THREE.MathUtils.degToRad(4)]}>
+    <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(14), 0, THREE.MathUtils.degToRad(4)]}>
       {clouds.map((c, i) => (
         <sprite key={i} position={c.pos} scale={[c.scale[0], c.scale[1], 1]}>
           <spriteMaterial

@@ -121,6 +121,9 @@ export function SettingsPanel() {
             <Row label="Show all links" hint="Tampilkan semua garis terkait (termasuk hover-only) tanpa dihide">
               <Toggle value={s.showAllLinks} onChange={(v) => update({ showAllLinks: v })} />
             </Row>
+            <Row label={`Level spacing ${s.levelSpacing}`} hint="Jarak seragam antar level (root → section → sub-section → leaf)">
+              <Slider value={s.levelSpacing} min={15} max={60} step={1} onChange={(v) => update({ levelSpacing: v })} />
+            </Row>
           </Section>
 
           <Section title="Camera">

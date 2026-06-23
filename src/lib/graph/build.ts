@@ -18,6 +18,70 @@ function mulberry32(seed: number) {
 }
 const rand = mulberry32(20260614);
 
+// ─── Uniform level spacing ───
+// User request: jarak root→section = section→subsection = ... = leaf seragam.
+// Default 30 unit; bisa di-tune lewat Settings → setLevelSpacing().
+let LEVEL_SPACING = 30;
+export function setLevelSpacing(v: number) { LEVEL_SPACING = Math.max(8, v); }
+export function getLevelSpacing() { return LEVEL_SPACING; }
+
+function hashSeed(v: V3): number {
+  return Math.abs(Math.floor(v[0]*1313 + v[1]*7919 + v[2]*49157)) % 0xffff;
+}
+
+// Point on a fibonacci sphere of radius=LEVEL_SPACING around `center`.
+function fibSphere(center: V3, n: number, seed = 0): V3[] {
+  const out: V3[] = [];
+  const phi = Math.PI * (3 - Math.sqrt(5));
+  const offset = ((seed * 0.61803398875) % 1) * Math.PI * 2;
+  const R = LEVEL_SPACING;
+  for (let i = 0; i < n; i++) {
+    const y = n === 1 ? 0 : 1 - (i / (n - 1)) * 2;
+    const r = Math.sqrt(Math.max(0, 1 - y * y));
+    const th = phi * i + offset;
+    out.push([
+      center[0] + Math.cos(th) * r * R,
+      center[1] + y * R,
+      center[2] + Math.sin(th) * r * R,
+    ]);
+  }
+  return out;
+}
+
+// Point on a fibonacci HEMISPHERE of radius=LEVEL_SPACING around `center`,
+// oriented to face away from `hub`.
+function fibHemisphere(center: V3, hub: V3, n: number, seed = 0): V3[] {
+  const axis = normalize(sub(center, hub));
+  const tmp: V3 = Math.abs(axis[1]) < 0.95 ? [0, 1, 0] : [1, 0, 0];
+  const u: V3 = normalize([
+    axis[1]*tmp[2] - axis[2]*tmp[1],
+    axis[2]*tmp[0] - axis[0]*tmp[2],
+    axis[0]*tmp[1] - axis[1]*tmp[0],
+  ]);
+  const v: V3 = normalize([
+    axis[1]*u[2] - axis[2]*u[1],
+    axis[2]*u[0] - axis[0]*u[2],
+    axis[0]*u[1] - axis[1]*u[0],
+  ]);
+  const out: V3[] = [];
+  const phi = Math.PI * (3 - Math.sqrt(5));
+  const offset = ((seed * 0.61803398875) % 1) * Math.PI * 2;
+  const R = LEVEL_SPACING;
+  for (let i = 0; i < n; i++) {
+    // y ∈ (0, 1] → hemisphere away from hub
+    const y = (i + 0.5) / n;
+    const r = Math.sqrt(Math.max(0, 1 - y * y));
+    const th = phi * i + offset;
+    const lx = Math.cos(th) * r, ly = y, lz = Math.sin(th) * r;
+    out.push([
+      center[0] + (u[0]*lx + axis[0]*ly + v[0]*lz) * R,
+      center[1] + (u[1]*lx + axis[1]*ly + v[1]*lz) * R,
+      center[2] + (u[2]*lx + axis[2]*ly + v[2]*lz) * R,
+    ]);
+  }
+  return out;
+}
+
 type V3 = [number, number, number];
 const normalize = (v: V3): V3 => { const L = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0]/L, v[1]/L, v[2]/L]; };
 const scale = (v: V3, s: number): V3 => [v[0]*s, v[1]*s, v[2]*s];
@@ -69,17 +133,10 @@ const GALAXY_LAYOUT: Record<string, GalaxySlot> = {
 };
 
 function galaxyPosition(key: string): V3 {
-  const s = GALAXY_LAYOUT[key];
-  if (!s) return [0, 0, 0];
-  // Jitter kecil pada radius & theta supaya cluster tidak terkesan "tepat di cincin"
-  const rJ    = s.r + (rand() - 0.5) * (4 + s.r * 0.06);
-  const thJ   = s.theta + (rand() - 0.5) * 0.18;
-  const x = rJ * Math.cos(thJ);
-  const z = rJ * Math.sin(thJ);
-  // 3D volume: cakram tipis tapi flares sedikit di luar (lebih organik)
-  const thickness = s.layer === "bulge" ? 5.5 : 2.2 + s.r * 0.018;
-  const yJ = ((rand() + rand() + rand() - 1.5) / 1.5) * thickness;
-  return [x, (s.y ?? 0) + yJ, z];
+  // Semua cluster berada di fibonacci sphere shell jarak LEVEL_SPACING dari root.
+  const idx = CLUSTERS.findIndex((c) => c.key === key);
+  if (idx < 0) return [0, 0, 0];
+  return fibSphere([0, 0, 0], CLUSTERS.length, 0)[idx];
 }
 
 function clusterIsDisc(key: string): boolean {
@@ -103,107 +160,23 @@ function fibDirections(n: number, jitter = 0.0): V3[] {
   return out;
 }
 
-// Place N points in a roughly-spherical cloud around center; then relax.
-function placeCloud(center: V3, radius: number, count: number, minSep?: number, disc = false): V3[] {
+// Place N children on a fibonacci sphere shell of radius=LEVEL_SPACING around `center`.
+// Distance dari parent SELALU = LEVEL_SPACING (jarak antar level seragam).
+// `radius`/`minSep`/`disc` args dipertahankan untuk kompatibilitas signature
+// tapi diabaikan secara sengaja.
+function placeCloud(center: V3, _radius: number, count: number, _minSep?: number, _disc = false): V3[] {
   if (count === 0) return [];
-  const dirs = fibDirections(count, 1.4);
-  const pts: V3[] = dirs.map((u) => {
-    // ~30% outliers branch out further (rasi bintang organik)
-    const outlier = rand() < 0.3;
-    const baseR = 0.45 + rand() * 1.05;
-    const rJ = outlier ? baseR * 1.7 : baseR;
-    const p = scale(u, radius * rJ);
-    if (disc) {
-      // Disc mode: flatten Y (vertical) — leaves stay near galactic plane
-      const ySquash = 0.12 + rand() * 0.10;
-      return add(center, [
-        p[0] + (rand() - 0.5) * radius * 0.42,
-        p[1] * ySquash + (rand() - 0.5) * radius * 0.10,
-        p[2] + (rand() - 0.5) * radius * 0.42,
-      ]);
-    }
-    // Sphere mode (bulge / halo): keep volumetric
-    const zSquash = 0.55 + rand() * 0.45;
-    return add(center, [
-      p[0] + (rand() - 0.5) * radius * 0.38,
-      p[1] + (rand() - 0.5) * radius * 0.38,
-      p[2] * zSquash + (rand() - 0.5) * radius * 0.45,
-    ]);
-  });
-  // Lloyd-ish relaxation: push apart pairs closer than minSep
-  const sep = minSep ?? radius * 0.32;
-  for (let iter = 0; iter < 4; iter++) {
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        const d = dist(pts[i], pts[j]);
-        if (d < sep && d > 1e-4) {
-          const push = (sep - d) * 0.5;
-          const dir = scale(normalize(sub(pts[j], pts[i])), push);
-          pts[i] = sub(pts[i], dir);
-          pts[j] = add(pts[j], dir);
-        }
-      }
-    }
-  }
-  return pts;
+  return fibSphere(center, count, hashSeed(center));
 }
 
 // Place children of a leaf as "ranting" — directions chosen with wide angular
 // spread (10°..350°) around the outward axis, not a tight cone. Followed by
 // a short repulsion pass so leaves don't collide.
-function placeBranch(center: V3, hubCenter: V3, count: number, distMin: number, distMax: number): V3[] {
+function placeBranch(center: V3, hubCenter: V3, count: number, _distMin: number, _distMax: number): V3[] {
   if (count === 0) return [];
-  const out = normalize(sub(center, hubCenter));
-  // Spread multiplier — sebaran ranting lebih lebar tapi tetap "berisi" (tidak jauh sekali)
-  const SPREAD = 1.55;
-  distMin = distMin * SPREAD;
-  distMax = distMax * SPREAD;
-  // pick two perpendicular axes to `out`
-  const tmp: V3 = Math.abs(out[1]) < 0.95 ? [0, 1, 0] : [1, 0, 0];
-  const u: V3 = normalize([
-    out[1]*tmp[2] - out[2]*tmp[1],
-    out[2]*tmp[0] - out[0]*tmp[2],
-    out[0]*tmp[1] - out[1]*tmp[0],
-  ]);
-  const v: V3 = normalize([
-    out[1]*u[2] - out[2]*u[1],
-    out[2]*u[0] - out[0]*u[2],
-    out[0]*u[1] - out[1]*u[0],
-  ]);
-  const pts: V3[] = [];
-  for (let i = 0; i < count; i++) {
-    // azimuth ∈ [10°, 350°] — avoid degenerate stacking at the poles
-    const azDeg = 10 + rand() * 340;
-    const az = azDeg * Math.PI / 180;
-    // elevation away from hub — sebaran melebar (~±82°) supaya feels organik & nyebar
-    const elev = (rand() - 0.5) * (Math.PI * 0.92);
-    const forwardWeight = Math.cos(elev);
-    const sideU = Math.sin(elev) * Math.cos(az);
-    const sideV = Math.sin(elev) * Math.sin(az);
-    const dir: V3 = normalize([
-      out[0]*forwardWeight + u[0]*sideU + v[0]*sideV,
-      out[1]*forwardWeight + u[1]*sideU + v[1]*sideV,
-      out[2]*forwardWeight + u[2]*sideU + v[2]*sideV,
-    ]);
-    const r = distMin + rand() * (distMax - distMin);
-    pts.push(add(center, scale(dir, r)));
-  }
-  // local repulsion pass to keep leaves from clumping
-  const minSep = Math.max(2.2, (distMin + distMax) * 0.18);
-  for (let iter = 0; iter < 3; iter++) {
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        const d = dist(pts[i], pts[j]);
-        if (d < minSep && d > 1e-4) {
-          const push = (minSep - d) * 0.5;
-          const dir = scale(normalize(sub(pts[j], pts[i])), push);
-          pts[i] = sub(pts[i], dir);
-          pts[j] = add(pts[j], dir);
-        }
-      }
-    }
-  }
-  return pts;
+  // Anak-anak diletakkan di hemisphere fibonacci jarak LEVEL_SPACING dari center,
+  // menjauh dari hub. Jarak antar-level tetap seragam.
+  return fibHemisphere(center, hubCenter, count, hashSeed(center));
 }
 
 export interface Graph {
@@ -701,10 +674,10 @@ export function buildGraph(): Graph {
     });
   }
 
-  // ─── Cross-cluster collision push: jaga buffer >= 8 antara leaf cluster berbeda ───
-  {
+  // ─── Cross-cluster collision push (disabled): user request bahwa jarak antar
+  // level seragam — push akan mendistorsi jarak edge. Dibiarkan komentar.
+  if (false) {
     const BUFFER = 6;
-    // only push small leaves (size < 0.2)
     const movable = nodes.filter((n) => n.kind !== "root" && n.kind !== "cluster" && n.kind !== "subhub");
     for (let iter = 0; iter < 2; iter++) {
       for (let i = 0; i < movable.length; i++) {
@@ -724,23 +697,8 @@ export function buildGraph(): Graph {
     }
   }
 
-  // ─── Disc flatten pass: paksa semua node masuk ke cakram tipis ───
-  // Y dipress proporsional terhadap r (radius di plane XZ) — tipis di tengah,
-  // sedikit melebar di pinggir, menghasilkan tampilan galaksi cincin orbit.
-  for (const n of nodes) {
-    if (n.id === "root") continue;
-    const r = Math.hypot(n.pos[0], n.pos[2]);
-    // base thickness 1.4 di pusat, flare ringan: 1.4 + r*0.018
-    const maxY = 1.4 + r * 0.018;
-    // squash factor: kalau abs(y) > maxY, kompres ke ±maxY
-    const ay = Math.abs(n.pos[1]);
-    if (ay > maxY) {
-      const sign = Math.sign(n.pos[1]);
-      // log-compress: keep some volume cue but stay in disc
-      const compressed = maxY + Math.log1p(ay - maxY) * 0.6;
-      n.pos = [n.pos[0], sign * compressed, n.pos[2]];
-    }
-  }
+  // (Disc-flatten pass dihapus — user pilih Fibonacci sphere per level:
+  // node mengisi volume bola 3D merata, bukan dipipihkan ke cakram.)
 
   // ─── Apply overrides (label/desc) ───
   for (const n of nodes) {

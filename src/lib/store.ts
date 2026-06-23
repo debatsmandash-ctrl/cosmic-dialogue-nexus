@@ -15,6 +15,7 @@ export interface Settings {
   starSize: number;
   showHoverEdges: boolean;
   showAllLinks: boolean;
+  levelSpacing: number;
   autoRotate: boolean;
   autoRotateSpeed: number;
   damping: number;
@@ -40,6 +41,7 @@ export const DEFAULT_SETTINGS: Settings = {
   starSize: 1.0,
   showHoverEdges: true,
   showAllLinks: false,
+  levelSpacing: 30,
   autoRotate: true,
   autoRotateSpeed: 0.25,
   damping: 0.1,

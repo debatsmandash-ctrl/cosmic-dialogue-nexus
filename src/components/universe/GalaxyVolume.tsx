@@ -120,7 +120,7 @@ function genThinDisc(n: number) {
   const siz = new Float32Array(n);
   const ARMS = 4;
   const ARM_OFFSETS = [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2];
-  const b = 0.22; // tightness of spiral
+  const b = 0.26; // tightness of spiral — sedikit lebih tegas
   for (let i = 0; i < n; i++) {
     // radial position — denser inside, fade outward
     const r = 14 + Math.pow(Math.random(), 0.55) * 220;
@@ -129,8 +129,8 @@ function genThinDisc(n: number) {
     // theta from r so it follows arm: r = a*exp(b*theta) → theta = ln(r/a)/b
     const a = 6;
     const armTheta = Math.log(Math.max(1, r) / a) / b + ARM_OFFSETS[arm];
-    // transverse spread (perpendicular to arm) — wider at larger r
-    const armSpread = 4 + r * 0.08;
+    // transverse spread (perpendicular to arm) — lebih ramping & tegas
+    const armSpread = 3 + r * 0.05;
     const offsetA = gauss() * armSpread;
     // convert (r, theta) + transverse offset to Cartesian
     const x = r * Math.cos(armTheta) + Math.cos(armTheta + Math.PI / 2) * offsetA;
@@ -342,11 +342,11 @@ export function GalaxyVolume({ tier = "desktop" }: { tier?: "desktop" | "mobile"
   const mobile = tier === "mobile";
   const counts = {
     bulge: mobile ? 3000  : 10000,
-    thin:  mobile ? 10000 : 55000,
+    thin:  mobile ? 10000 : 70000,
     thick: mobile ? 2500  : 15000,
     halo:  mobile ? 2000  : 10000,
-    // Dust lane dark dots dihapus → diganti ekstra bintang bebas latar
-    dust:  0,
+    // Dust lane gelap silhouette di dalam arm — dikembalikan untuk look realistis
+    dust:  mobile ? 4000  : 14000,
     bg:    mobile ? 14000 : 60000,
     free:  mobile ? 6000  : 22000, // bintang bebas tidak terkait komponen
   };
@@ -356,11 +356,12 @@ export function GalaxyVolume({ tier = "desktop" }: { tier?: "desktop" | "mobile"
     thin:  genThinDisc(counts.thin),
     thick: genThickDisc(counts.thick),
     halo:  genHalo(counts.halo),
+    dust:  genDustLanes(counts.dust),
     globs: !mobile ? genGlobulars() : [],
     bg:    genDiscBackground(counts.bg),
     free:  genDiscBackground(counts.free),
-    hii:   !mobile ? genHIIRegions(6000) : null,
-  }), [counts.bulge, counts.thin, counts.thick, counts.halo, counts.bg, counts.free, mobile]);
+    hii:   !mobile ? genHIIRegions(7500) : null,
+  }), [counts.bulge, counts.thin, counts.thick, counts.halo, counts.dust, counts.bg, counts.free, mobile]);
 
   const groupRef = useRef<THREE.Group>(null);
   useFrame((_, dt) => {
@@ -368,14 +369,16 @@ export function GalaxyVolume({ tier = "desktop" }: { tier?: "desktop" | "mobile"
   });
 
   return (
-    <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(6), 0, THREE.MathUtils.degToRad(4)]}>
+    <group ref={groupRef} rotation={[THREE.MathUtils.degToRad(14), 0, THREE.MathUtils.degToRad(4)]}>
       <StarLayer geometry={layers.bg}    opacity={0.55} sizeScale={0.75} />
       {/* bintang bebas tambahan — mengisi area antar komponen biar feels "berisi" */}
       <StarLayer geometry={layers.free}  opacity={0.45} sizeScale={0.65} />
       <StarLayer geometry={layers.bulge} opacity={0.95} sizeScale={1.05} />
       <StarLayer geometry={layers.thick} opacity={0.55} sizeScale={0.9} />
       <StarLayer geometry={layers.thin}  opacity={0.85} sizeScale={1.0} />
-      {layers.hii && <StarLayer geometry={layers.hii} opacity={0.9} sizeScale={2.2} />}
+      {layers.hii && <StarLayer geometry={layers.hii} opacity={1.0} sizeScale={2.4} />}
+      {/* Dust lanes — silhouette gelap di dalam arm (multiplicative-style normal blend) */}
+      <StarLayer geometry={layers.dust}  opacity={0.65} sizeScale={1.2} dust />
       <StarLayer geometry={layers.halo}  opacity={0.5}  sizeScale={0.8} />
       {layers.globs.map((g, i) => (
         <StarLayer key={`gl-${i}`} geometry={g.geom} opacity={0.85} sizeScale={1.0} />

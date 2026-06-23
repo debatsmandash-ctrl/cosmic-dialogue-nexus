@@ -4,7 +4,7 @@ import { EffectComposer, Bloom, ChromaticAberration, Vignette, SMAA } from "@rea
 import { BlendFunction } from "postprocessing";
 import { useMemo, useRef, useEffect, useState, Suspense } from "react";
 import * as THREE from "three";
-import { buildGraph } from "@/lib/graph/build";
+import { buildGraph, invalidateGraphCache, setLevelSpacing } from "@/lib/graph/build";
 import { useUniverse, useSettings, type QualityPreset } from "@/lib/store";
 import type { StarNode, StarEdge, NodeKind } from "@/data/types";
 import { MilkyWaySky } from "./MilkyWaySky";
@@ -385,7 +385,8 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
 function CameraController({ targetId, profile, autoRotate, autoRotateSpeed, damping, rotateSpeed, zoomSpeed, panSpeed }: { targetId: string | null; profile: DeviceProfile; autoRotate: boolean; autoRotateSpeed: number; damping: number; rotateSpeed: number; zoomSpeed: number; panSpeed: number }) {
   const controls = useRef<any>(null);
   const { camera } = useThree();
-  const graph = useMemo(() => buildGraph(), []);
+  const spacing = useSettings((s) => s.levelSpacing);
+  const graph = useMemo(() => buildGraph(), [spacing]);
   const [interacting, setInteracting] = useState(false);
   const idleTimerRef = useRef<number | null>(null);
 
@@ -416,10 +417,10 @@ function CameraController({ targetId, profile, autoRotate, autoRotateSpeed, damp
     const target = new THREE.Vector3(...node.pos);
     const dir = target.clone().sub(new THREE.Vector3(0, 0, 0)).normalize();
     const offset =
-      node.kind === "root" ? 180 :
-      node.kind === "cluster" ? 58 :
-      node.kind === "subhub" ? 34 :
-      node.kind === "domain" ? 28 : 18;
+      node.kind === "root" ? spacing * 2.2 :
+      node.kind === "cluster" ? spacing * 0.85 :
+      node.kind === "subhub" ? spacing * 0.55 :
+      node.kind === "domain" ? spacing * 0.45 : spacing * 0.28;
     const camTarget = target.clone().add(dir.multiplyScalar(offset));
     const startCam = camera.position.clone();
     const startLook = (controls.current?.target as THREE.Vector3 | undefined)?.clone() ?? new THREE.Vector3();
@@ -453,7 +454,7 @@ function CameraController({ targetId, profile, autoRotate, autoRotateSpeed, damp
       zoomSpeed={zoomSpeed}
       rotateSpeed={rotateSpeed}
       panSpeed={panSpeed}
-      maxDistance={500}
+      maxDistance={Math.max(180, spacing * 9)}
       minDistance={3}
       autoRotate={autoRotate && !interacting && !targetId}
       autoRotateSpeed={autoRotateSpeed}
@@ -463,12 +464,17 @@ function CameraController({ targetId, profile, autoRotate, autoRotateSpeed, damp
 
 // ─── Scene contents ───
 function Scene({ profile }: { profile: DeviceProfile }) {
-  const graph = useMemo(() => buildGraph(), []);
+  const settings = useSettings();
+  // Apply spacing → invalidate graph cache → rebuild
+  const graph = useMemo(() => {
+    setLevelSpacing(settings.levelSpacing);
+    invalidateGraphCache();
+    return buildGraph();
+  }, [settings.levelSpacing]);
   const selectedId = useUniverse((s) => s.selectedId);
   const hoveredId = useUniverse((s) => s.hoveredId);
   const select = useUniverse((s) => s.select);
   const setLoaded = useUniverse((s) => s.setLoaded);
-  const settings = useSettings();
   const quality = settings.quality;
   const qScale = quality === "low" ? 0.45 : quality === "medium" ? 0.7 : quality === "high" ? 0.9 : 1.0;
   const crustShells = quality === "low" ? 1 : quality === "medium" ? 1 : 2;
@@ -643,7 +649,7 @@ export function Universe() {
   return (
     <>
     <Canvas
-      camera={{ position: [160, 95, 230], fov: 52, near: 0.1, far: 2400 }}
+      camera={{ position: [70, 42, 110], fov: 52, near: 0.1, far: 2400 }}
       dpr={profile.dpr}
       frameloop={fpsCap ? "demand" : "always"}
       gl={{
@@ -658,7 +664,7 @@ export function Universe() {
       style={{ position: "absolute", inset: 0, background: "transparent" }}
     >
       <color attach="background" args={["#05080f"]} />
-      <fog attach="fog" args={["#05080f", 480, 1400]} />
+      <fog attach="fog" args={["#05080f", 220, 900]} />
       <Suspense fallback={null}>
         <Scene profile={profile} />
       </Suspense>

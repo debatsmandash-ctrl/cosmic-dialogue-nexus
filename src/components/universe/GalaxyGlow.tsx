@@ -18,11 +18,13 @@ function makeDiscTexture(): THREE.CanvasTexture {
   c.width = c.height = size;
   const ctx = c.getContext("2d")!;
   const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  g.addColorStop(0.00, "rgba(255, 235, 200, 0.85)");
-  g.addColorStop(0.08, "rgba(255, 220, 170, 0.55)");
-  g.addColorStop(0.22, "rgba(200, 180, 220, 0.32)");
-  g.addColorStop(0.45, "rgba(140, 160, 220, 0.18)");
-  g.addColorStop(0.75, "rgba(80, 110, 180, 0.06)");
+  // Gaussian-like falloff (eksp -r²/σ²) untuk transisi super halus bulge→arm
+  g.addColorStop(0.00, "rgba(255, 230, 180, 0.95)");
+  g.addColorStop(0.05, "rgba(255, 210, 150, 0.72)");
+  g.addColorStop(0.14, "rgba(255, 180, 120, 0.46)");
+  g.addColorStop(0.28, "rgba(220, 150, 110, 0.26)");
+  g.addColorStop(0.50, "rgba(160, 130, 150, 0.12)");
+  g.addColorStop(0.78, "rgba(60, 80, 140, 0.04)");
   g.addColorStop(1.00, "rgba(0, 0, 0, 0)");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, size, size);
@@ -61,7 +63,7 @@ export function GalaxyGlow() {
   });
 
   return (
-    <group rotation={[THREE.MathUtils.degToRad(6), 0, THREE.MathUtils.degToRad(4)]}>
+    <group rotation={[THREE.MathUtils.degToRad(14), 0, THREE.MathUtils.degToRad(4)]}>
       {/* Disc glow layer 1 — luas, krem-biru */}
       <mesh ref={disc1Ref} rotation={[-Math.PI / 2, 0, 0]} renderOrder={-2}>
         <planeGeometry args={[640, 640]} />
