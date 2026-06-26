@@ -8,6 +8,8 @@ import {
 import { useUniverse } from "@/lib/store";
 import { buildGraph } from "@/lib/graph/build";
 import { useMemo, useState } from "react";
+import { SimeoneEgg } from "@/components/panels/SimeoneEgg";
+import { RiskBar } from "@/components/panels/RiskBar";
 
 const muted = { fontFamily: "Space Mono", fontSize: 10, letterSpacing: "0.25em", color: "var(--au-muted)", textTransform: "uppercase" as const };
 const para = { fontFamily: "DM Sans", fontSize: 13.5, lineHeight: 1.75, color: "var(--au-dim)" };
@@ -98,12 +100,20 @@ function ClusterPanel({ node }: { node: StarNode }) {
 function StylePanel({ refId }: { refId: string }) {
   const s = STYLES.find((x) => x.id === refId);
   if (!s) return null;
+  const isHaram = refId === "haramdebate";
   return (
-    <div>
+    <div style={{ position: "relative", paddingTop: isHaram ? 4 : 0 }}>
+      {isHaram && <SimeoneEgg />}
       <div style={muted}>{s.tag}</div>
-      <p style={{ ...para, marginTop: 12 }}>{s.desc}</p>
+      <p style={{ ...para, marginTop: 12, paddingRight: isHaram ? 110 : 0 }}>{s.desc}</p>
       <h3 style={heading}>Eksekusi</h3>
       <p style={para}>{s.detail}</p>
+      {isHaram && (
+        <div style={{ marginTop: 18, padding: "10px 14px", borderLeft: "3px solid #ff2d8a", background: "rgba(255,45,138,0.06)" }}>
+          <div style={{ ...muted, color: "#ff2d8a", fontSize: 9 }}>EL CHOLO DOCTRINE</div>
+          <p style={{ ...para, marginTop: 4, fontStyle: "italic" }}>"Park the bus, then sting on the counter." — pertahanan absolut, eksploitasi celah lawan.</p>
+        </div>
+      )}
     </div>
   );
 }
