@@ -307,47 +307,158 @@ function MatterSubBabPanel({ refId }: { refId: string }) {
   const d = MATTER[dk]; if (!d) return null;
   const b = d.babs.find((x) => x.id === babId); if (!b) return null;
   const sb = b.subbabs.find((x) => x.id === subId); if (!sb) return null;
+
+  const accent = "var(--au-cyan)";
+  const penjelasan = sb.penjelasan || [];
+  const matters = sb.matter || [];
+  const contoh = sb.contoh;
+  // Drop-cap dari paragraf pertama
+  const firstPara = penjelasan[0];
+  const dropChar = firstPara ? firstPara[0] : "";
+  const firstRest = firstPara ? firstPara.slice(1) : "";
+
   return (
     <div>
-      <div style={{ ...muted, color: "var(--au-cyan)" }}>{d.icon} {d.label} · {b.title}</div>
-      {sb.badge && <div style={{ marginTop: 8 }}><Chip color="var(--au-gold)">{sb.badge}</Chip></div>}
-      {sb.penjelasan && (
-        <>
-          <h3 style={heading}>Penjelasan</h3>
-          {sb.penjelasan.map((p, i) => <p key={i} style={{ ...para, marginBottom: 8 }}>{p}</p>)}
-        </>
-      )}
-      {sb.matter && (
-        <>
-          <h3 style={heading}>Matter</h3>
-          {sb.matter.map((m, i) => (
-            <div key={i} style={{ marginBottom: 10, borderLeft: "2px solid var(--au-cyan)", paddingLeft: 12 }}>
-              <div style={{ ...muted, color: "var(--au-cyan)", fontSize: 9 }}>{m.label}</div>
-              <p style={{ ...para, marginTop: 4 }}>{m.text}</p>
+      {/* HERO bento card */}
+      <div style={{
+        position: "relative",
+        padding: "22px 22px 24px",
+        borderRadius: 10,
+        background: `
+          radial-gradient(120% 80% at 0% 0%, ${accent}22, transparent 55%),
+          radial-gradient(100% 70% at 100% 100%, var(--au-purple)18, transparent 60%),
+          linear-gradient(180deg, rgba(11,18,32,0.85), rgba(5,8,15,0.85))
+        `,
+        border: `1px solid ${accent}40`,
+        boxShadow: `inset 0 0 24px ${accent}10, 0 8px 28px rgba(0,0,0,0.4)`,
+        overflow: "hidden",
+      }}>
+        <div style={{ ...muted, color: accent, fontSize: 9 }}>
+          {d.icon} {d.label.toUpperCase()} · BAB {b.num}{b.title ? ` · ${b.title}` : ""}
+        </div>
+        <h2 style={{
+          fontFamily: "Bebas Neue", fontSize: 30, letterSpacing: "0.04em",
+          color: "var(--au-text)", marginTop: 8, lineHeight: 1.05,
+          textShadow: `0 0 22px ${accent}55`,
+        }}>{sb.num} {sb.title}</h2>
+        {sb.badge && (
+          <div style={{ marginTop: 10 }}>
+            <Chip color="var(--au-gold)">{sb.badge}</Chip>
+          </div>
+        )}
+        {firstPara && (
+          <p style={{
+            ...para, marginTop: 14, fontSize: 14, color: "var(--au-text)",
+          }}>
+            <span style={{
+              float: "left", fontFamily: "Bebas Neue", fontSize: 54,
+              lineHeight: 0.85, marginRight: 10, marginTop: 4,
+              color: accent, textShadow: `0 0 18px ${accent}77`,
+            }}>{dropChar}</span>
+            {firstRest}
+          </p>
+        )}
+      </div>
+
+      {/* Bento grid: paragraf pendukung + matter callout cards */}
+      {(penjelasan.length > 1 || matters.length > 0) && (
+        <div style={{
+          marginTop: 16, display: "grid",
+          gridTemplateColumns: "repeat(6, 1fr)",
+          gap: 10,
+        }}>
+          {penjelasan.slice(1).map((p, i) => (
+            <div key={`p-${i}`} style={{
+              gridColumn: i % 3 === 0 ? "span 6" : "span 3",
+              padding: "14px 16px", borderRadius: 8,
+              background: "rgba(255,255,255,0.025)",
+              border: "1px solid rgba(168,85,247,0.18)",
+            }}>
+              <div style={{ ...muted, color: "var(--au-purple)", fontSize: 8, marginBottom: 6 }}>
+                ¶ {String(i + 2).padStart(2, "0")}
+              </div>
+              <p style={{ ...para, fontSize: 13 }}>{p}</p>
             </div>
           ))}
-        </>
+          {matters.map((m, i) => {
+            // Cycle accent colors for variety
+            const palette = [
+              { bg: "rgba(0,255,200,0.07)",  bd: "rgba(0,255,200,0.35)",  fg: "var(--au-cyan)" },
+              { bg: "rgba(168,85,247,0.07)", bd: "rgba(168,85,247,0.35)", fg: "var(--au-purple)" },
+              { bg: "rgba(56,189,248,0.07)", bd: "rgba(56,189,248,0.35)", fg: "var(--au-blue)" },
+              { bg: "rgba(253,224,71,0.06)", bd: "rgba(253,224,71,0.30)", fg: "var(--au-gold)" },
+            ][i % 4];
+            const span = i % 5 === 0 ? "span 6" : i % 3 === 0 ? "span 4" : "span 3";
+            return (
+              <div key={`m-${i}`} style={{
+                gridColumn: span,
+                padding: "14px 16px", borderRadius: 8,
+                background: palette.bg, border: `1px solid ${palette.bd}`,
+                position: "relative", overflow: "hidden",
+              }}>
+                <div style={{ ...muted, color: palette.fg, fontSize: 9 }}>
+                  ◆ {m.label.toUpperCase()}
+                </div>
+                <p style={{ ...para, marginTop: 6, fontSize: 13 }}>{m.text}</p>
+              </div>
+            );
+          })}
+        </div>
       )}
-      {sb.contoh && (sb.contoh.pro || sb.contoh.kon) && (
-        <>
-          <h3 style={heading}>Contoh</h3>
-          {sb.contoh.pro && (
-            <div style={{ background: "rgba(255,107,107,0.04)", border: "1px solid rgba(255,107,107,0.2)", padding: "10px 14px", marginBottom: 8, borderRadius: 4 }}>
-              <div style={{ ...muted, color: "var(--au-agg)", fontSize: 9 }}>PRO</div>
-              <p style={{ ...para, marginTop: 6 }}>{sb.contoh.pro}</p>
+
+      {/* Contoh PRO/KON — dua kolom magazine style */}
+      {contoh && (contoh.pro || contoh.kon) && (
+        <div style={{
+          marginTop: 18, display: "grid",
+          gridTemplateColumns: contoh.pro && contoh.kon ? "1fr 1fr" : "1fr",
+          gap: 10,
+        }}>
+          {contoh.pro && (
+            <div style={{
+              padding: "14px 16px", borderRadius: 8,
+              background: "linear-gradient(180deg, rgba(255,107,107,0.08), rgba(255,107,107,0.02))",
+              border: "1px solid rgba(255,107,107,0.35)",
+              borderTop: "3px solid #ff6b6b",
+            }}>
+              <div style={{ ...muted, color: "var(--au-agg)", fontSize: 10 }}>★ ARGUMEN PRO</div>
+              <p style={{ ...para, marginTop: 8, fontSize: 13 }}>{contoh.pro}</p>
             </div>
           )}
-          {sb.contoh.kon && (
-            <div style={{ background: "rgba(56,189,248,0.04)", border: "1px solid rgba(56,189,248,0.2)", padding: "10px 14px", borderRadius: 4 }}>
-              <div style={{ ...muted, color: "var(--au-blue)", fontSize: 9 }}>KON</div>
-              <p style={{ ...para, marginTop: 6 }}>{sb.contoh.kon}</p>
+          {contoh.kon && (
+            <div style={{
+              padding: "14px 16px", borderRadius: 8,
+              background: "linear-gradient(180deg, rgba(56,189,248,0.08), rgba(56,189,248,0.02))",
+              border: "1px solid rgba(56,189,248,0.35)",
+              borderTop: "3px solid #38bdf8",
+            }}>
+              <div style={{ ...muted, color: "var(--au-blue)", fontSize: 10 }}>★ ARGUMEN KON</div>
+              <p style={{ ...para, marginTop: 8, fontSize: 13 }}>{contoh.kon}</p>
             </div>
           )}
-        </>
+        </div>
+      )}
+
+      {/* Quote besar penutup (jika ada penjelasan ≥2) */}
+      {penjelasan.length >= 2 && (
+        <blockquote style={{
+          marginTop: 22,
+          padding: "18px 22px",
+          borderLeft: `4px solid ${accent}`,
+          background: `linear-gradient(90deg, ${accent}10, transparent)`,
+          fontFamily: "Bebas Neue", fontSize: 19, letterSpacing: "0.04em",
+          color: "var(--au-text)", lineHeight: 1.35, fontStyle: "italic",
+        }}>
+          “Memahami {sb.title.toLowerCase()} bukan soal hafal definisi, tapi soal melihat <span style={{ color: accent }}>tegangan moral & strategis</span> yang membentuknya.”
+          <div style={{
+            ...muted, fontSize: 8, color: "var(--au-muted)",
+            marginTop: 8, fontStyle: "normal",
+          }}>— Catatan editorial SMANDASH</div>
+        </blockquote>
       )}
     </div>
   );
 }
+
 
 // Assign deterministic risk 1..5 from index. First point = safer, last = bolder.
 function riskFor(i: number, n: number): number {
