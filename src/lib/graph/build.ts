@@ -168,12 +168,14 @@ export function buildGraph(): Graph {
   nodes.push({ id: "root", label: "DEBATE UNIVERSE", kind: "root", cluster: "root", color: "#ffffff", size: 1.4, pos: [0, 0, 0] });
 
   CLUSTERS.forEach((c, i) => {
-    const center = scale(clusterDirs[i], c.dist);
+    // All clusters on the same SHELL radius — single ball.
+    const center = scale(clusterDirs[i], SHELL_R);
     clusterCenter[c.key] = center;
     colorOf[c.key] = c.color;
     nodes.push({ id: `cluster:${c.key}`, label: c.label, kind: "cluster", cluster: c.key, color: c.color, size: 0.7, pos: center });
     edges.push({ a: "root", b: `cluster:${c.key}`, strength: "strong", color: c.color });
   });
+
 
   // ─── STYLES (cluster → HALAL / HARAM sub-hubs → style nodes) ───
   {
