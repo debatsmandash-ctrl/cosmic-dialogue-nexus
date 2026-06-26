@@ -28,20 +28,22 @@ const dist = (a: V3, b: V3): number => Math.hypot(a[0]-b[0], a[1]-b[1], a[2]-b[2
 
 // Cluster meta. Centers auto-spread on a fibonacci sphere so no two collide.
 interface ClusterMeta { key: ClusterKey; label: string; color: string; dist: number; }
+// SHELL layout — semua cluster pada radius mirip (kulit bola pasca big bang),
+// lebih jauh agar bola terasa lebar dan tidak rapat di tengah.
 const CLUSTERS: ClusterMeta[] = [
-  { key: "matter",        label: "MATTER",       color: "#00ffc8", dist: 50 },
-  { key: "motion",        label: "MOTION BANK",  color: "#ff8b3d", dist: 48 },
-  { key: "kamus",         label: "KAMUS",        color: "#38bdf8", dist: 48 },
-  { key: "competitor",    label: "COMPETITOR",   color: "#fb7185", dist: 40 },
-  { key: "active_member", label: "SMANDASH",     color: "#00ffc8", dist: 38 },
-  { key: "event",         label: "EVENT",        color: "#fde047", dist: 52 },
-  { key: "roles",         label: "ROLES",        color: "#ff6b6b", dist: 44 },
-  { key: "styles",        label: "STYLES",       color: "#f0c040", dist: 42 },
-  { key: "practice",      label: "PRACTICE",     color: "#ff9f43", dist: 40 },
-  { key: "circuit",       label: "CIRCUIT",      color: "#7b5ea7", dist: 40 },
-  { key: "assistant",     label: "ASSISTANT",    color: "#00d4aa", dist: 38 },
-  { key: "editor",        label: "EDITOR",       color: "#94a3b8", dist: 36 },
-  { key: "meta",          label: "META",         color: "#e8f4ff", dist: 36 },
+  { key: "matter",        label: "MATTER",       color: "#00ffc8", dist: 84 },
+  { key: "motion",        label: "MOTION BANK",  color: "#ff8b3d", dist: 82 },
+  { key: "kamus",         label: "KAMUS",        color: "#38bdf8", dist: 80 },
+  { key: "competitor",    label: "COMPETITOR",   color: "#fb7185", dist: 78 },
+  { key: "active_member", label: "SMANDASH",     color: "#00ffc8", dist: 76 },
+  { key: "event",         label: "EVENT",        color: "#fde047", dist: 86 },
+  { key: "roles",         label: "ROLES",        color: "#ff6b6b", dist: 80 },
+  { key: "styles",        label: "STYLES",       color: "#f0c040", dist: 78 },
+  { key: "practice",      label: "PRACTICE",     color: "#ff9f43", dist: 76 },
+  { key: "circuit",       label: "CIRCUIT",      color: "#7b5ea7", dist: 76 },
+  { key: "assistant",     label: "ASSISTANT",    color: "#00d4aa", dist: 74 },
+  { key: "editor",        label: "EDITOR",       color: "#94a3b8", dist: 72 },
+  { key: "meta",          label: "META",         color: "#e8f4ff", dist: 72 },
 ];
 
 // Fibonacci sphere directions, then perturbed
@@ -61,26 +63,26 @@ function fibDirections(n: number, jitter = 0.0): V3[] {
   return out;
 }
 
-// Place N points in a roughly-spherical cloud around center; then relax.
+// Place N points in a SHELL (kulit bola tipis) around center; then relax.
+// Ini menghasilkan struktur "post-big-bang" — semua anak melebar ke pinggir,
+// tidak ditumpuk di pusat. Ketebalan shell ±18% dari radius.
 function placeCloud(center: V3, radius: number, count: number, minSep?: number): V3[] {
   if (count === 0) return [];
-  const dirs = fibDirections(count, 1.4);
+  const dirs = fibDirections(count, 1.0);
   const pts: V3[] = dirs.map((u) => {
-    // True spherical distribution — TIDAK disc/galaksi.
-    // ~30% outliers untuk variasi "rasi bintang" organik.
-    const outlier = rand() < 0.3;
-    const baseR = 0.55 + rand() * 1.0;
-    const rJ = outlier ? baseR * 1.65 : baseR;
-    const p = scale(u, radius * rJ);
+    // SHELL: radius ~0.82..1.0 — kebanyakan di kulit, jarang di dalam.
+    const shellJ = 0.82 + rand() * 0.18;
+    const p = scale(u, radius * shellJ);
+    // jitter lateral tipis untuk "organik" (bukan grid yang rapi)
     return add(center, [
-      p[0] + (rand() - 0.5) * radius * 0.42,
-      p[1] + (rand() - 0.5) * radius * 0.42,
-      p[2] + (rand() - 0.5) * radius * 0.42,
+      p[0] + (rand() - 0.5) * radius * 0.12,
+      p[1] + (rand() - 0.5) * radius * 0.12,
+      p[2] + (rand() - 0.5) * radius * 0.12,
     ]);
   });
-  // Lloyd-ish relaxation: push apart pairs closer than minSep
-  const sep = minSep ?? radius * 0.32;
-  for (let iter = 0; iter < 4; iter++) {
+  // Relax pairs that are too close
+  const sep = minSep ?? radius * 0.38;
+  for (let iter = 0; iter < 5; iter++) {
     for (let i = 0; i < pts.length; i++) {
       for (let j = i + 1; j < pts.length; j++) {
         const d = dist(pts[i], pts[j]);
