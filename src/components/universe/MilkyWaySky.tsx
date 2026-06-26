@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
-import milkywayAsset from "@/assets/milkyway_pano.jpg.asset.json";
+import milkywayAsset from "@/assets/milkyway_pano_hd.jpg.asset.json";
 
 /**
  * MilkyWaySky — texture-based realistic skybox.

@@ -9,6 +9,7 @@ import { useUniverse, useSettings, type QualityPreset } from "@/lib/store";
 import type { StarNode, StarEdge, NodeKind } from "@/data/types";
 import { MilkyWaySky } from "./MilkyWaySky";
 import { HoverEdges } from "./HoverEdges";
+import { Universe2D } from "./Universe2D";
 import { useDeviceProfile, type DeviceProfile } from "@/hooks/useDeviceProfile";
 
 // ─── Halo texture (shared canvas radial gradient) ───
@@ -615,6 +616,15 @@ export function Universe() {
   const profile = useDeviceProfile();
   const fpsCap = useSettings((s) => s.fpsCap);
   const showFps = useSettings((s) => s.showFps);
+  const viewMode = useSettings((s) => s.viewMode);
+  if (viewMode === "2d") {
+    return (
+      <>
+        <Universe2D />
+        {showFps && <FpsCounter />}
+      </>
+    );
+  }
   return (
     <>
     <Canvas

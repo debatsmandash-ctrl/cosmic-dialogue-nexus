@@ -66,17 +66,16 @@ function placeCloud(center: V3, radius: number, count: number, minSep?: number):
   if (count === 0) return [];
   const dirs = fibDirections(count, 1.4);
   const pts: V3[] = dirs.map((u) => {
-    // ~30% outliers branch out further (rasi bintang organik)
+    // True spherical distribution — TIDAK disc/galaksi.
+    // ~30% outliers untuk variasi "rasi bintang" organik.
     const outlier = rand() < 0.3;
-    const baseR = 0.45 + rand() * 1.05;
-    const rJ = outlier ? baseR * 1.7 : baseR;
+    const baseR = 0.55 + rand() * 1.0;
+    const rJ = outlier ? baseR * 1.65 : baseR;
     const p = scale(u, radius * rJ);
-    // squash sumbu Y/Z biar oblate, bukan bola sempurna
-    const zSquash = 0.55 + rand() * 0.45;
     return add(center, [
-      p[0] + (rand() - 0.5) * radius * 0.38,
-      p[1] + (rand() - 0.5) * radius * 0.38,
-      p[2] * zSquash + (rand() - 0.5) * radius * 0.45,
+      p[0] + (rand() - 0.5) * radius * 0.42,
+      p[1] + (rand() - 0.5) * radius * 0.42,
+      p[2] + (rand() - 0.5) * radius * 0.42,
     ]);
   });
   // Lloyd-ish relaxation: push apart pairs closer than minSep

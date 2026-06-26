@@ -5,6 +5,8 @@ export type QualityPreset = "low" | "medium" | "high" | "ultra";
 export type FpsCap = 0 | 30 | 60 | 120;
 
 export type MobileLayout = "sheet" | "pills";
+export type ViewMode = "3d" | "2d";
+export type PlayMode = "shuffle" | "sequential";
 
 export interface Settings {
   quality: QualityPreset;
@@ -22,6 +24,9 @@ export interface Settings {
   reducedMotion: boolean;
   highContrastLabels: boolean;
   mobileLayout: MobileLayout;
+  viewMode: ViewMode;
+  enabledTracks: Record<string, boolean>;
+  playMode: PlayMode;
   // Offset draggable panel (desktop). { x, y } pixel relatif posisi default.
   sidebarOffset: { x: number; y: number };
   sidePanelOffset: { x: number; y: number };
@@ -43,6 +48,9 @@ export const DEFAULT_SETTINGS: Settings = {
   reducedMotion: false,
   highContrastLabels: false,
   mobileLayout: "sheet",
+  viewMode: "3d",
+  enabledTracks: {},
+  playMode: "shuffle",
   sidebarOffset: { x: 0, y: 0 },
   sidePanelOffset: { x: 0, y: 0 },
 };
