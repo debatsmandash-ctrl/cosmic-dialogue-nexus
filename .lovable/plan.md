@@ -1,102 +1,74 @@
-## Tujuan
 
-1. **Upgrade grafik 3D** — node ditata membentuk **bola utuh** (bukan piringan galaksi), agak melebar tapi tetap volumetric sphere, dengan cluster terpisah rapi seperti rasi. Skybox 16K-HDR realistis.
-2. **Mode 2D opsional** di Settings (default tetap 3D) — flat constellation map acak (bukan bola).
-3. **Playlist musik multi-track** — 6 lagu, user bisa enable/disable & atur mode play.
-4. **Optimasi panel Settings** — restruktur jadi tab supaya tidak panjang.
+# Overhaul: Universe Visuals + Materi Mendalam + UI Information Bar
 
----
+## 1. 3D Universe — "Shell of the Big Bang"
 
-## 1. Upgrade Grafik 3D
+Ubah layout di `src/lib/graph/build.ts`:
+- Cluster ditempatkan di **kulit bola** (Fibonacci sphere, radius tetap ~28) — bukan padat di tengah. Spacing antar cluster diperbesar agar "menyebar pasca big bang".
+- Children diorbitkan di **sub-shell tipis** di sekitar parent (offset radial kecil) — menegaskan struktur kulit.
+- Noise radial halus (±2 unit) supaya tidak terlalu geometris.
 
-### Layout — BOLA, bukan galaksi
-File: `src/lib/graph/build.ts`
-- Anchor cluster di permukaan **sphere** menggunakan distribusi Fibonacci spherical → titik tersebar merata di semua arah (atas/bawah/samping). 
-- **Bukan disc/piringan** — proporsi axis RX=24, RY=22, RZ=24 (hampir bulat, sedikit melebar horizontal saja, TIDAK pipih).
-- Anak nodes mengorbit anchor di sub-sphere lokal radius 3-6 → tiap cluster jadi "gugusan bintang" 3D yang clearly separated.
-- Noise perturbation kecil supaya organik, tidak terlalu geometric.
+`MilkyWaySky.tsx` + lighting (`Universe.tsx`):
+- Ganti pano dengan **referensi gambar 1** (nebula ungu-biru padat) sebagai HDR skybox baru.
+- Tambah lapisan **dust nebula** (sprite layered) supaya "ramai natural".
+- **Quality=ultra** → hidupkan emissive falloff lebih jauh + rim glow tipis, sehingga node sisi jauh bola tetap kelihatan samar. Quality≤high clamp untuk perf.
 
-### Skybox HDR realistis
-File: `src/components/universe/MilkyWaySky.tsx` + asset baru
-- Generate panorama equirectangular **premium quality** (1920×960) — referensi gambar 2: deep navy + ungu lembut, milky way band, bintang padat beragam ukuran.
-- Sphere segments 96→128, anisotropy 16, tone mapping ACESFilmic.
-- Tambah layer parallax stars (Points, additive blending) untuk depth saat kamera bergerak.
+## 2. 2D View — "Aurora Night Sky"
 
-### Quality preset
-- LOW: skybox saja
-- MEDIUM: + 2000 parallax stars
-- HIGH: + 4000 stars + bloom
-- ULTRA: + 6000 stars + bloom + subtle nebula sprites
+Rombak `Universe2D.tsx`:
+- Layout: **spread organik** (Poisson-disk) memenuhi viewport, bukan stack. Cluster = rasi bintang, leaves = bintang anggota, dihubungkan garis tipis constellation.
+- Bintang putih-natural redup (1-2.5px, soft glow). **Tidak neon**.
+- Background gradient langit malam biru-deep + **aurora pita biru-ungu-magenta** (bukan hijau) blur tinggi + perlin drift lambat.
+- **1-2 komet dekoratif** trail tipis, respawn random.
+- Tetap interaktif (hover/click → panel).
 
----
+## 3. Content Deepening — Materi Mosi 5-7 Poin + Risk Bars
 
-## 2. Mode 2D (Settings, non-default)
-
-`Settings.viewMode: "3d" | "2d"` default `"3d"`.
-
-File baru: `src/components/universe/Universe2D.tsx`
-- Canvas/SVG flat full-screen, background gradient navy-ungu + tile starfield.
-- Node ditata sebagai **rasi bintang acak** (random tapi seeded — stabil tiap reload): tiap cluster jadi konstelasi titik dengan garis tipis menghubungkan node terdekat (vibe rasi Orion).
-- **Bukan bola, bukan lingkaran** — bentuk konstelasi bebas/acak.
-- Pan/zoom, klik bintang → buka SidePanel (reuse existing).
-
-`src/routes/index.tsx`: render `<Universe />` atau `<Universe2D />` sesuai setting.
-
----
-
-## 3. Playlist Musik
-
-Upload 5 lagu baru via `lovable-assets create` (tetap pertahankan Interstellar lama = 6 track total):
-- Interstellar Theme (existing)
-- No Time For Caution
-- I Really Want to Stay at Your House
-- Dragonspine Medley
-- Dream Aria
-- Columbina's Lullaby
-
-File baru: `src/lib/playlist.ts` — definisi track.
-
-Update `Settings`:
-```ts
-playlist: { trackId: string; enabled: boolean }[]
-playMode: "sequential" | "shuffle" | "single"
+### Tipe data baru (`src/data/types.ts`)
+Tambah ke `Motion`:
+```
+discussionPoints: { text: string; risk: 1-5; strategy: "safe"|"balanced"|"chaos" }[]
+diagrams?: { kind: "comparison"|"flow"|"spectrum"; data: ... }[]
+idealCases: { side: "pro"|"opp"; tier: "safe"|"template"|"niche-chaos"; content: string; riskScore: number }[]
 ```
 
-Update `AmbientAudio.tsx`: putar track dari list enabled, on `ended` → next (atau shuffle). Tampilkan judul track + tombol skip kecil di sebelah tombol mute.
+### Importer
+- Import 27 motion baru dari `BATCH-01` (m061-m087), **min 5 max 7 discussion points** per mosi, ranged risk 1-5.
+- Migrasi 60 mosi existing: PRO/KON → discussionPoints terstruktur (auto-mapping, risk default 3).
+- 2-3 mosi populer dapat **diagram comparison** manual.
 
-UI Settings: list 6 lagu dengan toggle on/off + radio mode play + volume.
+## 4. Information Panel — Redesign
 
----
+Rombak `SidePanel.tsx` + `panels/PanelContent.tsx`:
+- **Header sticky** tipografi monumental + chip kategori berwarna.
+- **Tabs horizontal**: Overview · Argumen · Ideal Case · Terms · Meta.
+- **Argumen tab**: kolom PRO/OPP, **bar horizontal risk-meter** per poin (safe→chaos), dianimasikan saat masuk.
+- **Ideal Case tab**: 3 tier cards (Safe / Template / Niche Chaos) dengan badge risiko + animasi.
+- Mini-diagram (Recharts) untuk mosi yang punya data diagram.
 
-## 4. Optimasi SettingsPanel
+### Hierarki Matter (sidebar)
+Perbaiki `Sidebar.tsx`:
+- Indentasi jelas: Domain → Sub-domain (collapsible, chevron) → Leaf (font lebih kecil, dot bullet).
+- Sub-domain background subtle berbeda supaya tidak sejajar visual dengan leaf.
 
-`src/components/shell/SettingsPanel.tsx` → restruktur jadi **tab horizontal**:
-- **DISPLAY** — viewMode (2D/3D), quality, bloom, nebula opacity, star size, hover edges, mobile layout
-- **PERFORMANCE** — fpsCap, fps counter
-- **AUDIO** — playlist track toggles, playMode, volume, master mute
-- **ACCESSIBILITY** — reduced motion, high-contrast, auto-rotate + speed, damping
+## 5. Easter Egg — Diego Simeone (hanya di section HaramDebate)
 
-Hanya satu tab visible → panel jauh lebih ringkas.
+- Upload gambar Simeone sebagai asset.
+- Tampilkan **floating sticker Simeone** hanya di dalam panel/sub-section "HaramDebate" (rotate -8°, opacity 0.85, hover → tooltip "El Cholo approves"). Tidak muncul di domain/cluster lain.
 
----
+## 6. Audio — 2 Track Baru
+
+Upload via lovable-assets:
+- `Ludwig Göransson — Can You Hear The Music (slowed)`
+- `Hans Zimmer — Time`
+
+Tambahkan ke `playlist.ts`, default enabled.
 
 ## Files
 
-```text
-Create:
-- src/components/universe/Universe2D.tsx
-- src/lib/playlist.ts
-- src/assets/milkyway_pano_hd.jpg.asset.json
-- src/assets/audio/{notime,stay,dragonspine,dreamaria,columbina}.mp3.asset.json
+**Edit**: `src/lib/graph/build.ts`, `src/components/universe/MilkyWaySky.tsx`, `src/components/universe/Universe.tsx`, `src/components/universe/Universe2D.tsx`, `src/components/shell/SidePanel.tsx`, `src/components/shell/panels/PanelContent.tsx`, `src/components/shell/Sidebar.tsx`, `src/lib/playlist.ts`, `src/data/raw/motions.json`, `src/data/types.ts`.
 
-Edit:
-- src/lib/store.ts                          (+ viewMode, playlist, playMode)
-- src/lib/graph/build.ts                    (spherical layout, NOT disc)
-- src/components/universe/MilkyWaySky.tsx   (new HD asset + parallax stars)
-- src/components/universe/Universe.tsx      (tone mapping)
-- src/components/shell/SettingsPanel.tsx    (tab layout + playlist UI)
-- src/components/shell/AmbientAudio.tsx     (multi-track player)
-- src/routes/index.tsx                      (3D/2D switch)
-```
+**New**: `src/components/universe/AuroraSky.tsx`, `src/components/universe/Comet2D.tsx`, `src/components/panels/RiskBar.tsx`, `src/components/panels/IdealCaseCards.tsx`, `src/components/panels/SimeoneEgg.tsx`, `scripts/import-motions-batch01.mjs`, asset pointers (skybox, Simeone, 2 mp3).
 
-Catatan kunci: layout **sphere bulat penuh** — TIDAK pipih jadi piringan galaksi. Skybox tetap punya pita milky way (estetika background), tapi node graph 3D-nya bola.
+## Open question
+Scope cukup besar (visual + 27 motion baru × 5-7 poin + 60 migrasi + redesign panel). Eksekusi penuh dalam 1 run, atau split: **Step A** = visual + audio + Simeone, **Step B** = content + UI panel? Default eksekusi penuh.
