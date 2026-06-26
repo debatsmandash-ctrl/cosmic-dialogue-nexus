@@ -1,74 +1,106 @@
 
-# Overhaul: Universe Visuals + Materi Mendalam + UI Information Bar
+## 1. 3D — Satu Bola Besar (One-Ball Shell)
 
-## 1. 3D Universe — "Shell of the Big Bang"
+Saat ini cluster tersebar di Fibonacci sphere (radius ~80) dan tiap cluster bikin sub-shell sendiri → terlihat seperti banyak bola kecil. Target baru: **satu bola tunggal** di mana setiap section jadi **patch kulit** pada bola tersebut.
 
-Ubah layout di `src/lib/graph/build.ts`:
-- Cluster ditempatkan di **kulit bola** (Fibonacci sphere, radius tetap ~28) — bukan padat di tengah. Spacing antar cluster diperbesar agar "menyebar pasca big bang".
-- Children diorbitkan di **sub-shell tipis** di sekitar parent (offset radial kecil) — menegaskan struktur kulit.
-- Noise radial halus (±2 unit) supaya tidak terlalu geometris.
+- `src/lib/graph/build.ts`:
+  - Hapus jarak antar cluster (`dist 72-86`).
+  - Semua node (cluster + child) diletakkan pada **satu sphere radius R ≈ 55** menggunakan Fibonacci sphere global.
+  - Tiap cluster mendapat **patch angular** (cone region) di permukaan; cluster center = arah patch, child node tersebar di dalam cone (half-angle ~22°) dengan noise radial tipis ±2 unit (kulit tidak rapat).
+  - Subhub & leaf juga di kulit yang sama → "big bang shell".
+- `Universe.tsx`: kamera default sedikit lebih jauh (radius ~140) agar bola terlihat utuh; auto-rotate halus.
+- `MilkyWaySky.tsx`: tetap nebula; tambah fog ultra-distance agar sisi jauh bola sedikit redup tapi tetap terlihat (sesuai permintaan sebelumnya).
 
-`MilkyWaySky.tsx` + lighting (`Universe.tsx`):
-- Ganti pano dengan **referensi gambar 1** (nebula ungu-biru padat) sebagai HDR skybox baru.
-- Tambah lapisan **dust nebula** (sprite layered) supaya "ramai natural".
-- **Quality=ultra** → hidupkan emissive falloff lebih jauh + rim glow tipis, sehingga node sisi jauh bola tetap kelihatan samar. Quality≤high clamp untuk perf.
+## 2. Settings Panel — Upgrade Penuh
 
-## 2. 2D View — "Aurora Night Sky"
+`SettingsPanel.tsx` di-redesign jadi tabbed: **Rover · Tema · Density · A11y/Perf · Audio**.
 
-Rombak `Universe2D.tsx`:
-- Layout: **spread organik** (Poisson-disk) memenuhi viewport, bukan stack. Cluster = rasi bintang, leaves = bintang anggota, dihubungkan garis tipis constellation.
-- Bintang putih-natural redup (1-2.5px, soft glow). **Tidak neon**.
-- Background gradient langit malam biru-deep + **aurora pita biru-ungu-magenta** (bukan hijau) blur tinggi + perlin drift lambat.
-- **1-2 komet dekoratif** trail tipis, respawn random.
-- Tetap interaktif (hover/click → panel).
+- **Rover (kamera presets)**: Top-down, Orbit Auto (multi-angle), Fly-through Tour (animate camera around shell), Free-cam, Reset. Implementasi via ref ke `OrbitControls` + tween (lerp posisi target).
+- **Tema/Palette**: 4 preset universe — Nebula Biru (default), Aurora Hijau, Sunset Magenta, Monokrom. Mengubah CSS vars + warna cluster base.
+- **Density 3D**: slider radius bola (40-90), ketebalan kulit (0-6), jumlah background star (500-5000), intensitas nebula (sudah ada).
+- **2D**: toggle "Langit Real" — pakai layout konstelasi natural (posisi node bebas mengikuti pseudo-random seeded sky map, tidak diubah). Aurora & comet jadi opsional.
+- **A11y/Perf**: font scaler (90-130%), kontras tinggi (sudah ada), reduce motion granular (rotate/parallax/twinkle), FPS target 30/60/120/uncapped.
+- Settings persist via `useSettings` (sudah Zustand persist).
 
-## 3. Content Deepening — Materi Mosi 5-7 Poin + Risk Bars
+## 3. Main Menu / Landing Polish
 
-### Tipe data baru (`src/data/types.ts`)
-Tambah ke `Motion`:
+Komentar user: "main menu masih polos". Tambah di home (`routes/index.tsx` overlay loader/intro):
+- Hero title besar "SMANDASH UNIVERSE" Bebas Neue + tagline DM Sans.
+- 4 entry-pill animasi: Jelajahi Universe · Daftar Mosi · Matter · Kamus.
+- Background: live preview universe blur + nebula glow.
+- Mini-stat: jumlah mosi, domain, vocab.
+
+## 4. Diego Simeone — Banner Foto Jelas
+
+`SimeoneEgg.tsx` jadi **banner 320×180** di header panel HaramDebate:
+- Posisi: full-width di atas konten panel (bukan pojok).
+- Image cover, border neon pink 2px, caption "EL CHOLO · PARK THE BUS" Space Mono.
+- Hover: subtle zoom 1.04 + tooltip "Defensive masterclass approved".
+- Tetap muncul hanya di section HaramDebate.
+
+## 5. Konten — Ekspansi Matter & Import Motion
+
+### 5a. Import 3 batch motion baru
+Parse `BATCH-01/02/03*.txt` (m061-m087 sudah ada; tambahkan m088-m096 sosial/sains/HI dan m129+ feminisme/antropologi/dst) lewat script Node `scripts/import-batches.mjs` → append ke `src/data/raw/motions.json`. Total target ~150 motion. Bahasa Indonesia, istilah teknis (predatory lending, regulatory capture) dipertahankan miring.
+
+### 5b. Matter — format bento magazine
+`MatterSubBab` type diperluas:
+```ts
+{
+  id, num, title, badge?,
+  intro: string,            // paragraf pembuka
+  sections: Array<{
+    heading: string,
+    body: string,           // 2-4 paragraf
+    callout?: { type: 'insight'|'risk'|'example', text: string },
+    quote?: { text: string, source?: string },
+    bullets?: string[],
+  }>,
+  matter: { label, text }[],
+  contoh: { pro, kon },
+  furtherReading?: string[],
+}
 ```
-discussionPoints: { text: string; risk: 1-5; strategy: "safe"|"balanced"|"chaos" }[]
-diagrams?: { kind: "comparison"|"flow"|"spectrum"; data: ... }[]
-idealCases: { side: "pro"|"opp"; tier: "safe"|"template"|"niche-chaos"; content: string; riskScore: number }[]
-```
+- Parse semua isi `.txt` user → expand setiap sub-bab jadi 1-3 halaman (target 600-1500 kata) dengan struktur intro + 4-6 section + 2 callout + 1 quote + bullets.
+- Lengkapi domain yang error/hilang (cek `matter.json` saat ini, isi gap dari `debatabase.pdf` & batch txt).
+- Semua Bahasa Indonesia baku, istilah debat (POI, framing, characterization) tetap.
 
-### Importer
-- Import 27 motion baru dari `BATCH-01` (m061-m087), **min 5 max 7 discussion points** per mosi, ranged risk 1-5.
-- Migrasi 60 mosi existing: PRO/KON → discussionPoints terstruktur (auto-mapping, risk default 3).
-- 2-3 mosi populer dapat **diagram comparison** manual.
+### 5c. UI Matter — Bento Magazine
+`PanelContent.tsx` tab "Matter" pakai layout bento-grid:
+- Hero card besar (title + badge + intro, gradient sesuai domain).
+- Grid 12-col responsive: section body (col-span 6-8), callout berwarna (col-span 4), quote besar serif italic (col-span 12), bullets card (col-span 4), contoh PRO/KON dua kolom.
+- Sticky mini-TOC kiri (anchor per section).
+- Progress bar baca atas.
+- Animasi reveal `whileInView` framer-motion stagger.
+- Drop cap huruf pertama intro.
 
-## 4. Information Panel — Redesign
+## 6. Build Safety (Netlify / Vercel / GitHub-style)
 
-Rombak `SidePanel.tsx` + `panels/PanelContent.tsx`:
-- **Header sticky** tipografi monumental + chip kategori berwarna.
-- **Tabs horizontal**: Overview · Argumen · Ideal Case · Terms · Meta.
-- **Argumen tab**: kolom PRO/OPP, **bar horizontal risk-meter** per poin (safe→chaos), dianimasikan saat masuk.
-- **Ideal Case tab**: 3 tier cards (Safe / Template / Niche Chaos) dengan badge risiko + animasi.
-- Mini-diagram (Recharts) untuk mosi yang punya data diagram.
+- Pastikan tidak ada server-only import bocor ke client (sudah aman lewat TanStack pattern).
+- Static SSG: cek semua route loader bebas dari `requireSupabaseAuth` (project ini belum pakai auth).
+- Hindari `process.env` di module-scope client.
+- Image asset besar tetap via Lovable Assets CDN — referensikan `.url`.
+- Jalankan `bun run build` setelah patch besar; fix typecheck error (likely di `MatterSubBab` migration karena field baru — beri fallback opsional).
 
-### Hierarki Matter (sidebar)
-Perbaiki `Sidebar.tsx`:
-- Indentasi jelas: Domain → Sub-domain (collapsible, chevron) → Leaf (font lebih kecil, dot bullet).
-- Sub-domain background subtle berbeda supaya tidak sejajar visual dengan leaf.
+## 7. Urutan Eksekusi (1 pass)
 
-## 5. Easter Egg — Diego Simeone (hanya di section HaramDebate)
+1. Update `types.ts` (Matter sections schema, opsional).
+2. Script `scripts/expand-matter.mjs` + `scripts/import-batches.mjs` → tulis `matter.json` & `motions.json` baru (bahasa Indonesia, konten penuh).
+3. Refactor `build.ts` → one-ball shell.
+4. Refactor `SettingsPanel.tsx` (tabbed, rover, theme, density).
+5. Refactor `Universe2D.tsx` → mode "Langit Real" opsional.
+6. Refactor `SimeoneEgg.tsx` → banner foto besar; integrate di `PanelContent` header HaramDebate.
+7. Refactor `PanelContent.tsx` tab Matter → bento magazine.
+8. Polish landing (`routes/index.tsx`).
+9. `bun run build` + perbaiki error.
 
-- Upload gambar Simeone sebagai asset.
-- Tampilkan **floating sticker Simeone** hanya di dalam panel/sub-section "HaramDebate" (rotate -8°, opacity 0.85, hover → tooltip "El Cholo approves"). Tidak muncul di domain/cluster lain.
+## Catatan Teknis
 
-## 6. Audio — 2 Track Baru
+- Cluster patch angular: `cone(centerDir, halfAngle)` random uniform → konversi ke posisi sphere; child sedikit lebih dekat ke center patch (Gaussian).
+- Rover tour: state machine 4 waypoints, ease-in-out 6s per leg.
+- Theme switch: ganti `--cluster-*` CSS variables + remap warna node by `clusterKey`.
+- Matter ekspansi: konten ditulis manual berbasis sumber (.txt batch + debatabase.pdf) — tidak generated boilerplate; target 1-3 halaman/sub-bab.
 
-Upload via lovable-assets:
-- `Ludwig Göransson — Can You Hear The Music (slowed)`
-- `Hans Zimmer — Time`
+## Pertanyaan minor (tidak blocking)
 
-Tambahkan ke `playlist.ts`, default enabled.
-
-## Files
-
-**Edit**: `src/lib/graph/build.ts`, `src/components/universe/MilkyWaySky.tsx`, `src/components/universe/Universe.tsx`, `src/components/universe/Universe2D.tsx`, `src/components/shell/SidePanel.tsx`, `src/components/shell/panels/PanelContent.tsx`, `src/components/shell/Sidebar.tsx`, `src/lib/playlist.ts`, `src/data/raw/motions.json`, `src/data/types.ts`.
-
-**New**: `src/components/universe/AuroraSky.tsx`, `src/components/universe/Comet2D.tsx`, `src/components/panels/RiskBar.tsx`, `src/components/panels/IdealCaseCards.tsx`, `src/components/panels/SimeoneEgg.tsx`, `scripts/import-motions-batch01.mjs`, asset pointers (skybox, Simeone, 2 mp3).
-
-## Open question
-Scope cukup besar (visual + 27 motion baru × 5-7 poin + 60 migrasi + redesign panel). Eksekusi penuh dalam 1 run, atau split: **Step A** = visual + audio + Simeone, **Step B** = content + UI panel? Default eksekusi penuh.
+- Apakah font matter (bento) tetap Bebas Neue/DM Sans, atau ganti ke Instrument Serif untuk feel editorial? → default: pertahankan Bebas/DM, tambah Instrument Serif khusus quote.
