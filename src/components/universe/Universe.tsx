@@ -677,7 +677,7 @@ export function Universe() {
   return (
     <>
     <Canvas
-      camera={{ position: [0, 60, 360], fov: 58, near: 0.1, far: 2400 }}
+      camera={{ position: [0, SHELL_R * 0.7, SHELL_R * 3.2], fov: 58, near: 0.1, far: 2400 }}
       dpr={profile.dpr}
       frameloop={fpsCap ? "demand" : "always"}
       gl={{
