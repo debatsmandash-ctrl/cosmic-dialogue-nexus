@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useUniverse, useSettings, type QualityPreset, type FpsCap } from "@/lib/store";
+import { TRACKS, DEFAULT_ENABLED_TRACKS } from "@/lib/playlist";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -63,8 +65,11 @@ export function SettingsPanel() {
   const s = useSettings();
   const update = useSettings((st) => st.update);
   const reset = useSettings((st) => st.reset);
+  const [tab, setTab] = useState<"display" | "performance" | "audio" | "access">("display");
 
   if (!open) return null;
+
+  const trackMap = { ...DEFAULT_ENABLED_TRACKS, ...s.enabledTracks };
 
   return (
     <>
@@ -72,7 +77,7 @@ export function SettingsPanel() {
         style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", zIndex: 50 }} />
       <aside
         style={{
-          position: "fixed", top: 0, right: 0, bottom: 0, width: "min(360px, 92vw)", zIndex: 51,
+          position: "fixed", top: 0, right: 0, bottom: 0, width: "min(380px, 94vw)", zIndex: 51,
           background: "linear-gradient(180deg, rgba(8,13,24,0.98), rgba(5,8,15,0.96))",
           borderLeft: "1px solid rgba(168,85,247,0.25)",
           backdropFilter: "blur(16px)",
@@ -82,13 +87,72 @@ export function SettingsPanel() {
         <div style={{ padding: "16px 18px", borderBottom: "1px solid rgba(168,85,247,0.18)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
             <div style={{ fontFamily: "Bebas Neue", fontSize: 20, letterSpacing: "0.18em", color: "#e8f4ff" }}>SETTINGS</div>
-            <div style={{ fontFamily: "Space Mono", fontSize: 8, letterSpacing: "0.3em", color: "#5a6f8a", marginTop: 2 }}>PERFORMANCE · VISUAL · AUDIO</div>
+            <div style={{ fontFamily: "Space Mono", fontSize: 8, letterSpacing: "0.3em", color: "#5a6f8a", marginTop: 2 }}>DISPLAY · PERF · AUDIO · A11Y</div>
           </div>
           <button onClick={() => setOpen(false)}
             style={{ width: 30, height: 30, background: "transparent", border: "1px solid rgba(168,85,247,0.3)", color: "#a855f7", cursor: "pointer", borderRadius: 4 }}>✕</button>
         </div>
 
+        {/* Tabs */}
+        <div style={{ display: "flex", padding: "0 18px", borderBottom: "1px solid rgba(168,85,247,0.12)", gap: 2 }}>
+          {([
+            ["display", "DISPLAY"],
+            ["performance", "PERF"],
+            ["audio", "AUDIO"],
+            ["access", "A11Y"],
+          ] as const).map(([k, label]) => (
+            <button key={k} onClick={() => setTab(k)}
+              style={{
+                flex: 1, padding: "10px 4px", background: "transparent",
+                border: "none", borderBottom: `2px solid ${tab === k ? "#a855f7" : "transparent"}`,
+                color: tab === k ? "#e8f4ff" : "#5a6f8a", cursor: "pointer",
+                fontFamily: "Space Mono", fontSize: 10, letterSpacing: "0.2em",
+              }}>{label}</button>
+          ))}
+        </div>
+
         <div className="panel-scroll" style={{ flex: 1, overflowY: "auto", padding: "16px 18px" }}>
+          {tab === "display" && (<>
+          <Section title="View Mode">
+            <Row label="Mode" hint="2D lebih ringan & ramah pengguna baru (rasi bintang acak)">
+              <div style={{ display: "flex", gap: 4 }}>
+                <Pill active={s.viewMode === "3d"} onClick={() => update({ viewMode: "3d" })}>3D</Pill>
+                <Pill active={s.viewMode === "2d"} onClick={() => update({ viewMode: "2d" })}>2D</Pill>
+              </div>
+            </Row>
+          </Section>
+          <Section title="Visual">
+            <Row label={`Bloom ${s.bloomIntensity.toFixed(2)}`}>
+              <Slider value={s.bloomIntensity} min={0} max={1.5} step={0.05} onChange={(v) => update({ bloomIntensity: v })} />
+            </Row>
+            <Row label={`Nebula opacity ${s.nebulaOpacity.toFixed(2)}`}>
+              <Slider value={s.nebulaOpacity} min={0} max={1.2} step={0.05} onChange={(v) => update({ nebulaOpacity: v })} />
+            </Row>
+            <Row label={`Star size ×${s.starSize.toFixed(2)}`}>
+              <Slider value={s.starSize} min={0.5} max={1.6} step={0.05} onChange={(v) => update({ starSize: v })} />
+            </Row>
+            <Row label="Hover edges"><Toggle value={s.showHoverEdges} onChange={(v) => update({ showHoverEdges: v })} /></Row>
+          </Section>
+          <Section title="Camera">
+            <Row label="Auto-rotate"><Toggle value={s.autoRotate} onChange={(v) => update({ autoRotate: v })} /></Row>
+            <Row label={`Rotate speed ${s.autoRotateSpeed.toFixed(2)}`}>
+              <Slider value={s.autoRotateSpeed} min={0.05} max={1.5} step={0.05} onChange={(v) => update({ autoRotateSpeed: v })} />
+            </Row>
+            <Row label={`Damping ${s.damping.toFixed(2)}`}>
+              <Slider value={s.damping} min={0.04} max={0.2} step={0.01} onChange={(v) => update({ damping: v })} />
+            </Row>
+          </Section>
+          <Section title="Mobile Layout">
+            <Row label="Style" hint="Berlaku di tampilan HP/tablet sentuh">
+              <div style={{ display: "flex", gap: 4 }}>
+                <Pill active={s.mobileLayout === "sheet"} onClick={() => update({ mobileLayout: "sheet" })}>SHEET</Pill>
+                <Pill active={s.mobileLayout === "pills"} onClick={() => update({ mobileLayout: "pills" })}>PILLS</Pill>
+              </div>
+            </Row>
+          </Section>
+          </>)}
+
+          {tab === "performance" && (<>
           <Section title="Performance">
             <Row label="Quality preset" hint="Mengontrol nebula, bloom, dan kepadatan bintang">
               <div style={{ display: "flex", gap: 4 }}>
@@ -106,52 +170,61 @@ export function SettingsPanel() {
             </Row>
             <Row label="FPS counter"><Toggle value={s.showFps} onChange={(v) => update({ showFps: v })} /></Row>
           </Section>
+          </>)}
 
-          <Section title="Visual">
-            <Row label={`Bloom ${s.bloomIntensity.toFixed(2)}`}>
-              <Slider value={s.bloomIntensity} min={0} max={1.5} step={0.05} onChange={(v) => update({ bloomIntensity: v })} />
-            </Row>
-            <Row label={`Nebula opacity ${s.nebulaOpacity.toFixed(2)}`}>
-              <Slider value={s.nebulaOpacity} min={0} max={1.2} step={0.05} onChange={(v) => update({ nebulaOpacity: v })} />
-            </Row>
-            <Row label={`Star size ×${s.starSize.toFixed(2)}`}>
-              <Slider value={s.starSize} min={0.5} max={1.6} step={0.05} onChange={(v) => update({ starSize: v })} />
-            </Row>
-            <Row label="Hover edges"><Toggle value={s.showHoverEdges} onChange={(v) => update({ showHoverEdges: v })} /></Row>
-          </Section>
-
-          <Section title="Camera">
-            <Row label="Auto-rotate"><Toggle value={s.autoRotate} onChange={(v) => update({ autoRotate: v })} /></Row>
-            <Row label={`Rotate speed ${s.autoRotateSpeed.toFixed(2)}`}>
-              <Slider value={s.autoRotateSpeed} min={0.05} max={1.5} step={0.05} onChange={(v) => update({ autoRotateSpeed: v })} />
-            </Row>
-            <Row label={`Damping ${s.damping.toFixed(2)}`}>
-              <Slider value={s.damping} min={0.04} max={0.2} step={0.01} onChange={(v) => update({ damping: v })} />
-            </Row>
-          </Section>
-
+          {tab === "audio" && (<>
           <Section title="Audio">
             <Row label="Background music"><Toggle value={!s.audioMuted} onChange={(v) => update({ audioMuted: !v })} /></Row>
             <Row label={`Volume ${(s.audioVolume*100).toFixed(0)}%`}>
               <Slider value={s.audioVolume} min={0} max={1} step={0.05} onChange={(v) => update({ audioVolume: v })} />
             </Row>
-          </Section>
-
-          <Section title="Mobile Layout">
-            <Row label="Style" hint="Berlaku di tampilan HP/tablet sentuh">
+            <Row label="Play mode">
               <div style={{ display: "flex", gap: 4 }}>
-                <Pill active={s.mobileLayout === "sheet"} onClick={() => update({ mobileLayout: "sheet" })}>SHEET</Pill>
-                <Pill active={s.mobileLayout === "pills"} onClick={() => update({ mobileLayout: "pills" })}>PILLS</Pill>
+                <Pill active={s.playMode === "shuffle"} onClick={() => update({ playMode: "shuffle" })}>SHUFFLE</Pill>
+                <Pill active={s.playMode === "sequential"} onClick={() => update({ playMode: "sequential" })}>URUT</Pill>
               </div>
             </Row>
           </Section>
+          <Section title="Playlist">
+            <div style={{ fontFamily: "DM Sans", fontSize: 10, color: "#5a6f8a", marginBottom: 6 }}>
+              Centang lagu yang ingin diputar. Minimum 1 lagu aktif.
+            </div>
+            {TRACKS.map((t) => {
+              const on = trackMap[t.id] !== false;
+              const activeCount = TRACKS.filter((x) => trackMap[x.id] !== false).length;
+              const canDisable = activeCount > 1 || !on;
+              return (
+                <div key={t.id} style={{
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  padding: "8px 10px", borderRadius: 4, gap: 8,
+                  background: on ? "rgba(0,255,200,0.06)" : "transparent",
+                  border: `1px solid ${on ? "rgba(0,255,200,0.25)" : "rgba(168,85,247,0.15)"}`,
+                }}>
+                  <div style={{ minWidth: 0, flex: 1 }}>
+                    <div style={{ fontFamily: "DM Sans", fontSize: 12, color: on ? "#e8f4ff" : "#8ba3c0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.title}</div>
+                    <div style={{ fontFamily: "DM Sans", fontSize: 10, color: "#5a6f8a" }}>{t.artist}</div>
+                  </div>
+                  <Toggle
+                    value={on}
+                    onChange={(v) => {
+                      if (!v && !canDisable) return;
+                      update({ enabledTracks: { ...trackMap, [t.id]: v } });
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </Section>
+          </>)}
 
+          {tab === "access" && (<>
           <Section title="Accessibility">
             <Row label="Reduced motion" hint="Matikan auto-rotate dan animasi transisi">
               <Toggle value={s.reducedMotion} onChange={(v) => update({ reducedMotion: v, autoRotate: v ? false : s.autoRotate })} />
             </Row>
             <Row label="High-contrast labels"><Toggle value={s.highContrastLabels} onChange={(v) => update({ highContrastLabels: v })} /></Row>
           </Section>
+          </>)}
 
           <button onClick={() => reset()}
             style={{ width: "100%", padding: "10px", marginTop: 8, background: "transparent",
