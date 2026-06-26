@@ -26,27 +26,37 @@ const sub = (a: V3, b: V3): V3 => [a[0]-b[0], a[1]-b[1], a[2]-b[2]];
 const lerp = (a: V3, b: V3, t: number): V3 => [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
 const dist = (a: V3, b: V3): number => Math.hypot(a[0]-b[0], a[1]-b[1], a[2]-b[2]);
 
-// Cluster meta. Centers auto-spread on a fibonacci sphere so no two collide.
+// ─── SHELL LAYOUT — semua node berada di SATU bola (kulit) ───
+// User request: "semuanya jadi 1 bola yang menyebar — section jadi kulit bola itu".
+// SHELL_R = radius bola utama. Semua cluster/subhub/leaf diproyeksikan ke shell
+// dengan noise radial tipis supaya tidak "rapat seperti dinding tegel".
+export const SHELL_R = 62;
+const SHELL_NOISE = 2.2; // ±radial offset (unit)
+
 interface ClusterMeta { key: ClusterKey; label: string; color: string; dist: number; }
-// SHELL layout — semua cluster pada radius mirip (kulit bola pasca big bang),
-// lebih jauh agar bola terasa lebar dan tidak rapat di tengah.
 const CLUSTERS: ClusterMeta[] = [
-  { key: "matter",        label: "MATTER",       color: "#00ffc8", dist: 84 },
-  { key: "motion",        label: "MOTION BANK",  color: "#ff8b3d", dist: 82 },
-  { key: "kamus",         label: "KAMUS",        color: "#38bdf8", dist: 80 },
-  { key: "competitor",    label: "COMPETITOR",   color: "#fb7185", dist: 78 },
-  { key: "active_member", label: "SMANDASH",     color: "#00ffc8", dist: 76 },
-  { key: "event",         label: "EVENT",        color: "#fde047", dist: 86 },
-  { key: "roles",         label: "ROLES",        color: "#ff6b6b", dist: 80 },
-  { key: "styles",        label: "STYLES",       color: "#f0c040", dist: 78 },
-  { key: "practice",      label: "PRACTICE",     color: "#ff9f43", dist: 76 },
-  { key: "circuit",       label: "CIRCUIT",      color: "#7b5ea7", dist: 76 },
-  { key: "assistant",     label: "ASSISTANT",    color: "#00d4aa", dist: 74 },
-  { key: "editor",        label: "EDITOR",       color: "#94a3b8", dist: 72 },
-  { key: "meta",          label: "META",         color: "#e8f4ff", dist: 72 },
+  { key: "matter",        label: "MATTER",       color: "#00ffc8", dist: SHELL_R },
+  { key: "motion",        label: "MOTION BANK",  color: "#ff8b3d", dist: SHELL_R },
+  { key: "kamus",         label: "KAMUS",        color: "#38bdf8", dist: SHELL_R },
+  { key: "competitor",    label: "COMPETITOR",   color: "#fb7185", dist: SHELL_R },
+  { key: "active_member", label: "SMANDASH",     color: "#00ffc8", dist: SHELL_R },
+  { key: "event",         label: "EVENT",        color: "#fde047", dist: SHELL_R },
+  { key: "roles",         label: "ROLES",        color: "#ff6b6b", dist: SHELL_R },
+  { key: "styles",        label: "STYLES",       color: "#f0c040", dist: SHELL_R },
+  { key: "practice",      label: "PRACTICE",     color: "#ff9f43", dist: SHELL_R },
+  { key: "circuit",       label: "CIRCUIT",      color: "#7b5ea7", dist: SHELL_R },
+  { key: "assistant",     label: "ASSISTANT",    color: "#00d4aa", dist: SHELL_R },
+  { key: "editor",        label: "EDITOR",       color: "#94a3b8", dist: SHELL_R },
+  { key: "meta",          label: "META",         color: "#e8f4ff", dist: SHELL_R },
 ];
 
-// Fibonacci sphere directions, then perturbed
+// Project arbitrary point onto the shell (with optional small radial jitter).
+function projectToShell(p: V3, jitter = SHELL_NOISE): V3 {
+  const n = normalize(p);
+  const r = SHELL_R + (rand() - 0.5) * 2 * jitter;
+  return scale(n, r);
+}
+
 function fibDirections(n: number, jitter = 0.0): V3[] {
   const out: V3[] = [];
   const phi = Math.PI * (3 - Math.sqrt(5));
@@ -63,94 +73,73 @@ function fibDirections(n: number, jitter = 0.0): V3[] {
   return out;
 }
 
-// Place N points in a SHELL (kulit bola tipis) around center; then relax.
-// Ini menghasilkan struktur "post-big-bang" — semua anak melebar ke pinggir,
-// tidak ditumpuk di pusat. Ketebalan shell ±18% dari radius.
-function placeCloud(center: V3, radius: number, count: number, minSep?: number): V3[] {
-  if (count === 0) return [];
-  const dirs = fibDirections(count, 1.0);
-  const pts: V3[] = dirs.map((u) => {
-    // SHELL: radius ~0.82..1.0 — kebanyakan di kulit, jarang di dalam.
-    const shellJ = 0.82 + rand() * 0.18;
-    const p = scale(u, radius * shellJ);
-    // jitter lateral tipis untuk "organik" (bukan grid yang rapi)
-    return add(center, [
-      p[0] + (rand() - 0.5) * radius * 0.12,
-      p[1] + (rand() - 0.5) * radius * 0.12,
-      p[2] + (rand() - 0.5) * radius * 0.12,
-    ]);
-  });
-  // Relax pairs that are too close
-  const sep = minSep ?? radius * 0.38;
-  for (let iter = 0; iter < 5; iter++) {
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        const d = dist(pts[i], pts[j]);
-        if (d < sep && d > 1e-4) {
-          const push = (sep - d) * 0.5;
-          const dir = scale(normalize(sub(pts[j], pts[i])), push);
-          pts[i] = sub(pts[i], dir);
-          pts[j] = add(pts[j], dir);
-        }
-      }
-    }
+// Sample `count` directions inside a spherical cap of half-angle `halfAngle`
+// centered on `centerDir`. Uniform area distribution on the cap.
+function samplePatchDirs(centerDir: V3, halfAngle: number, count: number): V3[] {
+  const cd = normalize(centerDir);
+  // build orthonormal basis (cd, u, v)
+  const tmp: V3 = Math.abs(cd[1]) < 0.95 ? [0, 1, 0] : [1, 0, 0];
+  const u = normalize([
+    cd[1]*tmp[2] - cd[2]*tmp[1],
+    cd[2]*tmp[0] - cd[0]*tmp[2],
+    cd[0]*tmp[1] - cd[1]*tmp[0],
+  ]);
+  const v: V3 = [
+    cd[1]*u[2] - cd[2]*u[1],
+    cd[2]*u[0] - cd[0]*u[2],
+    cd[0]*u[1] - cd[1]*u[0],
+  ];
+  const cosA = Math.cos(halfAngle);
+  const out: V3[] = [];
+  // golden-angle azimuth + uniform-area cosθ for even spread on the cap
+  const phi = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < count; i++) {
+    const k = count === 1 ? 0.5 : (i + 0.5) / count;
+    const cosTh = 1 - k * (1 - cosA); // ∈ [cosA, 1]
+    const sinTh = Math.sqrt(Math.max(0, 1 - cosTh * cosTh));
+    const az = phi * i + rand() * 0.6; // slight jitter
+    const x = sinTh * Math.cos(az);
+    const y = sinTh * Math.sin(az);
+    out.push(normalize([
+      cd[0]*cosTh + u[0]*x + v[0]*y,
+      cd[1]*cosTh + u[1]*x + v[1]*y,
+      cd[2]*cosTh + u[2]*x + v[2]*y,
+    ]));
   }
-  return pts;
+  return out;
 }
 
-// Place children of a leaf as "ranting" — directions chosen with wide angular
-// spread (10°..350°) around the outward axis, not a tight cone. Followed by
-// a short repulsion pass so leaves don't collide.
-function placeBranch(center: V3, hubCenter: V3, count: number, distMin: number, distMax: number): V3[] {
-  if (count === 0) return [];
-  const out = normalize(sub(center, hubCenter));
-  // pick two perpendicular axes to `out`
-  const tmp: V3 = Math.abs(out[1]) < 0.95 ? [0, 1, 0] : [1, 0, 0];
-  const u: V3 = normalize([
-    out[1]*tmp[2] - out[2]*tmp[1],
-    out[2]*tmp[0] - out[0]*tmp[2],
-    out[0]*tmp[1] - out[1]*tmp[0],
-  ]);
-  const v: V3 = normalize([
-    out[1]*u[2] - out[2]*u[1],
-    out[2]*u[0] - out[0]*u[2],
-    out[0]*u[1] - out[1]*u[0],
-  ]);
-  const pts: V3[] = [];
-  for (let i = 0; i < count; i++) {
-    // azimuth ∈ [10°, 350°] — avoid degenerate stacking at the poles
-    const azDeg = 10 + rand() * 340;
-    const az = azDeg * Math.PI / 180;
-    // elevation away from hub: bias forward but allow ±70° tilt
-    const elev = (rand() - 0.5) * (Math.PI * 0.78); // ~±70°
-    const forwardWeight = Math.cos(elev);
-    const sideU = Math.sin(elev) * Math.cos(az);
-    const sideV = Math.sin(elev) * Math.sin(az);
-    const dir: V3 = normalize([
-      out[0]*forwardWeight + u[0]*sideU + v[0]*sideV,
-      out[1]*forwardWeight + u[1]*sideU + v[1]*sideV,
-      out[2]*forwardWeight + u[2]*sideU + v[2]*sideV,
-    ]);
-    const r = distMin + rand() * (distMax - distMin);
-    pts.push(add(center, scale(dir, r)));
-  }
-  // local repulsion pass to keep leaves from clumping
-  const minSep = Math.max(2.2, (distMin + distMax) * 0.18);
-  for (let iter = 0; iter < 3; iter++) {
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        const d = dist(pts[i], pts[j]);
-        if (d < minSep && d > 1e-4) {
-          const push = (minSep - d) * 0.5;
-          const dir = scale(normalize(sub(pts[j], pts[i])), push);
-          pts[i] = sub(pts[i], dir);
-          pts[j] = add(pts[j], dir);
-        }
-      }
-    }
-  }
-  return pts;
+// patch sizing — scale with sqrt(count) so dense clusters get a wider patch.
+function patchHalfAngle(count: number, base = 0.10, k = 0.045, max = 0.55): number {
+  return Math.min(max, base + Math.sqrt(Math.max(1, count)) * k);
 }
+
+// placeCloud: place `count` nodes on the SHELL in a patch around the direction
+// hinted by `center`. The legacy `radius`/`minSep` args are repurposed:
+// - `radius` scales the patch width (larger radius = wider patch, more spread)
+// - `minSep` is ignored (shell layout handles separation via patch sizing).
+function placeCloud(center: V3, radius: number, count: number, _minSep?: number): V3[] {
+  if (count === 0) return [];
+  // scale patch by both count and the caller's old "radius" so callers that
+  // requested wider clouds still get wider patches.
+  const widthScale = Math.max(0.4, Math.min(1.8, radius / 12));
+  const half = patchHalfAngle(count, 0.10, 0.045 * widthScale, 0.55);
+  const dirs = samplePatchDirs(normalize(center), half, count);
+  return dirs.map((d) => scale(d, SHELL_R + (rand() - 0.5) * 2 * SHELL_NOISE));
+}
+
+// placeBranch: kids of a leaf — tight cluster directly around the leaf's own
+// position on the shell. We ignore `hubCenter`/`distMin`/`distMax`: kids share
+// the shell with the parent. Half-angle is tighter so leaf-children stay near.
+function placeBranch(center: V3, _hubCenter: V3, count: number, distMin: number, distMax: number): V3[] {
+  if (count === 0) return [];
+  // tighter spread; respect old distance hint by mapping it to half-angle.
+  const avg = (distMin + distMax) * 0.5;
+  const half = patchHalfAngle(count, 0.045, 0.018 + avg * 0.0025, 0.22);
+  const dirs = samplePatchDirs(normalize(center), half, count);
+  return dirs.map((d) => scale(d, SHELL_R + (rand() - 0.5) * 2 * SHELL_NOISE));
+}
+
 
 export interface Graph {
   nodes: StarNode[];
