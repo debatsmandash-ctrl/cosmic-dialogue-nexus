@@ -288,7 +288,7 @@ export function SettingsPanel() {
               </Row>
               <Row label="Constellation shape" hint="Bentuk sambungan antar bintang — orbit (cincin konsentris), free (alami), figurative (rasi bentuk), hybrid (campuran)">
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
-                  {(["orbit","free","figurative","hybrid"] as ConstellationShape[]).map(t => (
+                  {(["orbit_rings","free_lines","figurative","hybrid"] as ConstellationShape[]).map(t => (
                     <Pill key={t} active={s.constellationShape === t} onClick={() => update({ constellationShape: t })}>{t.toUpperCase()}</Pill>
                   ))}
                 </div>
