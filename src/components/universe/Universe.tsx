@@ -10,7 +10,10 @@ import type { StarNode, StarEdge, NodeKind } from "@/data/types";
 import { MilkyWaySky } from "./MilkyWaySky";
 import { HoverEdges } from "./HoverEdges";
 import { Universe2D } from "./Universe2D";
+import { MicroDust } from "./MicroDust";
+import { InterClusterLinks } from "./InterClusterLinks";
 import { useDeviceProfile, type DeviceProfile } from "@/hooks/useDeviceProfile";
+
 
 
 // ─── Halo texture (shared canvas radial gradient) ───
@@ -260,10 +263,11 @@ const LABEL_THRESHOLDS: Record<NodeKind, number> = {
 };
 
 // ─── Star node ───
-function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, profile, starSize, highContrast }: {
-  node: StarNode; isSelected: boolean; isHovered: boolean; isLit: boolean; isDim: boolean; haloTex: THREE.Texture; profile: DeviceProfile; starSize: number; highContrast: boolean;
+function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, profile, starSize, highContrast, showAllHovers, pulseGlowOnHover }: {
+  node: StarNode; isSelected: boolean; isHovered: boolean; isLit: boolean; isDim: boolean; haloTex: THREE.Texture; profile: DeviceProfile; starSize: number; highContrast: boolean; showAllHovers: boolean; pulseGlowOnHover: boolean;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
+  const ringRef = useRef<THREE.Mesh>(null);
   const lightRef = useRef<THREE.PointLight>(null);
   const hover = useUniverse((s) => s.hover);
   const select = useUniverse((s) => s.select);
@@ -271,17 +275,16 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
   const baseSize = (0.08 + node.size * 1.0) * starSize;
   const segs = baseSize > 0.25 ? profile.starSegments + 6 : baseSize > 0.12 ? profile.starSegments : Math.max(12, profile.starSegments - 6);
 
-  // importance 0..1 — boost emissive + add pointLight when high
   const imp = node.importance ?? 0.4;
-  const baseEmissive = 1.6 + imp * 2.6; // 1.6..4.2
+  const baseEmissive = 1.6 + imp * 2.6;
   const hasOwnLight = profile.tier === "desktop" && imp >= 0.7;
   const pulses = !!node.pulse;
 
-  // distance-based label visibility (throttled state)
   const [labelVisible, setLabelVisible] = useState(node.kind === "root" || node.kind === "cluster");
   const lastCheck = useRef(0);
   const threshold = LABEL_THRESHOLDS[node.kind] ?? 40;
   const nodePos = useMemo(() => new THREE.Vector3(...node.pos), [node.pos]);
+  const isHub = node.kind === "root" || node.kind === "cluster" || node.kind === "subhub";
 
   useFrame((state, dt) => {
     if (meshRef.current) {
@@ -292,18 +295,23 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
       const flick = 0.92 + Math.sin(state.clock.elapsedTime * (1.2 + imp) + node.pos[0]) * 0.08;
       lightRef.current.intensity = imp * 1.4 * flick * (pulses ? 1.6 : 1);
     }
+    if (ringRef.current && pulseGlowOnHover && (isSelected || isHovered)) {
+      const k = 1 + (Math.sin(state.clock.elapsedTime * 3.4) * 0.5 + 0.5) * 0.5;
+      ringRef.current.scale.setScalar(k);
+      (ringRef.current.material as THREE.MeshBasicMaterial).opacity = 0.55 * (1 - (k - 1) * 1.3);
+    }
     lastCheck.current += dt;
     if (lastCheck.current > 0.2) {
       lastCheck.current = 0;
       const d = state.camera.position.distanceTo(nodePos);
-      const shouldShow = d < threshold || isHovered || isSelected;
+      const forceMulti = showAllHovers && (isHub || baseSize > 0.13);
+      const shouldShow = d < threshold || isHovered || isSelected || forceMulti;
       if (shouldShow !== labelVisible) setLabelVisible(shouldShow);
     }
   });
 
   const emissive = node.color;
   const opacity = isDim ? 0.22 : 1;
-  const isHub = node.kind === "root" || node.kind === "cluster" || node.kind === "subhub";
   const haloBoost = 1 + imp * 0.6;
 
   return (
@@ -326,6 +334,12 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
           clearcoatRoughness={0.25}
         />
       </mesh>
+      {pulseGlowOnHover && (isSelected || isHovered) && (
+        <mesh ref={ringRef} rotation={[Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[baseSize * 2.6, baseSize * 2.9, 48]} />
+          <meshBasicMaterial color={emissive} transparent opacity={0.5} side={THREE.DoubleSide} depthWrite={false} blending={THREE.AdditiveBlending} />
+        </mesh>
+      )}
       {hasOwnLight && (
         <pointLight
           ref={lightRef}
@@ -335,11 +349,9 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
           decay={2}
         />
       )}
-      {/* inner sharp halo */}
       <sprite scale={[baseSize * 6 * haloBoost, baseSize * 6 * haloBoost, 1]}>
         <spriteMaterial map={haloTex} color={emissive} transparent opacity={isDim ? 0.05 : 0.55 + imp * 0.25} blending={THREE.AdditiveBlending} depthWrite={false} />
       </sprite>
-      {/* outer soft glow (desktop only) */}
       {profile.haloLayers > 1 && (
         <sprite scale={[baseSize * 16 * haloBoost, baseSize * 16 * haloBoost, 1]}>
           <spriteMaterial map={haloTex} color={emissive} transparent opacity={isDim ? 0.02 : 0.22 + imp * 0.15} blending={THREE.AdditiveBlending} depthWrite={false} />
@@ -350,6 +362,8 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
           center
           distanceFactor={isHub ? (node.kind === "root" ? 70 : node.kind === "cluster" ? 50 : 35) : 18}
           style={{ pointerEvents: "none" }}
+          zIndexRange={[20, 0]}
+          occlude={false}
         >
           <div
             style={{
@@ -367,7 +381,7 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
               background: highContrast ? "rgba(0,0,0,0.85)" : "rgba(5,8,15,0.6)",
               border: `1px solid ${emissive}44`,
               transform: `translateY(${baseSize * 28}px)`,
-              opacity: isDim ? 0.4 : 1,
+              opacity: isDim ? 0.4 : showAllHovers && !isHovered && !isSelected ? 0.55 : 1,
               transition: "opacity 180ms",
             }}
           >
@@ -378,6 +392,7 @@ function StarNodeMesh({ node, isSelected, isHovered, isLit, isDim, haloTex, prof
     </group>
   );
 }
+
 
 // ─── Camera flyer / Rover ───
 function CameraController({ targetId, profile, autoRotate, autoRotateSpeed, damping, preset }: {
@@ -588,9 +603,15 @@ function Scene({ profile }: { profile: DeviceProfile }) {
             profile={profile}
             starSize={settings.starSize}
             highContrast={settings.highContrastLabels}
+            showAllHovers={settings.showAllHovers}
+            pulseGlowOnHover={settings.pulseGlowOnHover}
           />
         ))}
       </group>
+
+      {settings.microDust && <MicroDust density={settings.microDustDensity} quality={quality} />}
+      {settings.interClusterLinks && <InterClusterLinks graph={graph} />}
+
 
       <CameraController
         targetId={selectedId}
@@ -666,6 +687,12 @@ export function Universe() {
   const fpsCap = useSettings((s) => s.fpsCap);
   const showFps = useSettings((s) => s.showFps);
   const viewMode = useSettings((s) => s.viewMode);
+  const shellThickness = useSettings((s) => s.shellThickness);
+  // Sync shell-thickness into global so build.ts picks it up on next graph build.
+  useEffect(() => {
+    (globalThis as any).__SHELL_THICK__ = shellThickness;
+    import("@/lib/graph/build").then((m) => m.invalidateGraphCache());
+  }, [shellThickness]);
   if (viewMode === "2d") {
     return (
       <>
@@ -674,6 +701,7 @@ export function Universe() {
       </>
     );
   }
+
   return (
     <>
     <Canvas

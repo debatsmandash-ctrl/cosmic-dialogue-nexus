@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useUniverse, useSettings, type QualityPreset, type FpsCap, type ThemePalette, type CameraPreset } from "@/lib/store";
+import { useUniverse, useSettings, type QualityPreset, type FpsCap, type ThemePalette, type CameraPreset, type Sky2DTheme, type ConstellationShape, type StarColorMode, type LobbyStyle } from "@/lib/store";
+
 import { TRACKS, DEFAULT_ENABLED_TRACKS } from "@/lib/playlist";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -60,7 +61,7 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) =>
   );
 }
 
-type TabKey = "display" | "rover" | "theme" | "density" | "perf" | "audio" | "a11y";
+type TabKey = "display" | "sky" | "rover" | "theme" | "density" | "lobby" | "perf" | "audio" | "a11y";
 
 export function SettingsPanel() {
   const open = useUniverse((s) => s.settingsOpen);
@@ -91,13 +92,16 @@ export function SettingsPanel() {
 
   const TABS: [TabKey, string][] = [
     ["display", "DISPLAY"],
+    ["sky", "SKY"],
     ["rover", "ROVER"],
     ["theme", "TEMA"],
     ["density", "DENSITY"],
+    ["lobby", "LOBBY"],
     ["perf", "PERF"],
     ["audio", "AUDIO"],
     ["a11y", "A11Y"],
   ];
+
 
   return (
     <>
@@ -235,8 +239,30 @@ export function SettingsPanel() {
               <Row label={`Shell noise ±${s.shellNoise.toFixed(1)}`} hint="Ketebalan 'kulit' bola — 0 = halus, 6 = pecah organik">
                 <Slider value={s.shellNoise} min={0} max={6} step={0.2} onChange={(v) => update({ shellNoise: v })} />
               </Row>
+              <Row label={`Shell thickness ${s.shellThickness.toFixed(1)}`} hint="Volume radial — node leaf akan menyebar ke dalam (bukan cuma di permukaan)">
+                <Slider value={s.shellThickness} min={0} max={14} step={0.5} onChange={(v) => update({ shellThickness: v })} />
+              </Row>
               <Row label={`Background stars ${s.backgroundStars}`} hint="Jumlah bintang latar (efek perf)">
                 <Slider value={s.backgroundStars} min={500} max={5000} step={100} onChange={(v) => update({ backgroundStars: v })} />
+              </Row>
+            </Section>
+            <Section title="Visual Extras (3D)">
+              <Row label="Micro dust" hint="Partikel debu bercahaya mengambang di dalam volume bola">
+                <Toggle value={s.microDust} onChange={(v) => update({ microDust: v })} />
+              </Row>
+              {s.microDust && (
+                <Row label={`Dust density ${s.microDustDensity}`} hint="Lebih padat = lebih ramai tapi lebih berat">
+                  <Slider value={s.microDustDensity} min={200} max={1400} step={50} onChange={(v) => update({ microDustDensity: v })} />
+                </Row>
+              )}
+              <Row label="Inter-cluster links" hint="Garis tipis melengkung yang menyambung antar cluster (rasi besar)">
+                <Toggle value={s.interClusterLinks} onChange={(v) => update({ interClusterLinks: v })} />
+              </Row>
+              <Row label="Pulse glow on hover" hint="Cincin glow yang berdenyut saat node di-hover/select">
+                <Toggle value={s.pulseGlowOnHover} onChange={(v) => update({ pulseGlowOnHover: v })} />
+              </Row>
+              <Row label="Tampilkan semua hover" hint="Paksa label hub & node penting selalu kelihatan (bukan default — cocok untuk mode peta)">
+                <Toggle value={s.showAllHovers} onChange={(v) => update({ showAllHovers: v })} />
               </Row>
             </Section>
             <div style={{
@@ -244,9 +270,68 @@ export function SettingsPanel() {
               background: "rgba(168,85,247,0.05)", border: "1px solid rgba(168,85,247,0.2)",
               fontFamily: "DM Sans", fontSize: 11, color: "#a8b8d0", lineHeight: 1.6,
             }}>
-              Shell radius tetap di <b>62 unit</b> agar semua section selalu jadi satu bola utuh. Atur <i>shell noise</i> untuk bikin kulit terasa padat (0) atau berserabut organik (6).
+              Shell radius tetap di <b>62 unit</b>. Naikkan <i>thickness</i> agar leaf node menyebar ke dalam (volume) sehingga garis edge tidak saling bertabrakan.
             </div>
           </>)}
+
+          {tab === "sky" && (<>
+            <Section title="2D Sky">
+              <Row label="Langit real" hint="Aktifkan nebula, aurora, comet, dan partikel atmosfer (matikan kalau mau langit minimal)">
+                <Toggle value={s.realSky2D} onChange={(v) => update({ realSky2D: v })} />
+              </Row>
+              <Row label="Sky theme" hint="Pemandangan langit ala Genshin: Mondstadt (milky way + kunang), Snezhnaya (aurora salju), Liyue (lentera hangat), Pure (minim)">
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                  {(["mondstadt","snezhnaya","liyue","pure"] as Sky2DTheme[]).map(t => (
+                    <Pill key={t} active={s.sky2DTheme === t} onClick={() => update({ sky2DTheme: t })}>{t.toUpperCase()}</Pill>
+                  ))}
+                </div>
+              </Row>
+              <Row label="Constellation shape" hint="Bentuk sambungan antar bintang — orbit (cincin konsentris), free (alami), figurative (rasi bentuk), hybrid (campuran)">
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                  {(["orbit_rings","free_lines","figurative","hybrid"] as ConstellationShape[]).map(t => (
+                    <Pill key={t} active={s.constellationShape === t} onClick={() => update({ constellationShape: t })}>{t.toUpperCase()}</Pill>
+                  ))}
+                </div>
+              </Row>
+              <Row label="Star color" hint="Warna bintang: cluster (sesuai topik), white (semua putih), rainbow (acak warna-warni)">
+                <div style={{ display: "flex", gap: 4 }}>
+                  {(["cluster","white","rainbow"] as StarColorMode[]).map(t => (
+                    <Pill key={t} active={s.starColorMode === t} onClick={() => update({ starColorMode: t })}>{t.toUpperCase()}</Pill>
+                  ))}
+                </div>
+              </Row>
+            </Section>
+            <div style={{
+              padding: "10px 12px", borderRadius: 4,
+              background: "rgba(56,189,248,0.05)", border: "1px solid rgba(56,189,248,0.2)",
+              fontFamily: "DM Sans", fontSize: 11, color: "#a8b8d0", lineHeight: 1.6,
+            }}>
+              Mode 2D pakai engine langit terinspirasi Genshin (Mondstadt night sky, Snezhnaya aurora, Liyue lantern festival). Bintang bebas posisi — tidak terikat permukaan bola.
+            </div>
+          </>)}
+
+          {tab === "lobby" && (<>
+            <Section title="Main Lobby Style">
+              <Row label="Lobby style" hint="Tampilan menu utama: classic (sekarang), command-deck (HUD kokpit), cinematic (intro sinematik), minimal (cuma tombol)">
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                  {(["classic","command-deck","cinematic","minimal"] as LobbyStyle[]).map(t => (
+                    <Pill key={t} active={s.lobbyStyle === t} onClick={() => update({ lobbyStyle: t })}>{t.toUpperCase()}</Pill>
+                  ))}
+                </div>
+              </Row>
+            </Section>
+            <div style={{
+              padding: "10px 12px", borderRadius: 4,
+              background: "rgba(244,114,182,0.05)", border: "1px solid rgba(244,114,182,0.2)",
+              fontFamily: "DM Sans", fontSize: 11, color: "#a8b8d0", lineHeight: 1.6,
+            }}>
+              <b>Saran lobby:</b><br />
+              • <b>Command Deck</b> — HUD ala kokpit (radar, telemetry, quick-jump tile).<br />
+              • <b>Cinematic</b> — fade hitam → zoom kamera dari luar shell → tombol "ENTER UNIVERSE".<br />
+              • <b>Minimal</b> — judul + 3 tombol besar, fokus konten.
+            </div>
+          </>)}
+
 
           {tab === "perf" && (<>
             <Section title="Performance">

@@ -9,6 +9,10 @@ export type ViewMode = "3d" | "2d";
 export type PlayMode = "shuffle" | "sequential";
 export type ThemePalette = "aurora" | "sunset" | "emerald" | "mono";
 export type CameraPreset = "free" | "orbit" | "top" | "tour";
+export type Sky2DTheme = "mondstadt" | "snezhnaya" | "liyue" | "constellation_pure";
+export type ConstellationShape = "figurative" | "free_lines" | "orbit_rings" | "hybrid";
+export type StarColorMode = "cluster" | "pure_white" | "rainbow";
+export type LobbyStyle = "cinematic" | "hud" | "minimal";
 
 export interface Settings {
   quality: QualityPreset;
@@ -29,17 +33,28 @@ export interface Settings {
   viewMode: ViewMode;
   enabledTracks: Record<string, boolean>;
   playMode: PlayMode;
-  // New: 3D shell density & ambience
-  shellNoise: number;       // 0..6 unit radial jitter
-  backgroundStars: number;  // 500..5000
-  // New: theme palette + accessibility
+  shellNoise: number;
+  shellThickness: number;       // 0..14 — radial jitter untuk leaf node (cangkang tebal)
+  backgroundStars: number;
   themePalette: ThemePalette;
-  fontScale: number;        // 0.9..1.3
-  // New: 2D "real sky" toggle (mute aurora/comets)
+  fontScale: number;
   realSky2D: boolean;
-  // New: camera preset (Rover)
   cameraPreset: CameraPreset;
-  // Offset draggable panel (desktop). { x, y } pixel relatif posisi default.
+  // 2D sky engine
+  sky2DTheme: Sky2DTheme;
+  constellationShape: ConstellationShape;
+  starColorMode: StarColorMode;
+  constellationLineOpacity: number;  // 0..1
+  // 3D polish
+  showAllHovers: boolean;
+  microDust: boolean;
+  microDustDensity: number;     // 200..2000
+  interClusterLinks: boolean;
+  pulseGlowOnHover: boolean;
+  // Lobby
+  lobbyStyle: LobbyStyle;
+  showHudStrip: boolean;
+  showMiniMap: boolean;
   sidebarOffset: { x: number; y: number };
   sidePanelOffset: { x: number; y: number };
 }
@@ -64,14 +79,28 @@ export const DEFAULT_SETTINGS: Settings = {
   enabledTracks: {},
   playMode: "shuffle",
   shellNoise: 2.2,
-  backgroundStars: 2200,
+  shellThickness: 7,
+  backgroundStars: 2500,
   themePalette: "aurora",
   fontScale: 1.0,
   realSky2D: false,
   cameraPreset: "free",
+  sky2DTheme: "mondstadt",
+  constellationShape: "free_lines",
+  starColorMode: "cluster",
+  constellationLineOpacity: 0.45,
+  showAllHovers: false,
+  microDust: true,
+  microDustDensity: 700,
+  interClusterLinks: false,
+  pulseGlowOnHover: true,
+  lobbyStyle: "cinematic",
+  showHudStrip: false,
+  showMiniMap: false,
   sidebarOffset: { x: 0, y: 0 },
   sidePanelOffset: { x: 0, y: 0 },
 };
+
 
 
 interface UniverseState {
@@ -128,6 +157,9 @@ export const useSettings = create<SettingsState>()(
       update: (patch) => set(patch as Settings),
       reset: () => set(DEFAULT_SETTINGS),
     }),
-    { name: "smandash-settings-v2" }
+    {
+      name: "smandash-settings-v3",
+      merge: (persisted, current) => ({ ...current, ...(persisted as object) }),
+    }
   )
 );
