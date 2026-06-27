@@ -600,9 +600,15 @@ function Scene({ profile }: { profile: DeviceProfile }) {
             profile={profile}
             starSize={settings.starSize}
             highContrast={settings.highContrastLabels}
+            showAllHovers={settings.showAllHovers}
+            pulseGlowOnHover={settings.pulseGlowOnHover}
           />
         ))}
       </group>
+
+      {settings.microDust && <MicroDust density={settings.microDustDensity} quality={quality} />}
+      {settings.interClusterLinks && <InterClusterLinks graph={graph} />}
+
 
       <CameraController
         targetId={selectedId}
