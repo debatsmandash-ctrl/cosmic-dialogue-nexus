@@ -92,13 +92,16 @@ export function SettingsPanel() {
 
   const TABS: [TabKey, string][] = [
     ["display", "DISPLAY"],
+    ["sky", "SKY"],
     ["rover", "ROVER"],
     ["theme", "TEMA"],
     ["density", "DENSITY"],
+    ["lobby", "LOBBY"],
     ["perf", "PERF"],
     ["audio", "AUDIO"],
     ["a11y", "A11Y"],
   ];
+
 
   return (
     <>
