@@ -687,6 +687,12 @@ export function Universe() {
   const fpsCap = useSettings((s) => s.fpsCap);
   const showFps = useSettings((s) => s.showFps);
   const viewMode = useSettings((s) => s.viewMode);
+  const shellThickness = useSettings((s) => s.shellThickness);
+  // Sync shell-thickness into global so build.ts picks it up on next graph build.
+  useEffect(() => {
+    (globalThis as any).__SHELL_THICK__ = shellThickness;
+    import("@/lib/graph/build").then((m) => m.invalidateGraphCache());
+  }, [shellThickness]);
   if (viewMode === "2d") {
     return (
       <>
@@ -695,6 +701,7 @@ export function Universe() {
       </>
     );
   }
+
   return (
     <>
     <Canvas
