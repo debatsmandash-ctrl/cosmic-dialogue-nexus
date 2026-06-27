@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useUniverse, useSettings, type QualityPreset, type FpsCap, type ThemePalette, type CameraPreset } from "@/lib/store";
+import { useUniverse, useSettings, type QualityPreset, type FpsCap, type ThemePalette, type CameraPreset, type Sky2DTheme, type ConstellationShape, type StarColorMode, type LobbyStyle } from "@/lib/store";
+
 import { TRACKS, DEFAULT_ENABLED_TRACKS } from "@/lib/playlist";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -60,7 +61,7 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) =>
   );
 }
 
-type TabKey = "display" | "rover" | "theme" | "density" | "perf" | "audio" | "a11y";
+type TabKey = "display" | "sky" | "rover" | "theme" | "density" | "lobby" | "perf" | "audio" | "a11y";
 
 export function SettingsPanel() {
   const open = useUniverse((s) => s.settingsOpen);
