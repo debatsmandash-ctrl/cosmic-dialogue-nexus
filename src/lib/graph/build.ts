@@ -639,22 +639,28 @@ export function buildGraph(): Graph {
     });
   }
 
-  // ─── SHELL re-projection: pastikan SEMUA leaf benar2 di kulit bola ───
-  // (placeCloud/placeBranch sudah project, tapi root tetap di origin,
-  // subhub offsets juga di-project di sini sebagai safety net.)
+  // ─── SHELL re-projection: hub di kulit; leaf boleh punya ketebalan radial ───
+  // shellThickness diambil dari setting saat runtime via globalThis (default 7).
+  // Hub (root/cluster/subhub/domain) tetap di SHELL_R; leaf disebar ±thickness.
   {
+    const thick = Math.max(0, Math.min(14,
+      (typeof globalThis !== "undefined" && (globalThis as any).__SHELL_THICK__) ?? 7
+    ));
+    const isHub = (k: string) =>
+      k === "root" || k === "cluster" || k === "subhub" || k === "domain" || k === "school";
     for (const n of nodes) {
       if (n.id === "root") continue;
       const r = Math.hypot(n.pos[0], n.pos[1], n.pos[2]);
       if (r < 1e-3) continue;
-      // jitter radial halus per-node (deterministik via hash sederhana)
       const seed = n.id.split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % 1000;
-      const j = ((seed / 1000) - 0.5) * 2 * SHELL_NOISE;
-      const target = SHELL_R + j;
+      const u = (seed / 1000) - 0.5; // -0.5..0.5
+      const leafJitter = isHub(n.kind) ? SHELL_NOISE : SHELL_NOISE + thick;
+      const target = SHELL_R + u * 2 * leafJitter;
       const k = target / r;
       n.pos = [n.pos[0] * k, n.pos[1] * k, n.pos[2] * k];
     }
   }
+
 
   // ─── Cross-cluster collision push (tangensial, tetap di kulit) ───
   {
